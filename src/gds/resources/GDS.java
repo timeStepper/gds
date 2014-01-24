@@ -8,7 +8,6 @@ package gds.resources;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import javax.swing.event.MouseInputAdapter;
 
 /**
  *
@@ -37,9 +38,12 @@ public class GDS extends javax.swing.JFrame {
         gds = new javax.swing.JFileChooser();
         outerPanel = new javax.swing.JPanel();
         displayArea = new MyPanel();
-        leftFlank = new javax.swing.JPanel();
         topBar = new javax.swing.JPanel();
         rightFlank = new javax.swing.JPanel();
+        editMode = new javax.swing.JToggleButton();
+        genMode = new javax.swing.JToggleButton();
+        editmodelabel = new javax.swing.JLabel();
+        genmodelabel = new javax.swing.JLabel();
         bottomBar = new javax.swing.JPanel();
         gridY = new javax.swing.JSpinner();
         gridYlabel = new javax.swing.JLabel();
@@ -52,6 +56,7 @@ public class GDS extends javax.swing.JFrame {
         labelX = new javax.swing.JLabel();
         readX = new javax.swing.JTextField();
         scale_position = new javax.swing.JButton();
+        leftFlank = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -69,29 +74,11 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 290, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
-        );
-
-        leftFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        leftFlank.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                leftFlankComponentHidden(evt);
-            }
-        });
-
-        javax.swing.GroupLayout leftFlankLayout = new javax.swing.GroupLayout(leftFlank);
-        leftFlank.setLayout(leftFlankLayout);
-        leftFlankLayout.setHorizontalGroup(
-            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 107, Short.MAX_VALUE)
-        );
-        leftFlankLayout.setVerticalGroup(
-            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+            .addGap(0, 247, Short.MAX_VALUE)
         );
 
         topBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -100,7 +87,7 @@ public class GDS extends javax.swing.JFrame {
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,15 +97,49 @@ public class GDS extends javax.swing.JFrame {
         rightFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         rightFlank.setMaximumSize(new java.awt.Dimension(100, 32767));
 
+        editMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editModeActionPerformed(evt);
+            }
+        });
+
+        genMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genModeActionPerformed(evt);
+            }
+        });
+
+        editmodelabel.setText("Edit Mode");
+
+        genmodelabel.setText("Gen Mode");
+
         javax.swing.GroupLayout rightFlankLayout = new javax.swing.GroupLayout(rightFlank);
         rightFlank.setLayout(rightFlankLayout);
         rightFlankLayout.setHorizontalGroup(
             rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 104, Short.MAX_VALUE)
+            .addGroup(rightFlankLayout.createSequentialGroup()
+                .addGroup(rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rightFlankLayout.createSequentialGroup()
+                        .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editmodelabel))
+                    .addGroup(rightFlankLayout.createSequentialGroup()
+                        .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(genmodelabel)))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
         rightFlankLayout.setVerticalGroup(
             rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+            .addGroup(rightFlankLayout.createSequentialGroup()
+                .addGroup(rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editmodelabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(genmodelabel))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         bottomBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -150,21 +171,9 @@ public class GDS extends javax.swing.JFrame {
 
         moduleSize.setText("unit Size");
 
-        readY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readYActionPerformed(evt);
-            }
-        });
-
         labelY.setText("Y");
 
         labelX.setText("X");
-
-        readX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                readXActionPerformed(evt);
-            }
-        });
 
         scale_position.setText("scale");
         scale_position.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +237,19 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelX))
                 .addContainerGap())
+        );
+
+        leftFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout leftFlankLayout = new javax.swing.GroupLayout(leftFlank);
+        leftFlank.setLayout(leftFlankLayout);
+        leftFlankLayout.setHorizontalGroup(
+            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 110, Short.MAX_VALUE)
+        );
+        leftFlankLayout.setVerticalGroup(
+            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
@@ -307,51 +329,44 @@ public class GDS extends javax.swing.JFrame {
         int returnVal = gds.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = gds.getSelectedFile();
-              MyPanel dpA = (MyPanel)displayArea;
-              dpA.loadImage( file );
+              backgroundImage.loadImage( file );
         } else {
             System.out.println("File access cancelled by user.");
         }
     }//GEN-LAST:event_OpenActionPerformed
 
     private void scale_positionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scale_positionActionPerformed
-        MyPanel dpa = ( MyPanel ) displayArea;
-        dpa.resize( );
+        backgroundImage.resize( );
     }//GEN-LAST:event_scale_positionActionPerformed
 
     private void gridXStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridXStateChanged
-        MyPanel dp = (MyPanel) displayArea;
-        int c = (int) gridX.getValue( );
-        dp.changeGridWidth( c );
-        readX.setText( c + "" );
+        grid.changeWidth( (int) gridX.getValue( ) );
+        repaint();       
     }//GEN-LAST:event_gridXStateChanged
 
     private void gridYStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridYStateChanged
-        MyPanel dp = (MyPanel) displayArea;
-        dp.changeGridHeight( (int) gridY.getValue( ));
+        grid.changeHeight( (int) gridY.getValue( ) );
+        repaint();
     }//GEN-LAST:event_gridYStateChanged
 
-    private void readXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_readXActionPerformed
-
-    private void leftFlankComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_leftFlankComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_leftFlankComponentHidden
-
     private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
-        MyPanel dp = (MyPanel) displayArea;
-        dp.closeImage( );
+        backgroundImage.closeImage( );
     }//GEN-LAST:event_CloseActionPerformed
 
     private void gridSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridSizeStateChanged
-        MyPanel dp = (MyPanel) displayArea;
-        dp.changeGridUnit( ( int )gridSize.getValue( ) );
+        grid.changeModuleSize( ( int )gridSize.getValue( ) );
+        repaint();
     }//GEN-LAST:event_gridSizeStateChanged
 
-    private void readYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readYActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_readYActionPerformed
+    private void editModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editModeActionPerformed
+        if ( genMode.isSelected( ) ) genMode.setSelected( false );
+        mode.setEdit();
+    }//GEN-LAST:event_editModeActionPerformed
+
+    private void genModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genModeActionPerformed
+        if ( editMode.isSelected( ) ) editMode.setSelected( false );
+        mode.setGen();
+    }//GEN-LAST:event_genModeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,14 +411,90 @@ public class GDS extends javax.swing.JFrame {
         private boolean toggle = true;
         private int width;
         private int height;
-        Grid grid = new Grid( );
         
+
+        public MyPanel ( ) {
+            
+            addMouseMotionListener ( mode );
+            addMouseListener ( mode );
+        }
         
-        public void changeGridWidth( int w ) { grid.changeWidth( w ); repaint(); }
-        public void changeGridHeight( int h ) { grid.changeHeight( h ); repaint(); }
-        public void changeGridUnit( int u ) { grid.changeModuleSize( u ); repaint(); }
-        //javax.swing.GroupLayout displayAreaLayout = new javax.swing.GroupLayout(this);
+        @Override
+        protected void paintComponent(Graphics g1) {
+            Graphics2D g = (Graphics2D)g1;
+            super.paintComponent(g);
+            backgroundImage.paintImage( g );
+            grid.paintGrid( g, getWidth( ), getHeight( ) );
+            circ.paintCirc(g);
+        }
+    }
+    
+    
+    
+    class Mode extends MouseInputAdapter { //implements MouseMotionListener, MouseListener {
+        State mode = State.Off;
+        State image = State.Off;
         
+        public void setGen( ) {
+            mode = State.Gen;
+            System.out.println( mode );
+        }
+        public void setEdit( ) {
+            mode = State.Edit;
+            System.out.println( mode );
+        }
+        
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            MyPanel mp = ( MyPanel )displayArea;
+            switch ( mode ) {
+                case Edit :
+                    
+            }
+        }
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            MyPanel mp = ( MyPanel )displayArea;
+            backgroundImage.changeImage( e.getX( ), e.getY( ) );
+        }
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            System.out.println( "mode: " + mode );
+            MyPanel mp = ( MyPanel )displayArea;
+            switch ( mode ) {
+                case Edit :
+                    circ.x = e.getX();
+                    circ.y = e.getY();
+                    circ.state = State.On;
+                    repaint();
+                    
+            }
+        }
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            
+        }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+        @Override
+        public void mousePressed(MouseEvent e) {
+            
+        }
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+    }
+
+    class Image {
+        private BufferedImage image;
+        int xLoc;
+        int yLoc;
+        int width;
+        int height;
+        boolean toggle = true;
         
         
         public void resize( ){
@@ -426,27 +517,10 @@ public class GDS extends javax.swing.JFrame {
         }
         public void closeImage( ) { image = null; repaint( ); }
         
-
-        public MyPanel ( ) {
-            
-            addMouseMotionListener ( new MouseAdapter ( ) {
-                @Override
-                public void mouseDragged ( MouseEvent e ) {
-                    changeImage ( e.getX( ), e.getY( ) );
-                }
-            });
-            addMouseMotionListener ( new MouseAdapter ( ) {
-                @Override
-                public void mouseMoved ( MouseEvent e ) {
-                    int dw = getWidth( );
-                    int dh = getHeight( );
-                    
-                    readY.setText( (e.getY( ) - dh/2) + "" );
-                    readX.setText( (e.getX( ) - dw/2) + "" );
-                    System.out.println( "dh: " + dh );
-                    System.out.println( "dw: " + dw );
-                }
-            });
+        
+        public void paintImage( Graphics2D g ) {
+            g.drawImage(image, xLoc, yLoc, width, height,null);
+            repaint();
         }
         
         private void changeImage ( int x, int y ) {
@@ -465,93 +539,45 @@ public class GDS extends javax.swing.JFrame {
                 repaint(xLoc, yLoc, width, height);
         }
         private void moveImage ( int x, int y ){
-            
-                
-                // The square is moving, repaint background 
-                // over the old square location. 
                 repaint(xLoc,yLoc,width ,height);
-                // Update coordinates.
                 xLoc = x;
                 yLoc = y;
-                
-                // Repaint the square at the new location.
                 repaint( xLoc, yLoc, width, height);
             
         }
-        @Override
-        protected void paintComponent(Graphics g1) {
-            Graphics2D g = (Graphics2D)g1;
-            super.paintComponent(g);
-            g.drawImage(image, xLoc, yLoc, width, height,null); // see javadoc for more info on the parameters
-            //g.drawOval(50, 50, 50, 50);
-            //g.setColor( new Color ( 200, 20 , 20, 122 ) );
-            //g.fillRect(75, 75, 50, 50);
-            //g.setColor( Color.BLACK );
-            //g.drawRect(75, 75, 50, 50);
-            grid.drawGrid( g, getWidth( ), getHeight( ) );
+        
+    }
+    
+    
+    class Circle {
+        int x;
+        int y;
+        State state = State.Off;
+        
+        public void paintCirc( Graphics2D g ) {
+            switch ( state ){
+                case On :
+                    g.setColor(Color.white);
+                    g.fillOval(x, y, 8, 8);
+                    g.setColor(Color.BLACK);
+                    g.drawOval( x, y, 8, 8 );
+                    break;
+            }
         }
     }
     
-    class Grid {
-        int opacity = 90;
-        Color col = new Color ( 136, 177, 245, opacity );
-        int mS = 40;
-        int width = 8;
-        int height = 8;
-        
-        Grid (  ) {            
-        }
-        
-        public void changeWidth( int w ) { width = w; }
-        public void changeHeight( int h ) { height = h; }
-        public void changeModuleSize( int m ) { mS = m; }
-        
-        public void drawGrid ( Graphics2D g, int w, int h ) {
-            
-            
-            int offX = ( w - width*mS ) / 2;
-            int offY = ( h - height*mS ) / 2;
-            
-//            g.setColor(col);
-//            g.fillRect(0, 0, w, h);
-//            g.setStroke(new BasicStroke(3F));
-//            int dw = displayArea.getWidth( );
-//            int dh = displayArea.getHeight( );
-//            g.setColor( new Color( 0,255,0,100 ) );
-//            g.drawLine( dw / 2, 0, dw / 2, dh );
-//            g.setColor( new Color( 255,0,0,100 ) );
-//            g.drawLine( 0, dh / 2, dw, dh / 2);
-            
-            g.setStroke(new BasicStroke(1F));
-            g.setColor( Color.BLACK );
-            for (int x = 0; x <= width; ++x) {
-                g.drawLine( x*mS + offX, offY, x*mS + offX, height*mS + offY );
-            }
-            for (int y = 0; y <= height; ++y ) {
-                g.drawLine( offX, y*mS + offY, width*mS + offX, y*mS + offY);
-            }
-            
-            g.setColor(col);
-            g.fillRect(0, 0, w, h);
-            g.setStroke(new BasicStroke(3F));
-            int dw = displayArea.getWidth( );
-            int dh = displayArea.getHeight( );
-            g.setColor( new Color( 0,255,0,100 ) );
-            g.drawLine( dw / 2, 0, dw / 2, dh );
-            g.setColor( new Color( 255,0,0,100 ) );
-            g.drawLine( 0, dh / 2, dw, dh / 2);
-            
-        }
-     
-    }
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Close;
     private javax.swing.JMenuItem Open;
     private javax.swing.JPanel bottomBar;
     private javax.swing.JPanel displayArea;
+    private javax.swing.JToggleButton editMode;
+    private javax.swing.JLabel editmodelabel;
     private javax.swing.JFileChooser gds;
+    private javax.swing.JToggleButton genMode;
+    private javax.swing.JLabel genmodelabel;
     private javax.swing.JSpinner gridSize;
     private javax.swing.JSpinner gridX;
     private javax.swing.JLabel gridXlabel;
@@ -571,7 +597,10 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton scale_position;
     private javax.swing.JPanel topBar;
     // End of variables declaration//GEN-END:variables
-    
+    private Mode mode = new Mode( );
+    Grid grid = new Grid();
+    Circle circ = new Circle();
+    Image backgroundImage = new Image();
 }
 
 
