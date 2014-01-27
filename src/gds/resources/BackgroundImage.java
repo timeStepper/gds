@@ -7,6 +7,7 @@
 package gds.resources;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -42,13 +43,14 @@ import javax.imageio.ImageIO;
         public void resizeImage ( int x, int y ) {  
                 width = x;
                 height = y;
-//                int scaleX = (int) (image.getWidth() * width);
-//                int scaleY = (int) (image.getHeight() * height);
-//                Image imagez = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//                BufferedImage buffered = new BufferedImage(scaleX, scaleY, BufferedImage.TYPE_3BYTE_BGR);
-//                buffered.getGraphics().drawImage(imagez, 0, 0 , null);
-                image =  (BufferedImage) image.getScaledInstance(
-                        width, height, BufferedImage.SCALE_DEFAULT );
+                BufferedImage resized = new BufferedImage(x, y, image.getType());
+                Graphics2D g = resized.createGraphics();
+                g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g.drawImage(image, 0, 0, x, y, 0, 0, image.getWidth(), image.getHeight(), null);
+                g.dispose();
+
+//                image =  (BufferedImage) image.getScaledInstance(
+//                        width, height, BufferedImage.SCALE_DEFAULT );
         }
         public void moveImage ( int x, int y ){
                 xLoc = xLoc + x;

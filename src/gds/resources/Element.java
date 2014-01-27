@@ -1,9 +1,9 @@
 package gds.resources;
 
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,17 +16,17 @@ import java.util.ArrayList;
  * @author owenpaulmeyer
  */
 public class Element {
-    private ArrayList< Child > children;
-    private ArrayList< Connection > connections;
+    private HashSet< Child > children;
+    private HashSet< Connection > connections;
     
     Element ( ) {
-        children  = new ArrayList<  >( );
-        connections = new ArrayList<  >( );
+        children  = new HashSet<  >( );
+        connections = new HashSet<  >( );
     }
-    ArrayList< Child > children( ) {
+    HashSet< Child > children( ) {
         return children;
     }
-    ArrayList< Connection > connections( ) {
+    HashSet< Connection > connections( ) {
         return connections;
     }
     
@@ -57,19 +57,16 @@ public class Element {
         return  children.equals( e.children( ) ) &&
                 connections.equals( e.connections( ) );
     }
-    
 }
 
 
 class Child {
     private Element child;
     private Location location;
-    private int scale;
     
     Child ( Element e, Location l, int s ) {
         child = e;
         location = l;
-        scale = s;
     }
     
     Element child( ) {
@@ -77,9 +74,6 @@ class Child {
     }
     Location location( ) {
         return location;
-    }
-    int scale( ) {
-        return scale;
     }
     
     @Override
@@ -93,8 +87,7 @@ class Child {
         Child c = ( Child ) obj;
         
         return  child.equals( c.child( ) ) &&
-                location.equals( c.location( ) ) &&
-                scale == c.scale( );
+                location.equals( c.location( ) );
     }
 }
 class Location {
