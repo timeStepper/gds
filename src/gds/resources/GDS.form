@@ -14,7 +14,33 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="editMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="addEmpty">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+E"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Add Empty"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addEmptyActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="removeElement">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+R"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Remove Element"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="imageMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Image"/>
           </Properties>
@@ -37,7 +63,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="scaleImage">
               <Properties>
-                <Property name="text" type="java.lang.String" value=" Scale Image"/>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+S"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Scale Image"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="scaleImageActionPerformed"/>
@@ -45,6 +74,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="translateImage">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+T"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Translate Image"/>
               </Properties>
               <Events>
@@ -116,32 +148,38 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="gridY" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="gridYlabel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="gridX" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="gridXlabel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="moduleSize" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="424" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="readX" max="32767" attributes="0"/>
+                  <EmptySpace pref="538" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="hereXr" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="readX" min="-2" pref="61" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelX" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="readY" min="-2" pref="61" max="-2" attributes="0"/>
+                      <Component id="hereYr" min="-2" pref="61" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="labelY" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelX" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="labelY" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -169,11 +207,13 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="readY" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -240,6 +280,10 @@
         </Component>
         <Component class="javax.swing.JTextField" name="readX">
         </Component>
+        <Component class="javax.swing.JTextField" name="hereYr">
+        </Component>
+        <Component class="javax.swing.JTextField" name="hereXr">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="rightFlank">
@@ -286,7 +330,7 @@
                       <Component id="genMode" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="genmodelabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="290" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="542" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

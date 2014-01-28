@@ -20,8 +20,50 @@ public class Grid {
         int mS = 40; //grid unit size
         int width = 8;
         int height = 8;
+        int currentX;
+        int currentY;
+        int originX;
+        int originY;
         
-        Grid (  ) {            
+        
+        public void setOriginX( int x ) {
+            originX = x;
+        }
+        public void setOriginY( int y ) {
+            originY = y;
+        }
+        public boolean isLocation( int x, int y ) {
+            return true;
+        }
+        public int currentX() {
+            return currentX;
+        }
+        public int currentY() {
+            return currentY;
+        }
+        public int originX() {
+            return originX;
+        }
+        public int originY() {
+            return originY;
+        }
+        public void setX( int xLoc ) {
+            if ( xLoc - originX < 0 ) currentX = (xLoc-6 - originX)/mS;
+            else currentX = (xLoc+6 - originX)/mS;
+        }
+        public void setY( int yLoc ) {
+            if ( yLoc - originY < 0 ) currentY = (yLoc-6 - originY)/mS ;
+            else currentY = (yLoc+6 - originY)/mS ;
+        }
+        public boolean isReticle( int xLoc, int yLoc ) {
+            int modX = Math.abs((originX - xLoc) % mS);
+            int modY = Math.abs((originY- yLoc) % mS);
+            int hereX = Math.abs(xLoc - originX);
+            int hereY = Math.abs(yLoc - originY);
+            int halfX = ((width / 2) * mS);
+            int halfY = ((height / 2) * mS);
+            return ((modX < 5 || modX > mS - 5) && (modY < 5 || modY > mS - 5)
+                    && hereX < halfX && hereY < halfY);
         }
         
         public void changeWidth( int w ) { width = w; }

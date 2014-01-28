@@ -8,15 +8,12 @@ package gds.resources;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import javax.swing.event.MouseInputAdapter;
 
 /**
@@ -46,6 +43,8 @@ public class GDS extends javax.swing.JFrame {
         labelY = new javax.swing.JLabel();
         labelX = new javax.swing.JLabel();
         readX = new javax.swing.JTextField();
+        hereYr = new javax.swing.JTextField();
+        hereXr = new javax.swing.JTextField();
         rightFlank = new javax.swing.JPanel();
         editMode = new javax.swing.JToggleButton();
         genMode = new javax.swing.JToggleButton();
@@ -54,7 +53,10 @@ public class GDS extends javax.swing.JFrame {
         displayArea = new MyPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        editMenu = new javax.swing.JMenu();
+        addEmpty = new javax.swing.JMenuItem();
+        removeElement = new javax.swing.JMenuItem();
+        imageMenu = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
         Close = new javax.swing.JMenuItem();
         scaleImage = new javax.swing.JMenuItem();
@@ -115,14 +117,19 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(moduleSize)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(readX)
-                    .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 538, Short.MAX_VALUE)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelY)
-                    .addComponent(labelX))
+                    .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bottomBarLayout.createSequentialGroup()
+                        .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelX)))
+                .addGap(25, 25, 25)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelY)
                 .addContainerGap())
         );
         bottomBarLayout.setVerticalGroup(
@@ -143,11 +150,13 @@ public class GDS extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelY))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelY)
                     .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelX))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -196,7 +205,7 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(rightFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genmodelabel))
-                .addGap(0, 290, Short.MAX_VALUE))
+                .addGap(0, 542, Short.MAX_VALUE))
         );
 
         displayArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -216,7 +225,24 @@ public class GDS extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Image");
+        editMenu.setText("Edit");
+
+        addEmpty.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
+        addEmpty.setText("Add Empty");
+        addEmpty.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmptyActionPerformed(evt);
+            }
+        });
+        editMenu.add(addEmpty);
+
+        removeElement.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
+        removeElement.setText("Remove Element");
+        editMenu.add(removeElement);
+
+        jMenuBar1.add(editMenu);
+
+        imageMenu.setText("Image");
 
         Open.setText("Open Image");
         Open.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +250,7 @@ public class GDS extends javax.swing.JFrame {
                 OpenActionPerformed(evt);
             }
         });
-        jMenu2.add(Open);
+        imageMenu.add(Open);
 
         Close.setText("Close Image");
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -232,25 +258,27 @@ public class GDS extends javax.swing.JFrame {
                 CloseActionPerformed(evt);
             }
         });
-        jMenu2.add(Close);
+        imageMenu.add(Close);
 
-        scaleImage.setText(" Scale Image");
+        scaleImage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK));
+        scaleImage.setText("Scale Image");
         scaleImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 scaleImageActionPerformed(evt);
             }
         });
-        jMenu2.add(scaleImage);
+        imageMenu.add(scaleImage);
 
+        translateImage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.SHIFT_MASK));
         translateImage.setText("Translate Image");
         translateImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 translateImageActionPerformed(evt);
             }
         });
-        jMenu2.add(translateImage);
+        imageMenu.add(translateImage);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(imageMenu);
 
         setJMenuBar(jMenuBar1);
 
@@ -304,7 +332,9 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void gridSizeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_gridSizeStateChanged
-        grid.changeModuleSize( ( int )gridSize.getValue( ) );
+        int m = (int)gridSize.getValue();
+        grid.changeModuleSize( m );
+        edit.setModule(m);
         displayArea.repaint();
     }//GEN-LAST:event_gridSizeStateChanged
 
@@ -329,6 +359,10 @@ public class GDS extends javax.swing.JFrame {
         genMode.setSelected( false );
         editMode.setSelected( false );
     }//GEN-LAST:event_translateImageActionPerformed
+
+    private void addEmptyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmptyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addEmptyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,20 +400,6 @@ public class GDS extends javax.swing.JFrame {
     }
     
     public class MyPanel extends JPanel {
-        private int originX = getWidth() / 2;
-        private int originY = getHeight() / 2;
-        public void updateXO( ){
-            originX = getWidth() / 2;
-        }
-        public void updateYO( ){
-            originY = getHeight() / 2;
-        }
-        public int originX() {
-            return originX;
-        }
-        public int originY() {
-            return originY;
-        }
         public MyPanel ( ) {
             
             addMouseMotionListener ( mode );
@@ -392,15 +412,18 @@ public class GDS extends javax.swing.JFrame {
             super.paintComponent(g);
             backgroundImage.paintImage( g );
             grid.paintGrid( g, getWidth( ), getHeight( ) );
-            circ.paintCirc(g);
+            edit.paintEdit( g );
         }
     }
 
     class Mode extends MouseInputAdapter { //implements MouseMotionListener, MouseListener {
         State mode = State.Off;
         State image = State.Off;
+        State editElem = State.Add;
         int xLoc;
         int yLoc;
+        int setX;
+        int setY;
         
         public void scaleImage(){
             image = State.Scale;
@@ -410,7 +433,6 @@ public class GDS extends javax.swing.JFrame {
             image = State.Move;
             mode = State.Off;
         }
-        
         public void setGen( ) {
             mode = State.Gen;
             image = State.Off;
@@ -427,7 +449,24 @@ public class GDS extends javax.swing.JFrame {
             MyPanel mp = ( MyPanel )displayArea;
             switch ( mode ) {
                 case Edit :
-                    
+                    grid.setX( xLoc );
+                    grid.setY(yLoc);
+                    int module = grid.mS;
+                    int modX = Math.abs((grid.originX() - xLoc) % module);
+                    int modY = Math.abs((grid.originY() - yLoc) % module);
+                    int hereX = Math.abs(xLoc - grid.originX());
+                    int hereY = Math.abs(yLoc - grid.originY());
+                    int halfX = ((grid.width/2) *module) ;
+                    int halfY = ((grid.height/2) *module) ;
+                    readY.setText( setY +"");
+                    readX.setText( setX +"");
+//                    if ( (modX < 5 || modX > module-5) && (modY < 5 || modY > module-5) &&
+//                            hereX < halfX && hereY < halfY ) {
+                    if ( grid.isReticle( xLoc, yLoc ) ) {
+                        Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
+                        setCursor(cursor);
+                    }
+                    else setCursor( Cursor.DEFAULT_CURSOR );
             }
         }
         @Override
@@ -449,32 +488,31 @@ public class GDS extends javax.swing.JFrame {
         }
         @Override
         public void mouseClicked(MouseEvent e) {
-            System.out.println( "mode: " + mode );
+            
             MyPanel mp = ( MyPanel )displayArea;
             switch ( mode ) {
                 case Edit :
-                    circ.x = e.getX();
-                    circ.y = e.getY();
-                    circ.state = State.On;
+                    Location l = new Location( grid.currentX(), grid.currentY() );
+                    edit.addEmpty( l );
                     mp.repaint();
                     
             }
         }
+        //update displayArea relations with grid and edit
         @Override
         public void mouseEntered(MouseEvent e) {
             MyPanel mp = (MyPanel)displayArea;
-            mp.updateYO();
-            mp.updateXO();
-            readY.setText(mp.originY()+"");
-            readX.setText(mp.originX()+"");
-            circ.x= mp.originX()-4;
-            circ.y= mp.originY()-4;
-            circ.state=State.On;
+            int ox = mp.getWidth() / 2;
+            int yx = mp.getHeight() / 2;
+            grid.setOriginX(ox);
+            grid.setOriginY(yx);
+            edit.setX(ox);
+            edit.setY(yx);            
             mp.repaint();
         }
         @Override
         public void mouseExited(MouseEvent e) {
-            
+            setCursor(Cursor.DEFAULT_CURSOR);
         }
         @Override
         public void mousePressed(MouseEvent e) {
@@ -509,8 +547,10 @@ public class GDS extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Close;
     private javax.swing.JMenuItem Open;
+    private javax.swing.JMenuItem addEmpty;
     private javax.swing.JPanel bottomBar;
     private javax.swing.JPanel displayArea;
+    private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
     private javax.swing.JLabel editmodelabel;
     private javax.swing.JFileChooser gds;
@@ -521,22 +561,25 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel gridXlabel;
     private javax.swing.JSpinner gridY;
     private javax.swing.JLabel gridYlabel;
+    private javax.swing.JTextField hereXr;
+    private javax.swing.JTextField hereYr;
+    private javax.swing.JMenu imageMenu;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JLabel moduleSize;
     private javax.swing.JTextField readX;
     private javax.swing.JTextField readY;
+    private javax.swing.JMenuItem removeElement;
     private javax.swing.JPanel rightFlank;
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JMenuItem translateImage;
     // End of variables declaration//GEN-END:variables
     private Mode mode = new Mode( );
     Grid grid = new Grid();
-    Circle circ = new Circle();
     BackgroundImage backgroundImage = new BackgroundImage();
+    EditElement edit = new EditElement();
 }
 
 

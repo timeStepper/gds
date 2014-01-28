@@ -23,6 +23,9 @@ public class Element {
         children  = new HashSet<  >( );
         connections = new HashSet<  >( );
     }
+    public static Element empty() {
+        return new Element();
+    }
     HashSet< Child > children( ) {
         return children;
     }
@@ -34,8 +37,8 @@ public class Element {
         return children.isEmpty() && connections.isEmpty();
     }
     
-    public void addChild( Element e, Location l, int s ) {
-        Child c = new Child ( e, l, s );
+    public void addChild( Element e, Location l ) {
+        Child c = new Child ( e, l );
         children.add( c );
     }
     
@@ -64,7 +67,7 @@ class Child {
     private Element child;
     private Location location;
     
-    Child ( Element e, Location l, int s ) {
+    Child ( Element e, Location l ) {
         child = e;
         location = l;
     }

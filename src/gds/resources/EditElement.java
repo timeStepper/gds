@@ -15,14 +15,27 @@ import java.util.ArrayList;
  * @author owenpaulmeyer
  */
 public class EditElement {
-        Element editable;
+        int originX;
+        int originY;
+        int module = 40;
+        public void setModule( int m ) {
+            module = m;
+            System.out.println( "module " + module);
+        }
+        public void setX( int x ) {
+            originX = x;
+        }
+        public void setY( int y ) {
+            originY = y;
+        }
+        Element element = new Element();
         
-        public void initEdit( ) {
-            editable = new Element( );
+        public void addEmpty( Location l ) {
+            element.addChild( Element.empty(), l );
         }
         
         public void paintEdit( Graphics2D g ) {
-            paintElement( g, editable );
+            if ( !element.isEmpty() ) paintElement( g, element );
         }
         
         public void paintElement( Graphics2D g, Element e ) {
@@ -33,9 +46,9 @@ public class EditElement {
         }
         public void paintLocation(Graphics2D g, Location l) {
             g.setColor(Color.WHITE);
-            g.fillOval(l.xLoc(), l.yLoc(), 8, 8);
+            g.fillOval(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
             g.setColor(Color.BLACK);
-            g.drawOval(l.xLoc(), l.yLoc(), 8, 8);
+            g.drawOval(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
         }
         
         public void paintConnection( Graphics2D g, Connection c ) {
