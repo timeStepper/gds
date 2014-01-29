@@ -15,6 +15,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
@@ -238,6 +240,15 @@ public class GDS extends javax.swing.JFrame {
         elementTree.setEditable(true);
         elementTree.getSelectionModel().setSelectionMode
         (TreeSelectionModel.SINGLE_TREE_SELECTION);
+        elementTree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+                elementTree.getLastSelectedPathComponent();
+                if (node == null) return;
+                Element elem = (Element)node.getUserObject();
+                edit.setSelection( elem );
+            }
+        });
         elementTree.setShowsRootHandles(true);
         elementTree.setBackground(new java.awt.Color(210, 210, 210));
         elementTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -728,7 +739,8 @@ public class GDS extends javax.swing.JFrame {
     Grid grid = new Grid();
     BackgroundImage backgroundImage = new BackgroundImage();
     EditElement edit = new EditElement();
-    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Element");
+    //the root of elementTree
+    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(Element.empty());
     DefaultTreeModel treeModel;
     
 }

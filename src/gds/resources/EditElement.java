@@ -19,13 +19,21 @@ public class EditElement {
         int originY;        //used for painting
         int module = 40;    //used for painting
         Element element = new Element();
-        Element selected;
+        Element selection;
+        Element addable;
+        
+        public void setAddable( Element e ){
+            addable = e;
+        }
+        public void setSelection( Element e ){
+            selection = e;
+        }
         
         public void addEmpty( Location l ) {
             element.addChild( Element.empty(), l );
         }
-        public void select( Location l ) {
-            
+        public void addElement( Location l, Element e ){
+            element.addChild( e, l);
         }
         
         

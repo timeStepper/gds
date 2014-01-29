@@ -48,6 +48,12 @@ public class Element {
     }
     
     @Override
+    public String toString(  ) {
+        if ( isEmpty() ) return "Empty";
+        else return "";
+    }
+    
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

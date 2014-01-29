@@ -443,7 +443,7 @@
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree(treeModel)"/>
                             <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="treeModel = new DefaultTreeModel(rootNode);&#xa;treeModel.addTreeModelListener(new MyTreeModelListener());"/>
-                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="elementTree.setEditable(true);&#xa;elementTree.getSelectionModel().setSelectionMode&#xa;        (TreeSelectionModel.SINGLE_TREE_SELECTION);&#xa;elementTree.setShowsRootHandles(true);"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="elementTree.setEditable(true);&#xa;elementTree.getSelectionModel().setSelectionMode&#xa;        (TreeSelectionModel.SINGLE_TREE_SELECTION);&#xa;elementTree.addTreeSelectionListener(new TreeSelectionListener() {&#xa;    public void valueChanged(TreeSelectionEvent e) {&#xa;        DefaultMutableTreeNode node = (DefaultMutableTreeNode)&#xa;                           elementTree.getLastSelectedPathComponent();&#xa;        if (node == null) return;&#xa;        Element elem = (Element)node.getUserObject();&#xa;        edit.setSelection( elem );&#xa;    }&#xa;});&#xa;elementTree.setShowsRootHandles(true);"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
