@@ -15,7 +15,7 @@ import java.awt.Graphics2D;
  * @author owenpaulmeyer
  */
 public class Grid {
-        int opacity = 90; //grid covers background image
+        int opacity = 110; //grid covers background image
         Color col = new Color ( 136, 177, 245, opacity );
         int mS = 40; //grid unit size
         int width = 8;
@@ -25,7 +25,7 @@ public class Grid {
         int originX;
         int originY;
         
-        
+      //used for relating grid lines to display for editing elements
         public void setOriginX( int x ) {
             originX = x;
         }
@@ -66,6 +66,7 @@ public class Grid {
                     && hereX < halfX && hereY < halfY);
         }
         
+      //grid setters
         public void changeWidth( int w ) { width = w; }
         public void changeHeight( int h ) { height = h; }
         public void changeModuleSize( int m ) { mS = m; }
@@ -73,6 +74,10 @@ public class Grid {
         public void paintGrid ( Graphics2D g, int w, int h ) {
             int offX = ( w - width*mS ) / 2;
             int offY = ( h - height*mS ) / 2;
+            
+            //semi opaque backdrop covers background image
+            g.setColor(col);
+            g.fillRect(0, 0, w, h);
 
             g.setStroke(new BasicStroke(1F));
             g.setColor( Color.BLACK );
@@ -83,16 +88,17 @@ public class Grid {
                 g.drawLine( offX, y*mS + offY, width*mS + offX, y*mS + offY);
             }
             
-            g.setColor(col);
-            g.fillRect(0, 0, w, h);
+            //draws the axis lines
             g.setStroke(new BasicStroke(3F));
-            
             g.setColor( new Color( 0,255,0,100 ) );
             g.drawLine( w / 2, 0, w / 2, h );
             g.setColor( new Color( 255,0,0,100 ) );
             g.drawLine( 0, h / 2, w, h / 2);
             g.setStroke(new BasicStroke(1F));
-            
+        }
+        public void setOpacity( int o ) {
+            opacity = o;
+            col = new Color ( 136, 177, 245, opacity );
         }
      
     }
