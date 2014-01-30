@@ -15,11 +15,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeSelectionModel;
 
 /**
  *
@@ -58,10 +55,9 @@ public class GDS extends javax.swing.JFrame {
         centerRightPanels = new javax.swing.JSplitPane();
         displayArea = new MyPanel();
         elementTabs = new javax.swing.JTabbedPane();
-        elementScroll = new javax.swing.JScrollPane();
-        treeModel = new DefaultTreeModel(rootNode);
+        jScrollPane1 = new javax.swing.JScrollPane();
         treeModel.addTreeModelListener(new MyTreeModelListener());
-        elementTree = new javax.swing.JTree(treeModel);
+        jTree1 = new javax.swing.JTree(treeModel);
         childScroll = new javax.swing.JScrollPane();
         childList = new javax.swing.JList();
         connectionScroll = new javax.swing.JScrollPane();
@@ -206,7 +202,7 @@ public class GDS extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        verticalSplit.setDividerLocation(88);
+        verticalSplit.setDividerLocation(0);
         verticalSplit.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         centerPanels.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -223,38 +219,20 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 352, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 460, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
 
         elementTabs.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        elementScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        elementScroll.setFocusTraversalPolicyProvider(getFocusableWindowState());
+        jScrollPane1.setViewportView(jTree1);
 
-        elementTree.setEditable(true);
-        elementTree.getSelectionModel().setSelectionMode
-        (TreeSelectionModel.SINGLE_TREE_SELECTION);
-        elementTree.addTreeSelectionListener(new TreeSelectionListener() {
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-                elementTree.getLastSelectedPathComponent();
-                if (node == null) return;
-                Element elem = (Element)node.getUserObject();
-                edit.setSelection( elem );
-            }
-        });
-        elementTree.setShowsRootHandles(true);
-        elementTree.setBackground(new java.awt.Color(210, 210, 210));
-        elementTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        elementScroll.setViewportView(elementTree);
-
-        elementTabs.addTab("Elm", elementScroll);
+        elementTabs.addTab("Elm", jScrollPane1);
 
         childScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -327,7 +305,7 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genmodelabel))
-                .addGap(0, 415, Short.MAX_VALUE))
+                .addGap(0, 422, Short.MAX_VALUE))
         );
 
         leftFlank.setViewportView(buttonPanel);
@@ -343,7 +321,7 @@ public class GDS extends javax.swing.JFrame {
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 799, Short.MAX_VALUE)
+            .addGap(0, 654, Short.MAX_VALUE)
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,7 +405,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                .addComponent(verticalSplit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -633,7 +611,9 @@ public class GDS extends javax.swing.JFrame {
                     int button = e.getButton();
                     if ( button == MouseEvent.BUTTON1 ){
                         Location l = new Location( grid.currentX(), grid.currentY() );
-                        edit.addEmpty( l );
+                        Child c = new Child( new Element(), l );
+                        edit.addEmpty( c );
+                        
                         mp.repaint();
                     }
                     else if ( button == MouseEvent.BUTTON3 ) {
@@ -704,9 +684,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
     private javax.swing.JLabel editmodelabel;
-    private javax.swing.JScrollPane elementScroll;
     private javax.swing.JTabbedPane elementTabs;
-    private javax.swing.JTree elementTree;
     private javax.swing.JFileChooser gds;
     private javax.swing.JToggleButton genMode;
     private javax.swing.JLabel genmodelabel;
@@ -723,6 +701,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JScrollPane leftFlank;
@@ -740,9 +720,9 @@ public class GDS extends javax.swing.JFrame {
     BackgroundImage backgroundImage = new BackgroundImage();
     EditElement edit = new EditElement();
     //the root of elementTree
-    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(Element.empty());
-    DefaultTreeModel treeModel;
-    
+    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child() );
+    //the elementTree is modified by methods on treeModel
+    DefaultTreeModel treeModel = new TreeModel(rootNode);
 }
 
 

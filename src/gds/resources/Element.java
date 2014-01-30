@@ -37,8 +37,8 @@ public class Element {
         return children.isEmpty() && connections.isEmpty();
     }
     
-    public void addChild( Element e, Location l ) {
-        Child c = new Child ( e, l );
+    public void addChild( Child c ) {
+        
         children.add( c );
     }
     
@@ -50,7 +50,7 @@ public class Element {
     @Override
     public String toString(  ) {
         if ( isEmpty() ) return "Empty";
-        else return "";
+        else return "!";
     }
     
     @Override
@@ -77,12 +77,21 @@ class Child {
         child = e;
         location = l;
     }
+    Child ( ) {
+        child = Element.empty();
+        location = new Location( 0, 0 );
+    }
     
     Element child( ) {
         return child;
     }
     Location location( ) {
         return location;
+    }
+    
+    @Override
+    public String toString() {
+        return child.toString();
     }
     
     @Override

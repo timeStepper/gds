@@ -16,7 +16,7 @@ import java.awt.Graphics2D;
  */
 public class Grid {
         int opacity = 110; //grid covers background image
-        Color col = new Color ( 136, 177, 245, opacity );
+        Color col = new Color ( 100, 100, 100, opacity );
         int mS = 40; //grid unit size
         int width = 8;
         int height = 8;
@@ -90,15 +90,15 @@ public class Grid {
             
             //draws the axis lines
             g.setStroke(new BasicStroke(3F));
-            g.setColor( new Color( 0,255,0,100 ) );
+            g.setColor( new Color( 0,200,0,100 ) );
             g.drawLine( w / 2, 0, w / 2, h );
-            g.setColor( new Color( 255,0,0,100 ) );
+            g.setColor( new Color( 200,0,0,100 ) );
             g.drawLine( 0, h / 2, w, h / 2);
             g.setStroke(new BasicStroke(1F));
         }
         public void setOpacity( int o ) {
             opacity = o;
-            col = new Color ( 136, 177, 245, opacity );
+            col = new Color ( 100, 100, 100, opacity );
         }
      
     }
