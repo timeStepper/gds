@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -55,15 +58,19 @@ public class GDS extends javax.swing.JFrame {
         centerRightPanels = new javax.swing.JSplitPane();
         displayArea = new MyPanel();
         elementTabs = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        //treeModel.addTreeModelListener(new MyTreeModelListener());
-        dynamicTree = new DynamicTree(rootNode,treeModel);
         childScroll = new javax.swing.JScrollPane();
         childList = new javax.swing.JList();
         connectionScroll = new javax.swing.JScrollPane();
         connectionList = new javax.swing.JList();
-        leftFlank = new javax.swing.JScrollPane();
-        buttonPanel = new javax.swing.JPanel();
+        leftFlank = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        addableElementList = new AddableList(addableListModel, edit);
+        addableElementListLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        //treeModel.addTreeModelListener(new MyTreeModelListener());
+        dynamicTree = new DynamicTree(rootNode,treeModel);
+        dynamicTreeLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         editMode = new javax.swing.JToggleButton();
         genMode = new javax.swing.JToggleButton();
         editmodelabel = new javax.swing.JLabel();
@@ -84,6 +91,7 @@ public class GDS extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        bottomBar.setBackground(new java.awt.Color(180, 180, 180));
         bottomBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         bottomBar.setMinimumSize(new java.awt.Dimension(0, 120));
 
@@ -212,7 +220,7 @@ public class GDS extends javax.swing.JFrame {
         verticalSplit.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         centerPanels.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        centerPanels.setDividerLocation(130);
+        centerPanels.setDividerLocation(170);
 
         centerRightPanels.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         centerRightPanels.setDividerLocation(500);
@@ -225,39 +233,28 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 361, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
 
+        elementTabs.setBackground(new java.awt.Color(180, 180, 180));
         elementTabs.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jScrollPane1.setViewportView(dynamicTree);
-
-        elementTabs.addTab("Elm", jScrollPane1);
 
         childScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        childList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        childList.setBackground(new java.awt.Color(180, 180, 180));
         childScroll.setViewportView(childList);
 
         elementTabs.addTab("Chld", childScroll);
 
         connectionScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        connectionList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        connectionList.setBackground(new java.awt.Color(180, 180, 180));
         connectionScroll.setViewportView(connectionList);
 
         elementTabs.addTab("Cnct", connectionScroll);
@@ -266,11 +263,23 @@ public class GDS extends javax.swing.JFrame {
 
         centerPanels.setRightComponent(centerRightPanels);
 
+        leftFlank.setBackground(new java.awt.Color(180, 180, 180));
         leftFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        buttonPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        buttonPanel.setMaximumSize(new java.awt.Dimension(100, 32767));
-        buttonPanel.setMinimumSize(new java.awt.Dimension(200, 0));
+        addableElementList.setBackground(new java.awt.Color(180, 180, 180));
+        addableElementList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane2.setViewportView(addableElementList);
+
+        addableElementListLabel.setText("Select  Addable");
+
+        dynamicTree.setBackground(new java.awt.Color(180, 180, 180));
+        dynamicTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane1.setViewportView(dynamicTree);
+
+        dynamicTreeLabel.setText("Element Tree");
+
+        jPanel1.setBackground(new java.awt.Color(180, 180, 180));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         editMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,46 +297,74 @@ public class GDS extends javax.swing.JFrame {
 
         genmodelabel.setText("Gen Mode");
 
-        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
-        buttonPanel.setLayout(buttonPanelLayout);
-        buttonPanelLayout.setHorizontalGroup(
-            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editmodelabel))
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(genmodelabel))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(genmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        buttonPanelLayout.setVerticalGroup(
-            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editmodelabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genmodelabel))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(genmodelabel)))
         );
 
-        leftFlank.setViewportView(buttonPanel);
+        javax.swing.GroupLayout leftFlankLayout = new javax.swing.GroupLayout(leftFlank);
+        leftFlank.setLayout(leftFlankLayout);
+        leftFlankLayout.setHorizontalGroup(
+            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(leftFlankLayout.createSequentialGroup()
+                .addGroup(leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        leftFlankLayout.setVerticalGroup(
+            leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftFlankLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dynamicTreeLabel)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addableElementListLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         centerPanels.setLeftComponent(leftFlank);
 
         verticalSplit.setBottomComponent(centerPanels);
 
-        topBar.setBackground(new java.awt.Color(220, 220, 220));
+        topBar.setBackground(new java.awt.Color(180, 180, 180));
         topBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGap(0, 788, Short.MAX_VALUE)
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,13 +443,13 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addComponent(verticalSplit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -580,10 +617,13 @@ public class GDS extends javax.swing.JFrame {
                             grid.setX( xLoc );
                             grid.setY(yLoc);
                             if ( grid.isReticle( xLoc, yLoc ) ) {
-                                Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
-                                setCursor(cursor);
+                                grid.selectOn();
+                                mp.repaint();
                             }
-                            else setCursor( Cursor.DEFAULT_CURSOR );
+                            else {
+                                grid.selectOff();
+                                mp.repaint();
+                            }
                             break;
                         case Remove:
                             
@@ -615,18 +655,18 @@ public class GDS extends javax.swing.JFrame {
             MyPanel mp = ( MyPanel )displayArea;
             switch ( mode ) {
                 case Edit :
-                    int button = e.getButton();
-                    if ( button == MouseEvent.BUTTON1 ){
-                        Location l = new Location( grid.currentX(), grid.currentY() );
-                        Child c = new Child( new Element(), l );
-                        edit.addEmpty( c );
-                        ((DynamicTree)dynamicTree).addObject( c );
-                        
-                        mp.repaint();
-                    }
-                    else if ( button == MouseEvent.BUTTON3 ) {
-                        
-                    }
+                        int button = e.getButton();
+                        if ( button == MouseEvent.BUTTON1 ){
+                            Location l = new Location( grid.currentX(), grid.currentY() );
+                            Child c = new Child( new Element(), l );
+                            edit.addEmpty( c );
+                            //((DynamicTree)dynamicTree).addObject( c );
+
+                            mp.repaint();
+                        }
+                        else if ( button == MouseEvent.BUTTON3 ) {
+
+                        }
                     
             }
         }
@@ -680,8 +720,9 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenuItem Close;
     private javax.swing.JMenuItem Open;
     private javax.swing.JMenuItem addEmpty;
+    private javax.swing.JList addableElementList;
+    private javax.swing.JLabel addableElementListLabel;
     private javax.swing.JPanel bottomBar;
-    private javax.swing.JPanel buttonPanel;
     private javax.swing.JSplitPane centerPanels;
     private javax.swing.JSplitPane centerRightPanels;
     private javax.swing.JList childList;
@@ -690,6 +731,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JScrollPane connectionScroll;
     private javax.swing.JPanel displayArea;
     private javax.swing.JTree dynamicTree;
+    private javax.swing.JLabel dynamicTreeLabel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
     private javax.swing.JLabel editmodelabel;
@@ -710,10 +752,12 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
-    private javax.swing.JScrollPane leftFlank;
+    private javax.swing.JPanel leftFlank;
     private javax.swing.JLabel moduleSize;
     private javax.swing.JTextField readX;
     private javax.swing.JTextField readY;
@@ -731,6 +775,7 @@ public class GDS extends javax.swing.JFrame {
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child() );
     //the elementTree is modified by methods on treeModel
     DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
+    DefaultListModel addableListModel = new DefaultListModel();
 }
 
 

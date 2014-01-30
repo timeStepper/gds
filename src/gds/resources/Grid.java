@@ -24,6 +24,14 @@ public class Grid {
         int currentY;
         int originX;
         int originY;
+        boolean select = false;
+        
+        public void selectOn() {
+            select = true;
+        }
+        public void selectOff() {
+            select = false;
+        }
         
       //used for relating grid lines to display for editing elements
         public void setOriginX( int x ) {
@@ -95,6 +103,12 @@ public class Grid {
             g.setColor( new Color( 200,0,0,100 ) );
             g.drawLine( 0, h / 2, w, h / 2);
             g.setStroke(new BasicStroke(1F));
+            
+            //paints select circle or not
+            if ( select ) {
+                g.setColor(new Color(255,255,255,200));
+                g.fillOval(originX+(currentX*mS)-6, originY+(currentY*mS)-6, 12, 12);
+            }
         }
         public void setOpacity( int o ) {
             opacity = o;
