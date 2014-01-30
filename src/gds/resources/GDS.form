@@ -115,13 +115,14 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" pref="678" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="verticalSplit" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="verticalSplit" pref="474" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="bottomBar" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -145,30 +146,37 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="gridX" min="-2" pref="52" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="gridXlabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="gridY" min="-2" pref="52" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="gridYlabel" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="gridX" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                              <Component id="gridXlabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="gridY" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
+                              <Component id="gridYlabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="moduleSize" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="imageOpacity" min="-2" pref="137" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="imageOpacity" min="-2" pref="137" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="moduleSize" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="gridcontrolLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="hereXr" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -190,13 +198,16 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="gridY" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="gridX" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="gridSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="moduleSize" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -204,25 +215,27 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="readY" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="readY" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -371,7 +384,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new MyPanel()"/>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="displayArea.setBackground( new Color( 136, 177, 245 ) );"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="displayArea.setBackground( new Color( 130, 130, 130 ) );"/>
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
@@ -382,12 +395,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="352" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="361" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="460" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="453" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -422,10 +435,10 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTree" name="jTree1">
+                        <Component class="javax.swing.JTree" name="dynamicTree">
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree(treeModel)"/>
-                            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="treeModel.addTreeModelListener(new MyTreeModelListener());"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new DynamicTree(rootNode,treeModel)"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//treeModel.addTreeModelListener(new MyTreeModelListener());"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -564,7 +577,7 @@
                                   <Component id="genMode" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
                                   <Component id="genmodelabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="422" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -616,7 +629,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="654" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="672" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

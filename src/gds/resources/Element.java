@@ -72,6 +72,7 @@ public class Element {
 class Child {
     private Element child;
     private Location location;
+    private String name = "Root";
     
     Child ( Element e, Location l ) {
         child = e;
@@ -89,9 +90,12 @@ class Child {
         return location;
     }
     
+    public void setName( String n ){
+        name = n;
+    }
     @Override
     public String toString() {
-        return child.toString();
+        return "[ "+name+", "+location.toString()+"  ]";
     }
     
     @Override
@@ -120,6 +124,10 @@ class Location {
     }
     int yLoc( ) {
         return yCoord;
+    }
+    @Override
+    public String toString() {
+        return "( "+xCoord+", "+yCoord+" )";
     }
     @Override
     public boolean equals(Object obj) {

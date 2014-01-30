@@ -56,8 +56,8 @@ public class GDS extends javax.swing.JFrame {
         displayArea = new MyPanel();
         elementTabs = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        treeModel.addTreeModelListener(new MyTreeModelListener());
-        jTree1 = new javax.swing.JTree(treeModel);
+        //treeModel.addTreeModelListener(new MyTreeModelListener());
+        dynamicTree = new DynamicTree(rootNode,treeModel);
         childScroll = new javax.swing.JScrollPane();
         childList = new javax.swing.JList();
         connectionScroll = new javax.swing.JScrollPane();
@@ -135,27 +135,29 @@ public class GDS extends javax.swing.JFrame {
         bottomBarLayout.setHorizontalGroup(
             bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bottomBarLayout.createSequentialGroup()
-                .addComponent(gridX, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gridXlabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bottomBarLayout.createSequentialGroup()
-                        .addComponent(gridY, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(gridYlabel)
+                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gridX, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gridXlabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gridY, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(gridYlabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(moduleSize)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(bottomBarLayout.createSequentialGroup()
+                                .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(bottomBarLayout.createSequentialGroup()
+                                .addComponent(moduleSize)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel1))))
                     .addGroup(bottomBarLayout.createSequentialGroup()
-                        .addComponent(gridcontrolLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(41, 41, 41)
+                        .addComponent(gridcontrolLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bottomBarLayout.createSequentialGroup()
@@ -175,30 +177,34 @@ public class GDS extends javax.swing.JFrame {
             .addGroup(bottomBarLayout.createSequentialGroup()
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gridY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gridYlabel)
                     .addComponent(gridX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(3, 3, 3)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(gridXlabel)
-                    .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gridYlabel)
                     .addComponent(moduleSize))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(gridcontrolLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(bottomBarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bottomBarLayout.createSequentialGroup()
-                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelY)
-                                .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelX))
-                            .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(11, 11, 11)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelY)
+                            .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelX))
+                        .addGap(14, 14, 14)
                         .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1))
+                    .addGroup(bottomBarLayout.createSequentialGroup()
+                        .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -213,24 +219,24 @@ public class GDS extends javax.swing.JFrame {
 
         displayArea.setBackground(new java.awt.Color(210, 210, 210));
         displayArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        displayArea.setBackground( new Color( 136, 177, 245 ) );
+        displayArea.setBackground( new Color( 130, 130, 130 ) );
 
         javax.swing.GroupLayout displayAreaLayout = new javax.swing.GroupLayout(displayArea);
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGap(0, 361, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGap(0, 453, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
 
         elementTabs.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jScrollPane1.setViewportView(jTree1);
+        jScrollPane1.setViewportView(dynamicTree);
 
         elementTabs.addTab("Elm", jScrollPane1);
 
@@ -305,7 +311,7 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(genmodelabel))
-                .addGap(0, 422, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         leftFlank.setViewportView(buttonPanel);
@@ -321,7 +327,7 @@ public class GDS extends javax.swing.JFrame {
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
+            .addGap(0, 672, Short.MAX_VALUE)
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,12 +406,13 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(verticalSplit)
+                .addContainerGap()
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -613,6 +620,7 @@ public class GDS extends javax.swing.JFrame {
                         Location l = new Location( grid.currentX(), grid.currentY() );
                         Child c = new Child( new Element(), l );
                         edit.addEmpty( c );
+                        ((DynamicTree)dynamicTree).addObject( c );
                         
                         mp.repaint();
                     }
@@ -681,6 +689,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JList connectionList;
     private javax.swing.JScrollPane connectionScroll;
     private javax.swing.JPanel displayArea;
+    private javax.swing.JTree dynamicTree;
     private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
     private javax.swing.JLabel editmodelabel;
@@ -702,7 +711,6 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTree jTree1;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JScrollPane leftFlank;
@@ -722,7 +730,7 @@ public class GDS extends javax.swing.JFrame {
     //the root of elementTree
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child() );
     //the elementTree is modified by methods on treeModel
-    DefaultTreeModel treeModel = new TreeModel(rootNode);
+    DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
 }
 
 

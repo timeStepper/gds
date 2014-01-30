@@ -16,7 +16,7 @@ import java.awt.Graphics2D;
  */
 public class Grid {
         int opacity = 110; //grid covers background image
-        Color col = new Color ( 100, 100, 100, opacity );
+        Color col = new Color ( 130, 130, 130, opacity );
         int mS = 40; //grid unit size
         int width = 8;
         int height = 8;
