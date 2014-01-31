@@ -6,6 +6,7 @@
 
 package gds.resources;
 
+import gds.resources.GDS.MyPanel;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -22,6 +23,8 @@ import javax.swing.tree.TreeSelectionModel;
 public class DynamicTree extends JTree{
     DefaultMutableTreeNode rootNode;
     DefaultTreeModel treeModel;
+    EditElement edit;
+    MyPanel displayArea;
     
     DynamicTree( DefaultMutableTreeNode dmt, DefaultTreeModel tm ) {
         super( tm );
@@ -34,14 +37,24 @@ public class DynamicTree extends JTree{
         addTreeSelectionListener( new TreeSelectionListener(){
             @Override
             public void valueChanged(TreeSelectionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                DefaultMutableTreeNode selected = (DefaultMutableTreeNode)
+                        getSelectionPath().getLastPathComponent();
+                Child c = (Child)selected.getUserObject();
+                edit.changeSelected( c );
+                displayArea.repaint();
             }
         });
     }
     
+    public void setDisplayArea( MyPanel dp ){
+        displayArea = dp;
+    }
+    public void setEditElement( EditElement ed ){
+        edit = ed;
+    }
+    
     public Child root() {
         Child c = (Child)rootNode.getUserObject();
-        System.out.println( "root " + c );
         return c;
     }
     

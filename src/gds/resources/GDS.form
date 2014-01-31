@@ -386,7 +386,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new MyPanel()"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="globalDisplayArea"/>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="displayArea.setBackground( new Color( 130, 130, 130 ) );"/>
                   </AuxValues>
                   <Constraints>
@@ -398,12 +398,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="496" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="518" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="533" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -455,7 +455,8 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ChildrenList( childrenList, edit )"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="childrenList"/>
+                            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="((ChildrenList)childList).setEditElem( edit );"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -515,28 +516,23 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="164" max="32767" attributes="0"/>
                       <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="addableElementListLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="dynamicTreeLabel" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="dynamicTreeLabel" max="32767" attributes="0"/>
+                      <Component id="addableElementListLabel" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="139" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="dynamicTreeLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="84" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="addableElementListLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="188" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -594,7 +590,8 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new DynamicTree(rootNode,treeModel)"/>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="((DynamicTree)dynamicTree).setEditElement( edit );&#xa;((DynamicTree)dynamicTree).setDisplayArea( globalDisplayArea );"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="dt;//dt must be initialized before here to be passed in to EditElement edit"/>
                         <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//treeModel.addTreeModelListener(new MyTreeModelListener());"/>
                       </AuxValues>
                     </Component>
@@ -640,7 +637,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="33" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="editMode" min="-2" pref="15" max="-2" attributes="0"/>
                                   <Component id="editmodelabel" min="-2" max="-2" attributes="0"/>

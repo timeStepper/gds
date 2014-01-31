@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -56,10 +54,10 @@ public class GDS extends javax.swing.JFrame {
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
-        displayArea = new MyPanel();
+        displayArea = globalDisplayArea;
         elementTabs = new javax.swing.JTabbedPane();
         childScroll = new javax.swing.JScrollPane();
-        childList = new ChildrenList( childrenList, edit );
+        childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
         connectionList = new javax.swing.JList();
         leftFlank = new javax.swing.JPanel();
@@ -68,7 +66,7 @@ public class GDS extends javax.swing.JFrame {
         addableElementListLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         //treeModel.addTreeModelListener(new MyTreeModelListener());
-        dynamicTree = new DynamicTree(rootNode,treeModel);
+        dynamicTree = dt;//dt must be initialized before here to be passed in to EditElement edit;
         dynamicTreeLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         editMode = new javax.swing.JToggleButton();
@@ -233,11 +231,11 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 496, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGap(0, 533, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -247,6 +245,7 @@ public class GDS extends javax.swing.JFrame {
 
         childScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        ((ChildrenList)childList).setEditElem( edit );
         childList.setBackground(new java.awt.Color(180, 180, 180));
         childScroll.setViewportView(childList);
 
@@ -275,6 +274,8 @@ public class GDS extends javax.swing.JFrame {
         dynamicTree.setBackground(new java.awt.Color(180, 180, 180));
         dynamicTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane1.setViewportView(dynamicTree);
+        ((DynamicTree)dynamicTree).setEditElement( edit );
+        ((DynamicTree)dynamicTree).setDisplayArea( globalDisplayArea );
 
         dynamicTreeLabel.setText("Element Tree");
 
@@ -316,7 +317,7 @@ public class GDS extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editmodelabel))
@@ -331,25 +332,22 @@ public class GDS extends javax.swing.JFrame {
         leftFlankLayout.setHorizontalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(leftFlankLayout.createSequentialGroup()
-                .addGroup(leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         leftFlankLayout.setVerticalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFlankLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dynamicTreeLabel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addableElementListLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -530,7 +528,6 @@ public class GDS extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -659,7 +656,9 @@ public class GDS extends javax.swing.JFrame {
                         if ( button == MouseEvent.BUTTON1 ){
                             Location l = new Location( grid.currentX(), grid.currentY() );
                             Child c = new Child( edit.addable(), l );
-                            ((ChildrenList)childList).addChild( c );
+                            //System.out.println( "child " + c );
+                            edit.addChild( c );
+                            
                             //edit.addEmpty( c );
                             //((DynamicTree)dynamicTree).addObject( c );
 
@@ -772,14 +771,16 @@ public class GDS extends javax.swing.JFrame {
     private Mode mode = new Mode( );
     Grid grid = new Grid();
     BackgroundImage backgroundImage = new BackgroundImage();
-    
+    MyPanel globalDisplayArea = new MyPanel();
     //the root of elementTree
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child( ) );
     //the elementTree is modified by methods on treeModel
     DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
     DefaultListModel addableListModel = new DefaultListModel();
-    DefaultListModel childrenList = new DefaultListModel();
-    EditElement edit = new EditElement( (DynamicTree)dynamicTree );
+    DefaultListModel childrenListModel = new DefaultListModel();
+    ChildrenList childrenList = new ChildrenList( childrenListModel );//for childList(global)
+    DynamicTree dt = new DynamicTree( rootNode, treeModel );
+    EditElement edit = new EditElement( dt, (ChildrenList)childrenList );
 }
 
 

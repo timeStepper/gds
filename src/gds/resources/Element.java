@@ -82,7 +82,7 @@ class Child {
         location = new Location( 0, 0 );
     }
     
-    Element child( ) {
+    Element childElement( ) {
         return child;
     }
     Location location( ) {
@@ -107,8 +107,18 @@ class Child {
         }
         Child c = ( Child ) obj;
         
-        return  child.equals( c.child( ) ) &&
+        return  child.equals( c.childElement( ) ) &&
                 location.equals( c.location( ) );
+    }
+    public void display(){
+        display("");
+    }
+    public void display( String tab ){
+        if ( child.isEmpty() ) System.out.println( tab+toString());
+        else {
+            for ( Child c : child.children() )
+                c.display(tab+="  ");
+        }
     }
 }
 class Location {

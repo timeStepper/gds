@@ -25,14 +25,14 @@ public class ChildrenList extends JList
     private EditElement editElem;
     ArrayList< Child > selections = new ArrayList<>();
     
-    public ChildrenList( DefaultListModel lm, EditElement ee ) {
+    public ChildrenList( DefaultListModel lm ) {
         super( lm );
-        
         listModel = lm;
- 
-        editElem = ee;
         setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         addListSelectionListener(this);
+    }
+    public void setEditElem( EditElement ee ) {
+        editElem = ee;
     }
     public void removeChild() {
         int index = getSelectedIndex();
@@ -44,9 +44,12 @@ public class ChildrenList extends JList
         } else {
             listModel.addElement(add);
         }
-        editElem.addChild(add);
     }
-    protected boolean alreadyInList(Child e) {
+    @Override
+    public void removeAll(){
+        listModel.removeAllElements();
+    }
+    public boolean alreadyInList(Child e) {
         return listModel.contains(e);
     }
     //This method is required by ListSelectionListener.
