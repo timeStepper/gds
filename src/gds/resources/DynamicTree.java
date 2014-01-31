@@ -7,6 +7,8 @@
 package gds.resources;
 
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -27,7 +29,20 @@ public class DynamicTree extends JTree{
         treeModel = tm;
         getSelectionModel().setSelectionMode
             (TreeSelectionModel.SINGLE_TREE_SELECTION);
+        setSelectionPath( new TreePath(rootNode.getPath()));
         //addTreeModelListener(new MyTreeModelListener());
+        addTreeSelectionListener( new TreeSelectionListener(){
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+    }
+    
+    public Child root() {
+        Child c = (Child)rootNode.getUserObject();
+        System.out.println( "root " + c );
+        return c;
     }
     
     /** Remove all nodes except the root node. */

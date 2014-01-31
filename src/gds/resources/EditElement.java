@@ -18,9 +18,15 @@ public class EditElement {
         int originX;        //used for painting
         int originY;        //used for painting
         int module = 40;    //used for painting
-        Element element = new Element();
+        Element element = null;//new Element();
         Child selection; //rootNode of elementTree must be Child
-        Element addable;
+        Element addable = null;
+        DynamicTree dynamicTree;
+        
+        EditElement ( DynamicTree dt ){
+            dynamicTree = dt;
+            //element = dynamicTree.root().child();
+        }
         
         public void setAddable( Element e ){
             addable = e;
@@ -29,18 +35,24 @@ public class EditElement {
             selection = c;
         }
         
-        public void addEmpty( Child c ) {
-            element.addChild( c );
+//        public void addEmpty( Child c ) {
+//            element.addChild( c );
+//        }
+//        public void addElement( Location l, Element e ){
+//            Child c = new Child( e, l );
+//            element.addChild( c );
+//        }
+        public void addChild( Child c ){
+            element.addChild(c);
         }
-        public void addElement( Location l, Element e ){
-            Child c = new Child( e, l );
-            element.addChild( c );
+        public Element addable() {
+            return addable;
         }
         
         
       //painting methods
         public void paintEdit( Graphics2D g ) {
-            if ( !element.isEmpty() ) paintElement( g, element );
+            if ( element != null ) paintElement( g, element );
         }
         public void paintElement( Graphics2D g, Element e ) {
         for ( Connection c : e.connections() )

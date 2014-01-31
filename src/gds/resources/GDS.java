@@ -59,7 +59,7 @@ public class GDS extends javax.swing.JFrame {
         displayArea = new MyPanel();
         elementTabs = new javax.swing.JTabbedPane();
         childScroll = new javax.swing.JScrollPane();
-        childList = new javax.swing.JList();
+        childList = new ChildrenList( childrenList, edit );
         connectionScroll = new javax.swing.JScrollPane();
         connectionList = new javax.swing.JList();
         leftFlank = new javax.swing.JPanel();
@@ -364,7 +364,7 @@ public class GDS extends javax.swing.JFrame {
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 788, Short.MAX_VALUE)
+            .addGap(0, 844, Short.MAX_VALUE)
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +443,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -658,11 +658,13 @@ public class GDS extends javax.swing.JFrame {
                         int button = e.getButton();
                         if ( button == MouseEvent.BUTTON1 ){
                             Location l = new Location( grid.currentX(), grid.currentY() );
-                            Child c = new Child( new Element(), l );
-                            edit.addEmpty( c );
+                            Child c = new Child( edit.addable(), l );
+                            ((ChildrenList)childList).addChild( c );
+                            //edit.addEmpty( c );
                             //((DynamicTree)dynamicTree).addObject( c );
 
                             mp.repaint();
+                            //((DynamicTree)dynamicTree).selection();
                         }
                         else if ( button == MouseEvent.BUTTON3 ) {
 
@@ -770,12 +772,14 @@ public class GDS extends javax.swing.JFrame {
     private Mode mode = new Mode( );
     Grid grid = new Grid();
     BackgroundImage backgroundImage = new BackgroundImage();
-    EditElement edit = new EditElement();
+    
     //the root of elementTree
-    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child() );
+    DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child( ) );
     //the elementTree is modified by methods on treeModel
     DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
     DefaultListModel addableListModel = new DefaultListModel();
+    DefaultListModel childrenList = new DefaultListModel();
+    EditElement edit = new EditElement( (DynamicTree)dynamicTree );
 }
 
 

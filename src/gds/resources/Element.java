@@ -23,9 +23,6 @@ public class Element {
         children  = new HashSet<  >( );
         connections = new HashSet<  >( );
     }
-    public static Element empty() {
-        return new Element();
-    }
     HashSet< Child > children( ) {
         return children;
     }
@@ -38,7 +35,6 @@ public class Element {
     }
     
     public void addChild( Child c ) {
-        
         children.add( c );
     }
     
@@ -72,14 +68,17 @@ public class Element {
 class Child {
     private Element child;
     private Location location;
-    private String name = "Root";
+    private String name;
     
     Child ( Element e, Location l ) {
+        if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
         child = e;
         location = l;
+        name = "empt";
     }
     Child ( ) {
-        child = Element.empty();
+        name = "root";
+        child = new Element();
         location = new Location( 0, 0 );
     }
     

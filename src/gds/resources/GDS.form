@@ -115,7 +115,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" pref="794" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" pref="850" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -454,6 +454,9 @@
                               <Color blue="b4" green="b4" red="b4" type="rgb"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ChildrenList( childrenList, edit )"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -698,7 +701,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="788" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="844" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">

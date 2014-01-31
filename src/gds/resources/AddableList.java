@@ -33,13 +33,9 @@ import javax.swing.event.ListSelectionListener;
 
     
 
-public class AddableList extends JList
-                      implements ListSelectionListener {
-    
-    //private JList list;
+public class AddableList extends JList implements ListSelectionListener {
     private DefaultListModel listModel;
     private EditElement editElem;
-    private Element addable = null;
     
     public AddableList( DefaultListModel lm, EditElement ee ) {
         super( lm );
@@ -48,91 +44,53 @@ public class AddableList extends JList
         listModel.addElement( new Element() );
  
         editElem = ee;
-        //Create the list and put it in a scroll pane.
-        //list = new JList(listModel);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //setSelectedIndex(0);
         addListSelectionListener(this);
-        //setVisibleRowCount(5);
-        //JScrollPane listScrollPane = new JScrollPane(list);
+        setSelectedIndex(0);
     }
- 
-    public void setAddable( Element e ){
-        addable = e;
+    
+    public void removeSelection() {
+        int index = getSelectedIndex();
+        listModel.remove( index );
     }
- 
-    class RemoveSelection implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //This method can be called only if
-            //there's a valid selection
-            //so go ahead and remove whatever's selected.
-            int index = getSelectedIndex();
-            listModel.remove(index);
+    
+    public void addElement(Element add) {
+        if (alreadyInList(add)) {
+            return;
         }
-    }
- 
-    //This listener is shared by the text field and the hire button.
-    class AddChild implements ActionListener {// {
-        private boolean alreadyEnabled = false;
-//        private JButton button;
-// 
-//        public AddChild(JButton button) {
-//            this.button = button;
-//        }
- 
-        //Required by ActionListener.
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
- 
-            //User didn't type in a unique name...
-            if (alreadyInList(addable)) {
-                return;
-            }
- 
-            int index = getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
-                index = 0;
-            } else {           //add after the selected item
-                index++;
-            }
- 
-            listModel.insertElementAt(addable, index);
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(employeeName.getText());
- 
-            
- 
-            //Select the new item and make it visible.
-            setSelectedIndex(index);
-            ensureIndexIsVisible(index);
+        int index = getSelectedIndex(); //get selected index
+        if (index == -1) { //no selection, so insert at beginning
+            index = 0;
+        } else {           //add after the selected item
+            index++;
         }
- 
-        //This method tests for string equality. You could certainly
-        //get more sophisticated about the algorithm.  For example,
-        //you might want to ignore white space and capitalization.
-        protected boolean alreadyInList(Element e) {
-            return listModel.contains(e);
-        }
+        listModel.insertElementAt(add, index);
+        setSelectedIndex(index);
+        ensureIndexIsVisible(index);
     }
- 
-    //This method is required by ListSelectionListener.
+
+    protected boolean alreadyInList(Element e) {
+        return listModel.contains(e);
+    }
+    
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
- 
-            if (getSelectedIndex() == -1) {
-            //No selection, disable fire button.
-                editElem.setAddable(Element.empty());
- 
-            } else {
-            //Selection, enable the fire button.
-                int index = getSelectedIndex();
-                Element add = (Element)listModel.getElementAt( index );
-                editElem.setAddable( add );
-            }
-        }
+        int index = getSelectedIndex();
+        Element elem = (Element)listModel.getElementAt( index );
+        editElem.setAddable( elem );
+//        if (e.getValueIsAdjusting() == false) {
+// 
+//            if (getSelectedIndex() == -1) {
+//            //No selection, disable fire button.
+//                editElem.setAddable(Element.empty());
+// 
+//            } else {
+//            //Selection, enable the fire button.
+//                int index = getSelectedIndex();
+//                Element elem = (Element)listModel.getElementAt( index );
+//                editElem.setAddable( elem );
+//            }
+//        }
     }
 }
  
