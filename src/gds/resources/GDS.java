@@ -653,20 +653,14 @@ public class GDS extends javax.swing.JFrame {
             switch ( mode ) {
                 case Edit :
                         int button = e.getButton();
+                        Location l = new Location( grid.currentX(), grid.currentY() );
                         if ( button == MouseEvent.BUTTON1 ){
-                            Location l = new Location( grid.currentX(), grid.currentY() );
                             Child c = new Child( edit.addable(), l );
-                            //System.out.println( "child " + c );
                             edit.addChild( c );
-                            
-                            //edit.addEmpty( c );
-                            //((DynamicTree)dynamicTree).addObject( c );
-
                             mp.repaint();
-                            //((DynamicTree)dynamicTree).selection();
                         }
                         else if ( button == MouseEvent.BUTTON3 ) {
-
+                            edit.removeChild( l );
                         }
                     
             }

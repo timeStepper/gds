@@ -34,8 +34,8 @@ public class ChildrenList extends JList
     public void setEditElem( EditElement ee ) {
         editElem = ee;
     }
-    public void removeChild() {
-        int index = getSelectedIndex();
+    public void removeChild( Child c ) {
+        int index = listModel.indexOf( c );
         listModel.remove(index);
     }
     public void addChild( Child add ) {

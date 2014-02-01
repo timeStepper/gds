@@ -23,7 +23,6 @@ public class EditElement {
         int module = 40;    //used for painting
         Element element;// = null;//new Element();
         Child selected; //rootNode of elementTree must be Child
-        HashMap< Child, Child[] > childrenLists;
         ChildrenList selected_ChildrenList;
         Element addable = null;//the element that can be added to the current selection by mouse clicks
         DynamicTree dynamicTree;
@@ -60,6 +59,12 @@ public class EditElement {
             selected_ChildrenList.addChild(c);
 //            new Child( element, new Location(0,0)).display();
 //            System.out.println();
+        }
+        public void removeChild( Location l ){
+            Child c = new Child ( addable, l );
+            selected.childElement().removeChild(c);
+            selected_ChildrenList.removeChild(c);
+            dynamicTree.removeChild(c);
         }
         public Element addable() {
             return addable;

@@ -16,17 +16,17 @@ import java.util.Objects;
  * @author owenpaulmeyer
  */
 public class Element {
-    private HashSet< Child > children;
-    private HashSet< Connection > connections;
+    private ArrayList< Child > children;
+    private ArrayList< Connection > connections;
     
     Element ( ) {
-        children  = new HashSet<  >( );
-        connections = new HashSet<  >( );
+        children  = new ArrayList<  >( );
+        connections = new ArrayList<  >( );
     }
-    HashSet< Child > children( ) {
+    ArrayList< Child > children( ) {
         return children;
     }
-    HashSet< Connection > connections( ) {
+    ArrayList< Connection > connections( ) {
         return connections;
     }
     
@@ -36,6 +36,10 @@ public class Element {
     
     public void addChild( Child c ) {
         children.add( c );
+    }
+    public void removeChild( Child c ){;
+        if ( children.contains( c ) )
+            children.remove( c );
     }
     
     public void addConnection( Child a, Child b ) {

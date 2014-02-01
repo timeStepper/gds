@@ -65,20 +65,29 @@ public class DynamicTree extends JTree{
     }
 
     /** Remove the currently selected node. */
-    public void removeCurrentNode() {
-        TreePath currentSelection = getSelectionPath();
-        if (currentSelection != null) {
-            DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)
-                         (currentSelection.getLastPathComponent());
-            MutableTreeNode parent = (MutableTreeNode)(currentNode.getParent());
-            if (parent != null) {
-                treeModel.removeNodeFromParent(currentNode);
-                return;
-            }
-        } 
-
-        // Either there was no selection, or the root was selected.
-        //toolkit.beep();
+    public void removeChild( Child c ) {
+        DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)
+                        getSelectionPath().getLastPathComponent();
+            DefaultMutableTreeNode childNode = (DefaultMutableTreeNode)currentNode.getFirstChild();
+            DefaultMutableTreeNode lastChild = (DefaultMutableTreeNode)currentNode.getLastChild();
+            
+            do {
+                Child node = (Child)childNode.getUserObject();
+                System.out.println( "node "  + node );
+                System.out.println( "child " + c );
+                System.out.println( "equals " + node.equals(c));
+                if( node.equals(c)){
+                    //childNode.removeAllChildren();
+                    treeModel.removeNodeFromParent(childNode);
+                    return;
+                }
+                else childNode = childNode.getNextSibling();
+        } while ( !childNode.equals(lastChild));
+        Child last = (Child)childNode.getUserObject();
+        if ( last.equals(c)){
+            //lastChild.removeAllChildren();
+            treeModel.removeNodeFromParent(lastChild);
+        }   
     }
 
     /** Add child to the currently selected node.
@@ -111,11 +120,9 @@ public class DynamicTree extends JTree{
         if (parent == null) {
             parent = rootNode;
         }
-	
 	//It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
         treeModel.insertNodeInto(childNode, parent, 
                                  parent.getChildCount());
-
         //Make sure the user can see the lovely new node.
         if (shouldBeVisible) {
             scrollPathToVisible(new TreePath(childNode.getPath()));
