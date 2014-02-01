@@ -73,15 +73,15 @@ public class DynamicTree extends JTree{
             
             do {
                 Child node = (Child)childNode.getUserObject();
-                System.out.println( "node "  + node );
-                System.out.println( "child " + c );
-                System.out.println( "equals " + node.equals(c));
                 if( node.equals(c)){
                     //childNode.removeAllChildren();
                     treeModel.removeNodeFromParent(childNode);
                     return;
                 }
                 else childNode = childNode.getNextSibling();
+//            System.out.println( "childNode "+childNode);
+//            System.out.println( "lastNode "+lastChild);
+//            System.out.println();
         } while ( !childNode.equals(lastChild));
         Child last = (Child)childNode.getUserObject();
         if ( last.equals(c)){

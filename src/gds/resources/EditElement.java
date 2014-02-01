@@ -8,7 +8,7 @@ package gds.resources;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 /**
  *
@@ -24,15 +24,17 @@ public class EditElement {
         Element element;// = null;//new Element();
         Child selected; //rootNode of elementTree must be Child
         ChildrenList selected_ChildrenList;
+        ConnectionsList selected_ConnectionsList;
         Element addable = null;//the element that can be added to the current selection by mouse clicks
         DynamicTree dynamicTree;
         
-        EditElement ( DynamicTree dt, ChildrenList cL ){
+        EditElement ( DynamicTree dt, ChildrenList cL, ConnectionsList cnL ){
             dynamicTree = dt;
             //System.out.println( "dynamic tree " + dt );
             element = dynamicTree.root().childElement();
             selected = dynamicTree.root();
             selected_ChildrenList = cL;
+            selected_ConnectionsList = cnL;
         }
         public void setAddable( Element e ){
             addable = e;
@@ -60,11 +62,23 @@ public class EditElement {
 //            new Child( element, new Location(0,0)).display();
 //            System.out.println();
         }
-        public void removeChild( Location l ){
-            Child c = new Child ( addable, l );
-            selected.childElement().removeChild(c);
-            selected_ChildrenList.removeChild(c);
-            dynamicTree.removeChild(c);
+        public void removeChild( Location l )throws NoSuchElementException{
+            //Child c = new Child ( addable, l );
+            try{
+                Child c = selected.childElement().childAt(l);
+                selected.childElement().removeChild(c);
+                selected_ChildrenList.removeChild(c);
+                dynamicTree.removeChild(c);
+                //the following commented out for testing in case dynamic tree throws this error
+//                try {
+//                    dynamicTree.removeChild(c);
+//                }catch (NoSuchElementException exc){
+//                    System.out.println( "wow: "+exc);
+//                }
+            }catch (NoSuchElementException nse){
+                System.out.println("err: "+nse);
+            }
+            
         }
         public Element addable() {
             return addable;
@@ -95,7 +109,7 @@ public class EditElement {
         }
         public void setModule( int m ) {
             module = m;
-            System.out.println( "module " + module);
+            
         }
         public void setX( int x ) {
             originX = x;

@@ -74,6 +74,7 @@ public class GDS extends javax.swing.JFrame {
         editmodelabel = new javax.swing.JLabel();
         genmodelabel = new javax.swing.JLabel();
         topBar = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
@@ -214,7 +215,7 @@ public class GDS extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        verticalSplit.setDividerLocation(0);
+        verticalSplit.setDividerLocation(50);
         verticalSplit.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         centerPanels.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -235,7 +236,7 @@ public class GDS extends javax.swing.JFrame {
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 484, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -246,6 +247,8 @@ public class GDS extends javax.swing.JFrame {
         childScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         ((ChildrenList)childList).setEditElem( edit );
+        ((ChildrenList)childList).setGrid( grid );
+        ((ChildrenList)childList).setPanel(globalDisplayArea);
         childList.setBackground(new java.awt.Color(180, 180, 180));
         childScroll.setViewportView(childList);
 
@@ -340,7 +343,7 @@ public class GDS extends javax.swing.JFrame {
         leftFlankLayout.setVerticalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFlankLayout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dynamicTreeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -358,15 +361,24 @@ public class GDS extends javax.swing.JFrame {
         topBar.setBackground(new java.awt.Color(180, 180, 180));
         topBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jTextField1.setText("jTextField1");
+        jTextField1.setMinimumSize(new java.awt.Dimension(0, 0));
+
         javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
         topBar.setLayout(topBarLayout);
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 844, Short.MAX_VALUE)
+            .addGroup(topBarLayout.createSequentialGroup()
+                .addContainerGap(386, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(399, Short.MAX_VALUE))
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topBarLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         verticalSplit.setLeftComponent(topBar);
@@ -447,7 +459,7 @@ public class GDS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit)
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -573,6 +585,7 @@ public class GDS extends javax.swing.JFrame {
             backgroundImage.paintImage( g );
             grid.paintGrid( g, getWidth( ), getHeight( ) );
             edit.paintEdit( g );
+            childrenList.paintSelections(g);
         }
     }
 
@@ -750,6 +763,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JPanel leftFlank;
@@ -773,8 +787,10 @@ public class GDS extends javax.swing.JFrame {
     DefaultListModel addableListModel = new DefaultListModel();
     DefaultListModel childrenListModel = new DefaultListModel();
     ChildrenList childrenList = new ChildrenList( childrenListModel );//for childList(global)
+    DefaultListModel connectionsModel = new DefaultListModel();
+    ConnectionsList cnList = new ConnectionsList ( connectionsModel );
     DynamicTree dt = new DynamicTree( rootNode, treeModel );
-    EditElement edit = new EditElement( dt, (ChildrenList)childrenList );
+    EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList );
 }
 
 

@@ -2,8 +2,7 @@ package gds.resources;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.NoSuchElementException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -40,6 +39,11 @@ public class Element {
     public void removeChild( Child c ){;
         if ( children.contains( c ) )
             children.remove( c );
+    }
+    public Child childAt( Location l )throws NoSuchElementException{
+        for( Child c: children)
+            if (c.location().equals(l))return c;
+        throw new NoSuchElementException();
     }
     
     public void addConnection( Child a, Child b ) {
@@ -95,6 +99,14 @@ class Child {
     
     public void setName( String n ){
         name = n;
+    }
+    public Child childAt( Location l )throws NoSuchElementException{
+        try{
+            return child.childAt(l);
+        }catch(NoSuchElementException nse){
+            throw nse;
+        }
+        
     }
     @Override
     public String toString() {

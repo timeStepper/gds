@@ -114,5 +114,6 @@ public class Grid {
             opacity = o;
             col = new Color ( 100, 100, 100, opacity );
         }
+        
      
     }
