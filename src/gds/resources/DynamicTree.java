@@ -37,6 +37,8 @@ public class DynamicTree extends JTree{
         addTreeSelectionListener( new TreeSelectionListener(){
             @Override
             public void valueChanged(TreeSelectionEvent e) {
+                if ( getSelectionCount() == 0 )
+                    setSelectionPath( new TreePath(rootNode.getPath()));
                 DefaultMutableTreeNode selected = (DefaultMutableTreeNode)
                         getSelectionPath().getLastPathComponent();
                 Child c = (Child)selected.getUserObject();
@@ -45,14 +47,15 @@ public class DynamicTree extends JTree{
             }
         });
     }
-    
+    public void selectRoot(){
+        setSelectionPath( new TreePath(rootNode.getPath()));
+    }
     public void setDisplayArea( MyPanel dp ){
         displayArea = dp;
     }
     public void setEditElement( EditElement ed ){
         edit = ed;
     }
-    
     public Child root() {
         Child c = (Child)rootNode.getUserObject();
         return c;

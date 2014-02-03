@@ -9,6 +9,7 @@ package gds.resources;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.NoSuchElementException;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -35,6 +36,13 @@ public class EditElement {
             selected = dynamicTree.root();
             selected_ChildrenList = cL;
             selected_ConnectionsList = cnL;
+        }
+        public void resetRoot(){
+            dynamicTree.clear();
+            selected = dynamicTree.root();
+            Child root = dynamicTree.root();
+            root = new Child();
+            changeSelected( root );
         }
         public void setAddable( Element e ){
             addable = e;
