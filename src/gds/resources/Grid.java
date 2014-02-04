@@ -105,15 +105,42 @@ public class Grid {
             g.setStroke(new BasicStroke(1F));
             
             //paints select circle or not
-            if ( select ) {
-                g.setColor(new Color(255,255,255,200));
-                g.fillOval(originX+(currentX*mS)-6, originY+(currentY*mS)-6, 12, 12);
-            }
+            
         }
+        
         public void setOpacity( int o ) {
             opacity = o;
             col = new Color ( 100, 100, 100, opacity );
         }
         
-     
+        
+        public void paintAddable(Graphics2D g, Element e){
+            if ( select ) {
+                if ( e.isEmpty() ){
+                    g.setColor(new Color(255,255,255,200));
+                    g.fillOval(originX+(currentX*mS)-6, originY+(currentY*mS)-6, 12, 12);
+                }
+                else
+                    paintAddableElement( g, e );
+            }
+        }
+        public void paintAddableElement( Graphics2D g, Element e ) {
+        for ( Connection c : e.connections() )
+            paintAddableConnection(g, c);
+        for ( Child c : e.children() )
+            paintAddableLocation(g, c.location());
+        }
+        public void paintAddableLocation(Graphics2D g, Location l) {
+            g.setColor(new Color( 255,255,255,180));
+            g.fillOval(originX+(currentX*mS)-6+(l.xLoc()*mS), originY+(currentY*mS)-6+(l.yLoc()*mS), 12, 12);
+            g.setColor(new Color( 255,255,255,180));
+            g.drawOval(originX+(currentX*mS)-6+(l.xLoc()*mS), originY+(currentY*mS)-6+(l.yLoc()*mS), 12, 12);
+        }
+        public void paintAddableConnection( Graphics2D g, Connection c ) {
+            int x1 = c.a().location( ).xLoc( );
+            int y1 = c.a().location( ).yLoc( );
+            int x2 = c.b().location( ).xLoc( );
+            int y2 = c.b().location( ).yLoc( );
+            g.drawLine( x1, y1, x2, y2 );
+        }
     }

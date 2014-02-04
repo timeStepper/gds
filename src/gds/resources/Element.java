@@ -22,15 +22,27 @@ public class Element {
         children  = new ArrayList<  >( );
         connections = new ArrayList<  >( );
     }
+    Element( ArrayList<Child> childs, ArrayList<Connection> conns){
+        children = childs;
+        connections = conns;
+    }
     ArrayList< Child > children( ) {
         return children;
     }
     ArrayList< Connection > connections( ) {
         return connections;
     }
-    
+    public Element clone(){
+        ArrayList<Child> childs = new ArrayList<>();
+        ArrayList<Connection> conns = new ArrayList<>();
+        for ( Child c : children )
+            childs.add(c.clone());
+        for ( Connection cn : connections )
+            conns.add(cn.clone());
+        return new Element( childs, conns );
+    }
     boolean isEmpty( ) {
-        return children.isEmpty() && connections.isEmpty();
+        return children.isEmpty();
     }
     
     public void addChild( Child c ) {
@@ -54,7 +66,7 @@ public class Element {
     @Override
     public String toString(  ) {
         if ( isEmpty() ) return "Empty";
-        else return "!";
+        else return children.toString();
     }
     
     @Override
@@ -89,7 +101,12 @@ class Child {
         child = new Element();
         location = new Location( 0, 0 );
     }
-    
+    public void empty(){
+        child = new Element();
+    }
+    public boolean isEmpty(){
+        return child.isEmpty();
+    }
     Element childElement( ) {
         return child;
     }
@@ -108,11 +125,16 @@ class Child {
         }
         
     }
+    public Child locate( Location l ){
+        return new Child ( child, location.add( l ));
+    }
+    public Child clone(){
+        return new Child( child.clone(), location );
+    }
     @Override
     public String toString() {
-        return "[ "+name+", "+location.toString()+"  ]";
+        return "[ "+name+", "+ child + ", "+location.toString()+"  ]";
     }
-    
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -150,6 +172,9 @@ class Location {
     int yLoc( ) {
         return yCoord;
     }
+    public Location add( Location l  ){
+        return new Location( xCoord+l.xLoc(), yCoord+l.yLoc());
+    }
     @Override
     public String toString() {
         return "( "+xCoord+", "+yCoord+" )";
@@ -179,6 +204,9 @@ class Connection {
     }
     Child b( ) {
         return b;
+    }
+    public Connection clone(){
+        return new Connection( a.clone(), b.clone());
     }
     
     @Override

@@ -52,6 +52,9 @@ public class GDS extends javax.swing.JFrame {
         gridcontrolLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         resetRoot = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        viewEmpties = new javax.swing.JButton();
+        viewChildren = new javax.swing.JButton();
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
@@ -145,6 +148,27 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText(" Make Element");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        viewEmpties.setText("View Empties");
+        viewEmpties.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewEmptiesActionPerformed(evt);
+            }
+        });
+
+        viewChildren.setText("View Children");
+        viewChildren.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewChildrenActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bottomBarLayout = new javax.swing.GroupLayout(bottomBar);
         bottomBar.setLayout(bottomBarLayout);
         bottomBarLayout.setHorizontalGroup(
@@ -172,9 +196,15 @@ public class GDS extends javax.swing.JFrame {
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(gridcontrolLabel)))
-                .addGap(33, 33, 33)
-                .addComponent(resetRoot)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(resetRoot))
+                .addGap(34, 34, 34)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewChildren)
+                    .addComponent(viewEmpties))
+                .addGap(95, 95, 95)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bottomBarLayout.createSequentialGroup()
@@ -212,17 +242,19 @@ public class GDS extends javax.swing.JFrame {
                             .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelY)
                             .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelX))
-                        .addGap(14, 14, 14)
+                            .addComponent(labelX)
+                            .addComponent(jButton1)
+                            .addComponent(viewEmpties))
+                        .addGap(11, 11, 11)
                         .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(resetRoot)
+                            .addComponent(viewChildren)))
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(resetRoot))
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -248,7 +280,7 @@ public class GDS extends javax.swing.JFrame {
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
+            .addGap(0, 526, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -280,6 +312,7 @@ public class GDS extends javax.swing.JFrame {
         leftFlank.setBackground(new java.awt.Color(180, 180, 180));
         leftFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        edit.setAddableList( (AddableList) addableElementList );
         addableElementList.setBackground(new java.awt.Color(180, 180, 180));
         addableElementList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane2.setViewportView(addableElementList);
@@ -323,8 +356,8 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                    .addComponent(genmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
+                    .addComponent(editmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(genmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -353,7 +386,7 @@ public class GDS extends javax.swing.JFrame {
         leftFlankLayout.setVerticalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFlankLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -469,7 +502,7 @@ public class GDS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -550,6 +583,20 @@ public class GDS extends javax.swing.JFrame {
         edit.resetRoot();
     }//GEN-LAST:event_resetRootActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        edit.makeElement();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void viewEmptiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmptiesActionPerformed
+        edit.paintEmptyOnly();
+        globalDisplayArea.repaint();
+    }//GEN-LAST:event_viewEmptiesActionPerformed
+
+    private void viewChildrenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewChildrenActionPerformed
+        edit.paintChildOnly();
+        globalDisplayArea.repaint();
+    }//GEN-LAST:event_viewChildrenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -598,8 +645,10 @@ public class GDS extends javax.swing.JFrame {
             super.paintComponent(g);
             backgroundImage.paintImage( g );
             grid.paintGrid( g, getWidth( ), getHeight( ) );
+            edit.paintAddable(g);
             edit.paintEdit( g );
             childrenList.paintSelections(g);
+            
         }
     }
 
@@ -607,6 +656,7 @@ public class GDS extends javax.swing.JFrame {
         State mode = State.Off;
         State image = State.Off;
         State editElem = State.Add;
+        State elementClone = State.On;
         int xLoc;
         int yLoc;
         int setX;
@@ -681,8 +731,11 @@ public class GDS extends javax.swing.JFrame {
                 case Edit :
                         int button = e.getButton();
                         Location l = new Location( grid.currentX(), grid.currentY() );
+                        Child c;
                         if ( button == MouseEvent.BUTTON1 ){
-                            Child c = new Child( edit.addable(), l );
+                            if ( elementClone == State.On )
+                                c = new Child( edit.addable().clone(), l );
+                            else c = new Child( edit.addable(), l );
                             edit.addChild( c );
                             mp.repaint();
                         }
@@ -771,6 +824,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JTextField hereYr;
     private javax.swing.JMenu imageMenu;
     private javax.swing.JSlider imageOpacity;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -790,6 +844,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;
     private javax.swing.JSplitPane verticalSplit;
+    private javax.swing.JButton viewChildren;
+    private javax.swing.JButton viewEmpties;
     // End of variables declaration//GEN-END:variables
     private Mode mode = new Mode( );
     Grid grid = new Grid();
@@ -805,7 +861,7 @@ public class GDS extends javax.swing.JFrame {
     DefaultListModel connectionsModel = new DefaultListModel();
     ConnectionsList cnList = new ConnectionsList ( connectionsModel );
     DynamicTree dt = new DynamicTree( rootNode, treeModel );
-    EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList );
+    EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
 }
 
 

@@ -9,7 +9,6 @@ package gds.resources;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.NoSuchElementException;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -28,24 +27,47 @@ public class EditElement {
         ConnectionsList selected_ConnectionsList;
         Element addable = null;//the element that can be added to the current selection by mouse clicks
         DynamicTree dynamicTree;
+        AddableList addableList;
+        Grid grid;
+        boolean paintEmpties = false;
         
-        EditElement ( DynamicTree dt, ChildrenList cL, ConnectionsList cnL ){
+        EditElement ( DynamicTree dt, ChildrenList cL, ConnectionsList cnL, Grid g ){
+            
             dynamicTree = dt;
             //System.out.println( "dynamic tree " + dt );
-            element = dynamicTree.root().childElement();
+            //element = dynamicTree.root().childElement();
             selected = dynamicTree.root();
             selected_ChildrenList = cL;
             selected_ConnectionsList = cnL;
+            grid = g;
         }
+        //needs further testing for garbage collection
         public void resetRoot(){
             dynamicTree.clear();
-            selected = dynamicTree.root();
             Child root = dynamicTree.root();
-            root = new Child();
+//            System.out.println("bef " +root);
+            root.empty();
             changeSelected( root );
+            root = dynamicTree.root();
+//            System.out.println( "aft " + root);
+        }
+        public void makeElement(){
+            addableList.addElement(selected.childElement().clone());
         }
         public void setAddable( Element e ){
             addable = e;
+        }
+        public void setAddableList( AddableList aL ){
+            addableList = aL;
+        }
+        public void setModule( int m ) {
+            module = m;
+        }
+        public void setX( int x ) {
+            originX = x;
+        }
+        public void setY( int y ) {
+            originY = y;
         }
         /*
         allows moving around in the global element
@@ -53,8 +75,9 @@ public class EditElement {
         updates the Lists to the current selected
         */
         public void changeSelected( Child c ){
-            updateChildrenList( c );
             selected = c;
+            updateChildrenList( c );
+            
         }
         public void updateChildrenList( Child c ){
             selected_ChildrenList.removeAll();
@@ -65,7 +88,7 @@ public class EditElement {
             if ( c.childElement().isEmpty() ) c = new Child( new Element(), c.location() );
             if ( selected_ChildrenList.alreadyInList(c) )return;
             selected.childElement().addChild(c);
-            dynamicTree.addObject(c);
+            dynamicTree.addChild(c);
             selected_ChildrenList.addChild(c);
 //            new Child( element, new Location(0,0)).display();
 //            System.out.println();
@@ -94,9 +117,14 @@ public class EditElement {
         
         //painting methods;  the current selected child's element is what is painted
         public void paintEdit( Graphics2D g ) {
-            if ( selected.childElement() != null ) paintElement( g, selected.childElement() );
+            if ( selected.childElement() != null ) {
+                if(paintEmpties) paintEmpties( g, selected );
+                else paintElement( g, selected.childElement() );
+            }
         }
+        
         public void paintElement( Graphics2D g, Element e ) {
+            
         for ( Connection c : e.connections() )
             paintConnection(g, c);
         for ( Child c : e.children() )
@@ -115,27 +143,26 @@ public class EditElement {
             int y2 = c.b().location( ).yLoc( );
             g.drawLine( x1, y1, x2, y2 );
         }
-        public void setModule( int m ) {
-            module = m;
-            
-        }
-        public void setX( int x ) {
-            originX = x;
-        }
-        public void setY( int y ) {
-            originY = y;
-        }
         
-        class Lists {
-            ChildrenList childrenList;
-            //ConnectionList connectionList;
-            
-            void setCurrenList( ChildrenList cl ){
-                childrenList = cl;
+        public void paintEmpties( Graphics2D g, Child c ){
+            if ( c.childElement().isEmpty()) {
+                
+                paintLocation( g, c.location());
             }
-//            void setConnectionList( ConnectionList cl ){
-//                connectionList = cl;
-//            }
+            else for ( Child child : c.childElement().children()){
+                System.out.println("empty");
+                paintEmpties( g, child.locate(c.location()));
+            }
         }
 
+        public void paintAddable( Graphics2D g){
+            grid.paintAddable(g, addable);
+        }
+        public void paintEmptyOnly(){
+            paintEmpties = true;
+        }
+        public void paintChildOnly(){
+            paintEmpties = false;
+        }
+         
     }
