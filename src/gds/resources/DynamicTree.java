@@ -7,12 +7,12 @@
 package gds.resources;
 
 import gds.resources.GDS.MyPanel;
+import java.util.ArrayList;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -108,27 +108,27 @@ public class DynamicTree extends JTree{
             }
             return addChild(child, parentNode);//parentNode is selected or root
     }
-    public DefaultMutableTreeNode addChild(Child child, DefaultMutableTreeNode parentNode){
+    public DefaultMutableTreeNode addChild(Child child, DefaultMutableTreeNode parentNode ){
             DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
-            if ( child.isEmpty())return addChild(childNode, parentNode, true);
+            if ( child.isEmpty())return addChild(childNode, parentNode, true );
             else {
                 for ( Child c : child.childElement().children() ) {
-                    addChild(addChild( c, childNode),parentNode,true);
-                    //treeModel.insertNodeInto(childNode, parentNode, parentNode.getChildCount());
+                    childNode = addChild( c, childNode);
                 }
+                addChild(childNode,parentNode,true);
             }
             return parentNode;
     }
     //parent <- selected or root, child <- child object
     public DefaultMutableTreeNode addChild( DefaultMutableTreeNode childNode,
-        DefaultMutableTreeNode parentNode, boolean shouldBeVisible){
+        DefaultMutableTreeNode parentNode, boolean shouldBeVisible ){
         
             //DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
             if (parentNode == null) {
                 parentNode = rootNode;
             }
             //It is key to invoke this on the TreeModel, and NOT DefaultMutableTreeNode
-            treeModel.insertNodeInto(childNode, parentNode, parentNode.getChildCount());
+            treeModel.insertNodeInto(childNode, parentNode, parentNode.getChildCount() );
             //Make sure the user can see the lovely new node.
             if (shouldBeVisible) {
                 scrollPathToVisible(new TreePath(childNode.getPath()));

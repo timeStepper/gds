@@ -133,7 +133,7 @@ class Child {
     }
     @Override
     public String toString() {
-        return "[ "+name+", "+ child + ", "+location.toString()+"  ]";
+        return "[ "+name+", "+location.toString()+"  ]";
     }
     @Override
     public boolean equals(Object obj) {
@@ -207,6 +207,11 @@ class Connection {
     }
     public Connection clone(){
         return new Connection( a.clone(), b.clone());
+    }
+    public Connection locate( Location l ){
+        Child newA = a.locate(l);
+        Child newB = b.locate(l);
+        return new Connection( newA, newB );
     }
     
     @Override

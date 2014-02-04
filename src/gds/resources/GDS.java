@@ -51,10 +51,11 @@ public class GDS extends javax.swing.JFrame {
         imageOpacity = new javax.swing.JSlider();
         gridcontrolLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        resetRoot = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        viewEmpties = new javax.swing.JButton();
-        viewChildren = new javax.swing.JButton();
+        resetRootButton = new javax.swing.JButton();
+        makeElementButton = new javax.swing.JButton();
+        viewEmptiesButton = new javax.swing.JButton();
+        viewChildrenButton = new javax.swing.JButton();
+        makeConnectionButton = new javax.swing.JButton();
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
@@ -141,31 +142,38 @@ public class GDS extends javax.swing.JFrame {
 
         jLabel1.setText("Image Opacity");
 
-        resetRoot.setText("Reset Element");
-        resetRoot.addActionListener(new java.awt.event.ActionListener() {
+        resetRootButton.setText("Reset Element");
+        resetRootButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetRootActionPerformed(evt);
+                resetRootButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setText(" Make Element");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        makeElementButton.setText(" Make Element");
+        makeElementButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                makeElementButtonActionPerformed(evt);
             }
         });
 
-        viewEmpties.setText("View Empties");
-        viewEmpties.addActionListener(new java.awt.event.ActionListener() {
+        viewEmptiesButton.setText("View Empties");
+        viewEmptiesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewEmptiesActionPerformed(evt);
+                viewEmptiesButtonActionPerformed(evt);
             }
         });
 
-        viewChildren.setText("View Children");
-        viewChildren.addActionListener(new java.awt.event.ActionListener() {
+        viewChildrenButton.setText("View Children");
+        viewChildrenButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewChildrenActionPerformed(evt);
+                viewChildrenButtonActionPerformed(evt);
+            }
+        });
+
+        makeConnectionButton.setText("Connect");
+        makeConnectionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeConnectionButtonActionPerformed(evt);
             }
         });
 
@@ -196,15 +204,18 @@ public class GDS extends javax.swing.JFrame {
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(gridcontrolLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(resetRootButton)
+                    .addComponent(makeElementButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bottomBarLayout.createSequentialGroup()
+                        .addComponent(viewEmptiesButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(makeConnectionButton))
+                    .addComponent(viewChildrenButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(resetRoot))
-                .addGap(34, 34, 34)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewChildren)
-                    .addComponent(viewEmpties))
-                .addGap(95, 95, 95)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bottomBarLayout.createSequentialGroup()
@@ -243,14 +254,15 @@ public class GDS extends javax.swing.JFrame {
                             .addComponent(labelY)
                             .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelX)
-                            .addComponent(jButton1)
-                            .addComponent(viewEmpties))
+                            .addComponent(makeElementButton)
+                            .addComponent(viewEmptiesButton)
+                            .addComponent(makeConnectionButton))
                         .addGap(11, 11, 11)
                         .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(resetRoot)
-                            .addComponent(viewChildren)))
+                            .addComponent(resetRootButton)
+                            .addComponent(viewChildrenButton)))
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -412,9 +424,9 @@ public class GDS extends javax.swing.JFrame {
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarLayout.createSequentialGroup()
-                .addContainerGap(386, Short.MAX_VALUE)
+                .addContainerGap(408, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(399, Short.MAX_VALUE))
+                .addContainerGap(420, Short.MAX_VALUE))
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +508,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -579,23 +591,27 @@ public class GDS extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_removeElementActionPerformed
 
-    private void resetRootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetRootActionPerformed
+    private void resetRootButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetRootButtonActionPerformed
         edit.resetRoot();
-    }//GEN-LAST:event_resetRootActionPerformed
+    }//GEN-LAST:event_resetRootButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void makeElementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeElementButtonActionPerformed
         edit.makeElement();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_makeElementButtonActionPerformed
 
-    private void viewEmptiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmptiesActionPerformed
+    private void viewEmptiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmptiesButtonActionPerformed
         edit.paintEmptyOnly();
         globalDisplayArea.repaint();
-    }//GEN-LAST:event_viewEmptiesActionPerformed
+    }//GEN-LAST:event_viewEmptiesButtonActionPerformed
 
-    private void viewChildrenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewChildrenActionPerformed
+    private void viewChildrenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewChildrenButtonActionPerformed
         edit.paintChildOnly();
         globalDisplayArea.repaint();
-    }//GEN-LAST:event_viewChildrenActionPerformed
+    }//GEN-LAST:event_viewChildrenButtonActionPerformed
+
+    private void makeConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeConnectionButtonActionPerformed
+        edit.makeConnection();
+    }//GEN-LAST:event_makeConnectionButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -647,6 +663,7 @@ public class GDS extends javax.swing.JFrame {
             grid.paintGrid( g, getWidth( ), getHeight( ) );
             edit.paintAddable(g);
             edit.paintEdit( g );
+            edit.paintHighlighted(g);
             childrenList.paintSelections(g);
             
         }
@@ -742,7 +759,9 @@ public class GDS extends javax.swing.JFrame {
                         else if ( button == MouseEvent.BUTTON3 ) {
                             edit.removeChild( l );
                         }
-                    
+                        else if ( button == MouseEvent.BUTTON2 ) {
+                            edit.highlight(l);
+                        }                    
             }
         }
         //update displayArea relations with grid and edit
@@ -824,7 +843,6 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JTextField hereYr;
     private javax.swing.JMenu imageMenu;
     private javax.swing.JSlider imageOpacity;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -835,17 +853,19 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JPanel leftFlank;
+    private javax.swing.JButton makeConnectionButton;
+    private javax.swing.JButton makeElementButton;
     private javax.swing.JLabel moduleSize;
     private javax.swing.JTextField readX;
     private javax.swing.JTextField readY;
     private javax.swing.JMenuItem removeElement;
-    private javax.swing.JButton resetRoot;
+    private javax.swing.JButton resetRootButton;
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;
     private javax.swing.JSplitPane verticalSplit;
-    private javax.swing.JButton viewChildren;
-    private javax.swing.JButton viewEmpties;
+    private javax.swing.JButton viewChildrenButton;
+    private javax.swing.JButton viewEmptiesButton;
     // End of variables declaration//GEN-END:variables
     private Mode mode = new Mode( );
     Grid grid = new Grid();

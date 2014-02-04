@@ -6,8 +6,10 @@
 
 package gds.resources;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 /**
@@ -23,6 +25,7 @@ public class EditElement {
         int module = 40;    //used for painting
         Element element;// = null;//new Element();
         Child selected; //rootNode of elementTree must be Child
+        ArrayList< Child > highlighted = new ArrayList<>();
         ChildrenList selected_ChildrenList;
         ConnectionsList selected_ConnectionsList;
         Element addable = null;//the element that can be added to the current selection by mouse clicks
@@ -69,6 +72,20 @@ public class EditElement {
         public void setY( int y ) {
             originY = y;
         }
+        public void highlight( Location l )throws NoSuchElementException{
+            try {
+                Child c = selected.childAt(l);
+                if( highlighted.contains(c) ) highlighted.remove(c);
+                else highlighted.add(c);
+            } catch( NoSuchElementException nse ){}
+        }
+        public void makeConnection( ){
+            if (highlighted.size() > 1){
+                Child a = highlighted.get(0);
+                Child b = highlighted.get(1);
+                selected.childElement().addConnection(a, b);
+            }
+        }
         /*
         allows moving around in the global element
         records the current state of the Lists
@@ -77,6 +94,7 @@ public class EditElement {
         public void changeSelected( Child c ){
             selected = c;
             updateChildrenList( c );
+            highlighted.clear();
             
         }
         public void updateChildrenList( Child c ){
@@ -137,11 +155,14 @@ public class EditElement {
             g.drawOval(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
         }
         public void paintConnection( Graphics2D g, Connection c ) {
+            g.setColor(Color.WHITE);
+            //g.setStroke(new BasicStroke(2F));
             int x1 = c.a().location( ).xLoc( );
             int y1 = c.a().location( ).yLoc( );
             int x2 = c.b().location( ).xLoc( );
             int y2 = c.b().location( ).yLoc( );
-            g.drawLine( x1, y1, x2, y2 );
+            g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
+            //g.setStroke(new BasicStroke(1F));
         }
         
         public void paintEmpties( Graphics2D g, Child c ){
@@ -149,11 +170,30 @@ public class EditElement {
                 
                 paintLocation( g, c.location());
             }
-            else for ( Child child : c.childElement().children()){
-                System.out.println("empty");
-                paintEmpties( g, child.locate(c.location()));
+            else {
+                for ( Child child : c.childElement().children())
+                    paintEmpties( g, child.locate(c.location()));
+                for ( Connection conn : c.childElement().connections() )
+                    paintEmptyConnection( g, conn.locate(c.location()));
             }
         }
+        public void paintEmptyConnection( Graphics2D g, Connection c ) {
+            g.setColor(Color.WHITE);
+            //g.setStroke(new BasicStroke(2F));
+            int x1 = c.a().location( ).xLoc( );
+            int y1 = c.a().location( ).yLoc( );
+            int x2 = c.b().location( ).xLoc( );
+            int y2 = c.b().location( ).yLoc( );
+            g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
+            //g.setStroke(new BasicStroke(1F));
+        }
+        public void paintHighlighted( Graphics2D g ){
+            for ( Child c : highlighted ){
+                grid.paintHighlightedLocation(g, c.location());
+                
+            }
+        }
+        
 
         public void paintAddable( Graphics2D g){
             grid.paintAddable(g, addable);

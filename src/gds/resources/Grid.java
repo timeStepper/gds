@@ -143,4 +143,10 @@ public class Grid {
             int y2 = c.b().location( ).yLoc( );
             g.drawLine( x1, y1, x2, y2 );
         }
+        public void paintHighlightedLocation(Graphics2D g, Location l) {
+            g.setColor(new Color( 255,255,255,180));
+            g.fillOval(originX-6+(l.xLoc()*mS), originY-6+(l.yLoc()*mS), 12, 12);
+            g.setColor(new Color( 255,255,255,180));
+            g.drawOval(originX-6+(l.xLoc()*mS), originY-6+(l.yLoc()*mS), 12, 12);
+        }
     }
