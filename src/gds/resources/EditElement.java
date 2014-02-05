@@ -6,11 +6,12 @@
 
 package gds.resources;
 
-import java.awt.BasicStroke;
+import com.google.gson.Gson;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+
 
 /**
  *
@@ -32,7 +33,8 @@ public class EditElement {
         DynamicTree dynamicTree;
         AddableList addableList;
         Grid grid;
-        boolean paintEmpties = false;
+        boolean paintEmpties = true;
+        Gson gson = new Gson();
         
         EditElement ( DynamicTree dt, ChildrenList cL, ConnectionsList cnL, Grid g ){
             
@@ -238,13 +240,17 @@ public class EditElement {
                 
             }
         }
-        
-
         public void paintAddable( Graphics2D g){
             grid.paintAddable(g, addable);
         }
         public void togglePaintEmpty(){
             if(paintEmpties)paintEmpties = false;
             else paintEmpties = true;
+        }
+        public String toJson(){
+            return gson.toJson(selected);
+        }
+        public void fromJson(String input){
+            selected = gson.fromJson(input, Child.class);
         }
     }

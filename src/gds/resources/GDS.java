@@ -15,6 +15,13 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -35,7 +42,9 @@ public class GDS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        gds = new javax.swing.JFileChooser();
+        importImage = new javax.swing.JFileChooser();
+        saveElement = new javax.swing.JFileChooser();
+        loadElement = new javax.swing.JFileChooser();
         bottomBar = new javax.swing.JPanel();
         gridY = new javax.swing.JSpinner();
         gridYlabel = new javax.swing.JLabel();
@@ -74,6 +83,7 @@ public class GDS extends javax.swing.JFrame {
         labelX = new javax.swing.JLabel();
         readY = new javax.swing.JTextField();
         labelY = new javax.swing.JLabel();
+        toJsonButton = new javax.swing.JButton();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -90,6 +100,8 @@ public class GDS extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        saveOutElementMenu = new javax.swing.JMenuItem();
+        loadElementMenu = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         addEmpty = new javax.swing.JMenuItem();
         removeElement = new javax.swing.JMenuItem();
@@ -100,7 +112,7 @@ public class GDS extends javax.swing.JFrame {
         scaleImage = new javax.swing.JMenuItem();
         translateImage = new javax.swing.JMenuItem();
 
-        gds.setDialogTitle("Select Image");
+        importImage.setDialogTitle("Select Image");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -358,6 +370,13 @@ public class GDS extends javax.swing.JFrame {
 
         labelY.setText("Y");
 
+        toJsonButton.setText("printJson");
+        toJsonButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toJsonButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editControlsLayout = new javax.swing.GroupLayout(editControls);
         editControls.setLayout(editControlsLayout);
         editControlsLayout.setHorizontalGroup(
@@ -387,17 +406,20 @@ public class GDS extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
                         .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
-                                .addComponent(translateButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelX)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
                                 .addComponent(scaleElementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
+                                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(toJsonButton)
+                                    .addGroup(editControlsLayout.createSequentialGroup()
+                                        .addComponent(translateButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelX)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelY)))
                 .addContainerGap(11, Short.MAX_VALUE))
@@ -436,7 +458,9 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(labelX)
                     .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelY))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(toJsonButton)
+                .addGap(19, 19, 19))
         );
 
         elementTabs.addTab("Edit", editControls);
@@ -531,6 +555,23 @@ public class GDS extends javax.swing.JFrame {
         verticalSplit.setLeftComponent(topBar);
 
         jMenu1.setText("File");
+
+        saveOutElementMenu.setText("Save Element");
+        saveOutElementMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveOutElementMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(saveOutElementMenu);
+
+        loadElementMenu.setText("Load Element");
+        loadElementMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadElementMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(loadElementMenu);
+
         jMenuBar1.add(jMenu1);
 
         editMenu.setText("Edit");
@@ -629,9 +670,9 @@ public class GDS extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
-        int returnVal = gds.showOpenDialog(this);
+        int returnVal = importImage.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = gds.getSelectedFile();
+            File file = importImage.getSelectedFile();
               backgroundImage.loadImage( file );
         } else {
             System.out.println("File access cancelled by user.");
@@ -777,6 +818,54 @@ public class GDS extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_translateButtonActionPerformed
+
+    private void toJsonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toJsonButtonActionPerformed
+        System.out.println("Json: ");
+        System.out.println(edit.toJson());
+    }//GEN-LAST:event_toJsonButtonActionPerformed
+
+    private void saveOutElementMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveOutElementMenuActionPerformed
+        int saveVal = saveElement.showSaveDialog(this);
+        if (saveVal == JFileChooser.APPROVE_OPTION) {
+            FileWriter fileWriter = null;
+            try{
+                File fileToSave = saveElement.getSelectedFile();
+                fileWriter = new FileWriter(fileToSave);
+                fileWriter.write(edit.toJson());
+                fileWriter.close();
+            }catch(IOException ioe){ioe.printStackTrace();}
+            finally {
+            try {
+                fileWriter.close();
+                } catch (IOException ex) {ex.printStackTrace();}
+            }
+        } else {
+            System.out.println("File save cancelled by user.");
+        }
+    }//GEN-LAST:event_saveOutElementMenuActionPerformed
+
+    private void loadElementMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadElementMenuActionPerformed
+        int loadVal = loadElement.showOpenDialog(this);
+        if (loadVal == JFileChooser.APPROVE_OPTION) {
+            BufferedReader read = null;
+            try{
+                String sCurrentLine;
+		read = new BufferedReader(new FileReader(loadElement.getSelectedFile()));
+                try {
+                    edit.fromJson(read.readLine());
+                } catch (IOException ex) {
+                    Logger.getLogger(GDS.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }catch(FileNotFoundException fnf){System.out.println(fnf+": fileLoad trouble");}
+            finally {
+            try {
+                read.close();
+                } catch (IOException ex) {}
+            }
+        } else {
+            System.out.println("File load cancelled by user.");
+        }
+    }//GEN-LAST:event_loadElementMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -999,7 +1088,6 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
     private javax.swing.JTabbedPane elementTabs;
-    private javax.swing.JFileChooser gds;
     private javax.swing.JToggleButton genMode;
     private javax.swing.JSpinner gridSize;
     private javax.swing.JButton gridToggleButton;
@@ -1012,6 +1100,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JTextField hereYr;
     private javax.swing.JMenu imageMenu;
     private javax.swing.JSlider imageOpacity;
+    private javax.swing.JFileChooser importImage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1021,6 +1110,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JPanel leftFlank;
+    private javax.swing.JFileChooser loadElement;
+    private javax.swing.JMenuItem loadElementMenu;
     private javax.swing.JButton makeConnectionButton;
     private javax.swing.JMenuItem makeConnectionMenuItem;
     private javax.swing.JButton makeElementButton;
@@ -1035,9 +1126,12 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton resetRootButton;
     private javax.swing.JButton rotateLeftButton;
     private javax.swing.JButton rotateRightButton;
+    private javax.swing.JFileChooser saveElement;
+    private javax.swing.JMenuItem saveOutElementMenu;
     private javax.swing.JButton scaleElementButton;
     private javax.swing.JTextField scaleField;
     private javax.swing.JMenuItem scaleImage;
+    private javax.swing.JButton toJsonButton;
     private javax.swing.JPanel topBar;
     private javax.swing.JButton translateButton;
     private javax.swing.JMenuItem translateImage;

@@ -101,7 +101,7 @@ class Child {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
         child = e;
         location = l;
-        name = "empt";
+        name = "empty";
     }
     Child ( ) {
         name = "root";
