@@ -132,6 +132,31 @@ class Child {
     public Child locate( Location l ){
         return new Child ( child, location.add( l ));
     }
+    
+    public void transform( Transform t ){
+        if (isEmpty()) location =  Transform.transform(t, location);
+        else {
+            location =  Transform.transform(t, location);
+            for ( Child c : childElement().children() )
+                c.transform( t );
+        }
+    }
+    public void rotateRight( ){
+        transform(new Transform(0,(-1),1,0) );
+    }
+    public void rotateLeft( ){
+        transform(new Transform(0,1,-1,0) );
+    }
+    public void reflectX( ){
+        transform(new Transform(1,0,0,-1) );
+    }
+    public void reflectY( ){
+        transform(new Transform(-1,0,0,1) );
+    }
+    public void scale( int s ){
+        transform(new Transform(s,0,0,s) );
+    }
+    
     public Child clone(){
         return new Child( child.clone(), location );
     }
@@ -230,6 +255,28 @@ class Connection {
         if ( a.equals( c.a( ) ) ) return b.equals( c.b( ) );
         else if ( a.equals( c.b ( ) ) ) return b.equals( c.a( ) );
         else return false;
+    }
+    
+}
+
+class Transform{
+    int a;
+    int b;
+    int c;
+    int d;
+    
+    Transform( int a1, int b1, int c1, int d1 ){
+        a = a1;
+        b = b1;
+        c = c1;
+        d = d1;
+    }
+    public static Location transform( Transform t, Location l ){
+        int lx;
+        int ly;
+        lx = (t.a*l.xLoc())+(t.b*l.yLoc());
+        ly = (t.c*l.xLoc())+(t.d*l.yLoc());
+        return new Location( lx, ly );
     }
     
 }

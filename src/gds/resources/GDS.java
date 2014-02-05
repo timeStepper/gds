@@ -67,6 +67,12 @@ public class GDS extends javax.swing.JFrame {
         renameAddable = new javax.swing.JTextField();
         renameAddableButton = new javax.swing.JButton();
         makeConnectionButton = new javax.swing.JButton();
+        rotateRightButton = new javax.swing.JButton();
+        rotateLeftButton = new javax.swing.JButton();
+        reflectXButton = new javax.swing.JButton();
+        reflectYButton = new javax.swing.JButton();
+        scaleElementButton = new javax.swing.JButton();
+        scaleField = new javax.swing.JTextField();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -250,7 +256,7 @@ public class GDS extends javax.swing.JFrame {
         centerPanels.setDividerLocation(170);
 
         centerRightPanels.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        centerRightPanels.setDividerLocation(500);
+        centerRightPanels.setDividerLocation(495);
 
         displayArea.setBackground(new java.awt.Color(210, 210, 210));
         displayArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -260,7 +266,7 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,6 +320,41 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        rotateRightButton.setText("Rotate R");
+        rotateRightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotateRightButtonActionPerformed(evt);
+            }
+        });
+
+        rotateLeftButton.setText("Rotate L");
+        rotateLeftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rotateLeftButtonActionPerformed(evt);
+            }
+        });
+
+        reflectXButton.setText("Reflect X");
+        reflectXButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reflectXButtonActionPerformed(evt);
+            }
+        });
+
+        reflectYButton.setText("Reflect Y");
+        reflectYButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reflectYButtonActionPerformed(evt);
+            }
+        });
+
+        scaleElementButton.setText("Scale");
+        scaleElementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scaleElementButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editControlsLayout = new javax.swing.GroupLayout(editControls);
         editControls.setLayout(editControlsLayout);
         editControlsLayout.setHorizontalGroup(
@@ -330,8 +371,17 @@ public class GDS extends javax.swing.JFrame {
                             .addComponent(renameAddable)
                             .addComponent(viewChildrenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(resetRootButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(makeConnectionButton))
-                .addContainerGap(61, Short.MAX_VALUE))
+                    .addComponent(makeConnectionButton)
+                    .addComponent(rotateRightButton)
+                    .addComponent(rotateLeftButton)
+                    .addComponent(reflectXButton)
+                    .addGroup(editControlsLayout.createSequentialGroup()
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(scaleElementButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(reflectYButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         editControlsLayout.setVerticalGroup(
             editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +400,19 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(renameAddable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(makeConnectionButton)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addGap(137, 137, 137)
+                .addComponent(rotateRightButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rotateLeftButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reflectXButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(reflectYButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(scaleElementButton)
+                    .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Edit", editControls);
@@ -430,9 +492,9 @@ public class GDS extends javax.swing.JFrame {
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarLayout.createSequentialGroup()
-                .addContainerGap(395, Short.MAX_VALUE)
+                .addContainerGap(418, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(402, Short.MAX_VALUE))
+                .addContainerGap(425, Short.MAX_VALUE))
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,6 +510,11 @@ public class GDS extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         editMenu.setText("Edit");
+        editMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editMenuActionPerformed(evt);
+            }
+        });
 
         addEmpty.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
         addEmpty.setText("Add Empty");
@@ -523,7 +590,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -639,7 +706,37 @@ public class GDS extends javax.swing.JFrame {
 
     private void makeConnectionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeConnectionMenuItemActionPerformed
         edit.makeConnection();
+        ((MyPanel)displayArea).repaint();
     }//GEN-LAST:event_makeConnectionMenuItemActionPerformed
+
+    private void rotateRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateRightButtonActionPerformed
+        edit.rotateRight();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_rotateRightButtonActionPerformed
+
+    private void rotateLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rotateLeftButtonActionPerformed
+        edit.rotateLeft();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_rotateLeftButtonActionPerformed
+
+    private void reflectXButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reflectXButtonActionPerformed
+        edit.reflectX();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_reflectXButtonActionPerformed
+
+    private void reflectYButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reflectYButtonActionPerformed
+        edit.reflectY();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_reflectYButtonActionPerformed
+
+    private void scaleElementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scaleElementButtonActionPerformed
+        edit.scale(Integer.parseInt(scaleField.getText()));
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_scaleElementButtonActionPerformed
+
+    private void editMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -788,9 +885,11 @@ public class GDS extends javax.swing.JFrame {
                         }
                         else if ( button == MouseEvent.BUTTON2 ) {
                             edit.removeChild( l );
+                            ((MyPanel)displayArea).repaint();
                         }
                         else if ( button == MouseEvent.BUTTON3 ) {
                             edit.highlight(l);
+                            ((MyPanel)displayArea).repaint();
                         }                    
             }
         }
@@ -887,10 +986,16 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel moduleSize;
     private javax.swing.JTextField readX;
     private javax.swing.JTextField readY;
+    private javax.swing.JButton reflectXButton;
+    private javax.swing.JButton reflectYButton;
     private javax.swing.JMenuItem removeElement;
     private javax.swing.JTextField renameAddable;
     private javax.swing.JButton renameAddableButton;
     private javax.swing.JButton resetRootButton;
+    private javax.swing.JButton rotateLeftButton;
+    private javax.swing.JButton rotateRightButton;
+    private javax.swing.JButton scaleElementButton;
+    private javax.swing.JTextField scaleField;
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;

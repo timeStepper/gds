@@ -131,6 +131,26 @@ public class EditElement {
             }
             
         }
+        public void rotateLeft(){
+            for ( Child c : selected.childElement().children() )
+                c.rotateLeft();
+        }
+        public void rotateRight(){
+            for ( Child c : selected.childElement().children() )
+                c.rotateRight();
+        }
+        public void reflectX(){
+            for ( Child c : selected.childElement().children() )
+                c.reflectX();
+        }
+        public void reflectY(){
+            for ( Child c : selected.childElement().children() )
+                c.reflectY();
+        }
+        public void scale(int s){
+            for ( Child c : selected.childElement().children() )
+                c.scale(s);
+        }
         public Element addable() {
             return addable;
         }
