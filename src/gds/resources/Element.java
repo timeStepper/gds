@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 public class Element {
     private ArrayList< Child > children;
     private ArrayList< Connection > connections;
-    String name = "";
+    String name = "!";
     
     Element ( ) {
         children  = new ArrayList<  >( );
@@ -38,8 +38,11 @@ public class Element {
         ArrayList<Connection> conns = new ArrayList<>();
         for ( Child c : children )
             childs.add(c.clone());
-        for ( Connection cn : connections )
-            conns.add(cn.clone());
+        for ( Connection cn : connections ){
+            int idxA = childs.indexOf(cn.a());
+            int idxB = childs.indexOf(cn.b());
+            conns.add(new Connection( childs.get(idxA), childs.get(idxB) ));
+        }
         return new Element( childs, conns );
     }
     boolean isEmpty( ) {

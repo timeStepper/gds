@@ -74,6 +74,7 @@ public class DynamicTree extends JTree{
         DefaultMutableTreeNode currentNode = (DefaultMutableTreeNode)
                         getSelectionPath().getLastPathComponent();
             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode)currentNode.getFirstChild();
+            
             DefaultMutableTreeNode lastChild = (DefaultMutableTreeNode)currentNode.getLastChild();
             
             do {
@@ -84,9 +85,11 @@ public class DynamicTree extends JTree{
                     return;
                 }
                 else childNode = childNode.getNextSibling();
-//            System.out.println( "childNode "+childNode);
-//            System.out.println( "lastNode "+lastChild);
-//            System.out.println();
+                
+            System.out.println( "childNode "+childNode);
+            System.out.println( "lastNode "+lastChild);
+            System.out.println();
+            if (childNode==null)return;
         } while ( !childNode.equals(lastChild));
         Child last = (Child)childNode.getUserObject();
         if ( last.equals(c)){

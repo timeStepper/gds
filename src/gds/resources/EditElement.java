@@ -188,6 +188,8 @@ public class EditElement {
             int y2 = c.b().location( ).yLoc( );
             g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
             //g.setStroke(new BasicStroke(1F));
+            //g.setColor(Color.BLACK);
+            //g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
         }
         
         public void paintEmpties( Graphics2D g, Child c ){
@@ -196,10 +198,10 @@ public class EditElement {
                 paintLocation( g, c.location());
             }
             else {
-                for ( Child child : c.childElement().children())
-                    paintEmpties( g, child.locate(c.location()));
                 for ( Connection conn : c.childElement().connections() )
                     paintEmptyConnection( g, conn.locate(c.location()));
+                for ( Child child : c.childElement().children())
+                    paintEmpties( g, child.locate(c.location()));
             }
         }
         public void paintEmptyConnection( Graphics2D g, Connection c ) {
@@ -211,6 +213,8 @@ public class EditElement {
             int y2 = c.b().location( ).yLoc( );
             g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
             //g.setStroke(new BasicStroke(1F));
+            //g.setColor(Color.BLACK);
+            //g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
         }
         public void paintHighlighted( Graphics2D g ){
             for ( Child c : highlighted ){
