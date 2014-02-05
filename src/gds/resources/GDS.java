@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.DefaultListModel;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -51,16 +52,21 @@ public class GDS extends javax.swing.JFrame {
         imageOpacity = new javax.swing.JSlider();
         gridcontrolLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        resetRootButton = new javax.swing.JButton();
-        makeElementButton = new javax.swing.JButton();
-        viewEmptiesButton = new javax.swing.JButton();
-        viewChildrenButton = new javax.swing.JButton();
-        makeConnectionButton = new javax.swing.JButton();
+        editMode = new javax.swing.JToggleButton();
+        genMode = new javax.swing.JToggleButton();
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
         displayArea = globalDisplayArea;
         elementTabs = new javax.swing.JTabbedPane();
+        editControls = new javax.swing.JPanel();
+        makeElementButton = new javax.swing.JButton();
+        resetRootButton = new javax.swing.JButton();
+        viewEmptiesButton = new javax.swing.JButton();
+        viewChildrenButton = new javax.swing.JButton();
+        renameAddable = new javax.swing.JTextField();
+        renameAddableButton = new javax.swing.JButton();
+        makeConnectionButton = new javax.swing.JButton();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -73,11 +79,6 @@ public class GDS extends javax.swing.JFrame {
         //treeModel.addTreeModelListener(new MyTreeModelListener());
         dynamicTree = dt;//dt must be initialized before here to be passed in to EditElement edit;
         dynamicTreeLabel = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        editMode = new javax.swing.JToggleButton();
-        genMode = new javax.swing.JToggleButton();
-        editmodelabel = new javax.swing.JLabel();
-        genmodelabel = new javax.swing.JLabel();
         topBar = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -85,6 +86,7 @@ public class GDS extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         addEmpty = new javax.swing.JMenuItem();
         removeElement = new javax.swing.JMenuItem();
+        makeConnectionMenuItem = new javax.swing.JMenuItem();
         imageMenu = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
         Close = new javax.swing.JMenuItem();
@@ -142,38 +144,18 @@ public class GDS extends javax.swing.JFrame {
 
         jLabel1.setText("Image Opacity");
 
-        resetRootButton.setText("Reset Element");
-        resetRootButton.addActionListener(new java.awt.event.ActionListener() {
+        editMode.setSelected(true);
+        editMode.setText("Edit Mode");
+        editMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetRootButtonActionPerformed(evt);
+                editModeActionPerformed(evt);
             }
         });
 
-        makeElementButton.setText(" Make Element");
-        makeElementButton.addActionListener(new java.awt.event.ActionListener() {
+        genMode.setText("Gen Mode");
+        genMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                makeElementButtonActionPerformed(evt);
-            }
-        });
-
-        viewEmptiesButton.setText("View Empties");
-        viewEmptiesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewEmptiesButtonActionPerformed(evt);
-            }
-        });
-
-        viewChildrenButton.setText("View Children");
-        viewChildrenButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewChildrenButtonActionPerformed(evt);
-            }
-        });
-
-        makeConnectionButton.setText("Connect");
-        makeConnectionButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                makeConnectionButtonActionPerformed(evt);
+                genModeActionPerformed(evt);
             }
         });
 
@@ -194,28 +176,21 @@ public class GDS extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(bottomBarLayout.createSequentialGroup()
-                                .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(bottomBarLayout.createSequentialGroup()
                                 .addComponent(moduleSize)
                                 .addGap(27, 27, 27)
-                                .addComponent(jLabel1))))
+                                .addComponent(jLabel1))
+                            .addGroup(bottomBarLayout.createSequentialGroup()
+                                .addComponent(gridSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(gridcontrolLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(resetRootButton)
-                    .addComponent(makeElementButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(bottomBarLayout.createSequentialGroup()
-                        .addComponent(viewEmptiesButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(makeConnectionButton))
-                    .addComponent(viewChildrenButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(editMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(bottomBarLayout.createSequentialGroup()
@@ -254,15 +229,12 @@ public class GDS extends javax.swing.JFrame {
                             .addComponent(labelY)
                             .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelX)
-                            .addComponent(makeElementButton)
-                            .addComponent(viewEmptiesButton)
-                            .addComponent(makeConnectionButton))
+                            .addComponent(editMode))
                         .addGap(11, 11, 11)
                         .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(resetRootButton)
-                            .addComponent(viewChildrenButton)))
+                            .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(bottomBarLayout.createSequentialGroup()
                         .addComponent(imageOpacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -288,17 +260,100 @@ public class GDS extends javax.swing.JFrame {
         displayArea.setLayout(displayAreaLayout);
         displayAreaLayout.setHorizontalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 386, Short.MAX_VALUE)
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGap(0, 537, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
 
         elementTabs.setBackground(new java.awt.Color(180, 180, 180));
         elementTabs.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        makeElementButton.setText(" Make Element");
+        makeElementButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeElementButtonActionPerformed(evt);
+            }
+        });
+
+        resetRootButton.setText("Reset Elem");
+        resetRootButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetRootButtonActionPerformed(evt);
+            }
+        });
+
+        viewEmptiesButton.setText("View Empties");
+        viewEmptiesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewEmptiesButtonActionPerformed(evt);
+            }
+        });
+
+        viewChildrenButton.setText("View Children");
+        viewChildrenButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewChildrenButtonActionPerformed(evt);
+            }
+        });
+
+        renameAddableButton.setText("Rename Elem");
+        renameAddableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameAddableButtonActionPerformed(evt);
+            }
+        });
+
+        makeConnectionButton.setText("Connect Elems");
+        makeConnectionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeConnectionButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout editControlsLayout = new javax.swing.GroupLayout(editControls);
+        editControls.setLayout(editControlsLayout);
+        editControlsLayout.setHorizontalGroup(
+            editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editControlsLayout.createSequentialGroup()
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editControlsLayout.createSequentialGroup()
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(makeElementButton, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(viewEmptiesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(renameAddableButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(renameAddable)
+                            .addComponent(viewChildrenButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(resetRootButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(makeConnectionButton))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        editControlsLayout.setVerticalGroup(
+            editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editControlsLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(makeElementButton)
+                    .addComponent(resetRootButton))
+                .addGap(18, 18, 18)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewChildrenButton)
+                    .addComponent(viewEmptiesButton))
+                .addGap(18, 18, 18)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(renameAddableButton)
+                    .addComponent(renameAddable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(makeConnectionButton)
+                .addContainerGap(344, Short.MAX_VALUE))
+        );
+
+        elementTabs.addTab("Edit", editControls);
 
         childScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -339,74 +394,25 @@ public class GDS extends javax.swing.JFrame {
 
         dynamicTreeLabel.setText("Element Tree");
 
-        jPanel1.setBackground(new java.awt.Color(180, 180, 180));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        editMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editModeActionPerformed(evt);
-            }
-        });
-
-        genMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genModeActionPerformed(evt);
-            }
-        });
-
-        editmodelabel.setText("Edit Mode");
-
-        genmodelabel.setText("Gen Mode");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(editMode, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(genMode, javax.swing.GroupLayout.PREFERRED_SIZE, 18, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(genmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(genmodelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)))
-        );
-
         javax.swing.GroupLayout leftFlankLayout = new javax.swing.GroupLayout(leftFlank);
         leftFlank.setLayout(leftFlankLayout);
         leftFlankLayout.setHorizontalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         leftFlankLayout.setVerticalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFlankLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE))
         );
 
         centerPanels.setLeftComponent(leftFlank);
@@ -424,9 +430,9 @@ public class GDS extends javax.swing.JFrame {
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarLayout.createSequentialGroup()
-                .addContainerGap(408, Short.MAX_VALUE)
+                .addContainerGap(395, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(420, Short.MAX_VALUE))
+                .addContainerGap(402, Short.MAX_VALUE))
         );
         topBarLayout.setVerticalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +458,7 @@ public class GDS extends javax.swing.JFrame {
         });
         editMenu.add(addEmpty);
 
-        removeElement.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.SHIFT_MASK));
+        removeElement.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, 0));
         removeElement.setText("Remove Element");
         removeElement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -460,6 +466,15 @@ public class GDS extends javax.swing.JFrame {
             }
         });
         editMenu.add(removeElement);
+
+        makeConnectionMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
+        makeConnectionMenuItem.setText("Make Connection");
+        makeConnectionMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeConnectionMenuItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(makeConnectionMenuItem);
 
         jMenuBar1.add(editMenu);
 
@@ -508,13 +523,13 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 852, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -577,7 +592,8 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_translateImageActionPerformed
 
     private void addEmptyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmptyActionPerformed
-        // TODO add your handling code here:
+        Location l = new Location( grid.currentX(), grid.currentY() );
+        edit.addChild( new Child( new Element(), l ));
     }//GEN-LAST:event_addEmptyActionPerformed
 
     private void imageOpacityStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_imageOpacityStateChanged
@@ -588,7 +604,8 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_imageOpacityStateChanged
 
     private void removeElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeElementActionPerformed
-        // TODO add your handling code here:
+        Location l = new Location( grid.currentX(), grid.currentY() );
+        edit.removeChild(l);
     }//GEN-LAST:event_removeElementActionPerformed
 
     private void resetRootButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetRootButtonActionPerformed
@@ -597,6 +614,8 @@ public class GDS extends javax.swing.JFrame {
 
     private void makeElementButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeElementButtonActionPerformed
         edit.makeElement();
+        edit.renameAddable( renameAddable.getText() );
+        addableElementList.updateUI();
     }//GEN-LAST:event_makeElementButtonActionPerformed
 
     private void viewEmptiesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewEmptiesButtonActionPerformed
@@ -612,6 +631,15 @@ public class GDS extends javax.swing.JFrame {
     private void makeConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeConnectionButtonActionPerformed
         edit.makeConnection();
     }//GEN-LAST:event_makeConnectionButtonActionPerformed
+
+    private void renameAddableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameAddableButtonActionPerformed
+        edit.renameAddable( renameAddable.getText() );
+        addableElementList.updateUI();
+    }//GEN-LAST:event_renameAddableButtonActionPerformed
+
+    private void makeConnectionMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeConnectionMenuItemActionPerformed
+        edit.makeConnection();
+    }//GEN-LAST:event_makeConnectionMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -658,6 +686,8 @@ public class GDS extends javax.swing.JFrame {
         @Override
         protected void paintComponent(Graphics g1) {
             Graphics2D g = (Graphics2D)g1;
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            //g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
             super.paintComponent(g);
             backgroundImage.paintImage( g );
             grid.paintGrid( g, getWidth( ), getHeight( ) );
@@ -670,7 +700,7 @@ public class GDS extends javax.swing.JFrame {
     }
 
     class Mode extends MouseInputAdapter { //implements MouseMotionListener, MouseListener {
-        State mode = State.Off;
+        State mode = State.Edit;
         State image = State.Off;
         State editElem = State.Add;
         State elementClone = State.On;
@@ -756,10 +786,10 @@ public class GDS extends javax.swing.JFrame {
                             edit.addChild( c );
                             mp.repaint();
                         }
-                        else if ( button == MouseEvent.BUTTON3 ) {
+                        else if ( button == MouseEvent.BUTTON2 ) {
                             edit.removeChild( l );
                         }
-                        else if ( button == MouseEvent.BUTTON2 ) {
+                        else if ( button == MouseEvent.BUTTON3 ) {
                             edit.highlight(l);
                         }                    
             }
@@ -826,13 +856,12 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JPanel displayArea;
     private javax.swing.JTree dynamicTree;
     private javax.swing.JLabel dynamicTreeLabel;
+    private javax.swing.JPanel editControls;
     private javax.swing.JMenu editMenu;
     private javax.swing.JToggleButton editMode;
-    private javax.swing.JLabel editmodelabel;
     private javax.swing.JTabbedPane elementTabs;
     private javax.swing.JFileChooser gds;
     private javax.swing.JToggleButton genMode;
-    private javax.swing.JLabel genmodelabel;
     private javax.swing.JSpinner gridSize;
     private javax.swing.JSpinner gridX;
     private javax.swing.JLabel gridXlabel;
@@ -846,7 +875,6 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
@@ -854,11 +882,14 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JLabel labelY;
     private javax.swing.JPanel leftFlank;
     private javax.swing.JButton makeConnectionButton;
+    private javax.swing.JMenuItem makeConnectionMenuItem;
     private javax.swing.JButton makeElementButton;
     private javax.swing.JLabel moduleSize;
     private javax.swing.JTextField readX;
     private javax.swing.JTextField readY;
     private javax.swing.JMenuItem removeElement;
+    private javax.swing.JTextField renameAddable;
+    private javax.swing.JButton renameAddableButton;
     private javax.swing.JButton resetRootButton;
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JPanel topBar;

@@ -76,7 +76,10 @@ public class EditElement {
             try {
                 Child c = selected.childAt(l);
                 if( highlighted.contains(c) ) highlighted.remove(c);
-                else highlighted.add(c);
+                else if ( highlighted.size()==2 ){
+                    highlighted.set(0, highlighted.get(1));
+                    highlighted.set(1, c);
+                }else highlighted.add(c);
             } catch( NoSuchElementException nse ){}
         }
         public void makeConnection( ){
@@ -95,7 +98,6 @@ public class EditElement {
             selected = c;
             updateChildrenList( c );
             highlighted.clear();
-            
         }
         public void updateChildrenList( Child c ){
             selected_ChildrenList.removeAll();
@@ -114,7 +116,7 @@ public class EditElement {
         public void removeChild( Location l )throws NoSuchElementException{
             //Child c = new Child ( addable, l );
             try{
-                Child c = selected.childElement().childAt(l);
+                Child c = new Child( addable, l );
                 selected.childElement().removeChild(c);
                 selected_ChildrenList.removeChild(c);
                 dynamicTree.removeChild(c);
@@ -131,6 +133,9 @@ public class EditElement {
         }
         public Element addable() {
             return addable;
+        }
+        public void renameAddable( String name ){
+            addable.rename(name);
         }
         
         //painting methods;  the current selected child's element is what is painted

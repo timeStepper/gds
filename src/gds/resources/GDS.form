@@ -33,12 +33,23 @@
             <MenuItem class="javax.swing.JMenuItem" name="removeElement">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Shift+R"/>
+                  <KeyStroke key="R"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Remove Element"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeElementActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="makeConnectionMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="C"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Make Connection"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeConnectionMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -115,14 +126,14 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" pref="893" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" pref="852" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="verticalSplit" pref="547" max="32767" attributes="0"/>
+              <Component id="verticalSplit" pref="558" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="bottomBar" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -163,14 +174,14 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="imageOpacity" min="-2" pref="137" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="moduleSize" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="imageOpacity" min="-2" pref="137" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -179,21 +190,12 @@
                           <Component id="gridcontrolLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="resetRootButton" min="-2" max="-2" attributes="0"/>
-                      <Component id="makeElementButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="viewEmptiesButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="makeConnectionButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="viewChildrenButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="editMode" max="32767" attributes="0"/>
+                      <Component id="genMode" pref="101" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="hereXr" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -240,16 +242,13 @@
                               <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="makeElementButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="viewEmptiesButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="makeConnectionButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="editMode" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="resetRootButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="viewChildrenButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="genMode" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -349,44 +348,23 @@
             <Property name="text" type="java.lang.String" value="Image Opacity"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="resetRootButton">
+        <Component class="javax.swing.JToggleButton" name="editMode">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reset Element"/>
+            <Property name="text" type="java.lang.String" value="Edit Mode"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetRootButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editModeActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="editMode.setSelected(true);"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="makeElementButton">
+        <Component class="javax.swing.JToggleButton" name="genMode">
           <Properties>
-            <Property name="text" type="java.lang.String" value=" Make Element"/>
+            <Property name="text" type="java.lang.String" value="Gen Mode"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeElementButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="viewEmptiesButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="View Empties"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewEmptiesButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="viewChildrenButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="View Children"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewChildrenButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="makeConnectionButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Connect"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeConnectionButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genModeActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -457,12 +435,12 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="496" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="386" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="526" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="537" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -486,6 +464,117 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
                   <SubComponents>
+                    <Container class="javax.swing.JPanel" name="editControls">
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="Edit">
+                            <Property name="tabTitle" type="java.lang.String" value="Edit"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="makeElementButton" pref="103" max="32767" attributes="0"/>
+                                              <Component id="viewEmptiesButton" max="32767" attributes="0"/>
+                                              <Component id="renameAddableButton" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="renameAddable" max="32767" attributes="0"/>
+                                              <Component id="viewChildrenButton" max="32767" attributes="0"/>
+                                              <Component id="resetRootButton" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="makeConnectionButton" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="61" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="makeElementButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="resetRootButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="viewChildrenButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="viewEmptiesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="renameAddableButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="renameAddable" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="makeConnectionButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="344" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JButton" name="makeElementButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value=" Make Element"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeElementButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="resetRootButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Reset Elem"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetRootButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="viewEmptiesButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="View Empties"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewEmptiesButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="viewChildrenButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="View Children"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewChildrenButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="renameAddable">
+                        </Component>
+                        <Component class="javax.swing.JButton" name="renameAddableButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Rename Elem"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renameAddableButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="makeConnectionButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Connect Elems"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="makeConnectionButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                     <Container class="javax.swing.JScrollPane" name="childScroll">
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -576,7 +665,6 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jScrollPane1" alignment="0" pref="164" max="32767" attributes="0"/>
-                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                       <Component id="dynamicTreeLabel" max="32767" attributes="0"/>
                       <Component id="addableElementListLabel" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -584,15 +672,13 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="319" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="306" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dynamicTreeLabel" max="32767" attributes="0"/>
+                          <Component id="dynamicTreeLabel" pref="17" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="84" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="179" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="addableElementListLabel" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="addableElementListLabel" pref="19" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -662,75 +748,6 @@
                     <Property name="text" type="java.lang.String" value="Element Tree"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel1">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="b4" green="b4" red="b4" type="rgb"/>
-                    </Property>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-                        <EtchetBorder/>
-                      </Border>
-                    </Property>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="editMode" pref="0" max="32767" attributes="0"/>
-                                  <Component id="genMode" pref="18" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="editmodelabel" pref="137" max="32767" attributes="0"/>
-                                  <Component id="genmodelabel" pref="137" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="33" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="editMode" max="32767" attributes="0"/>
-                                  <Component id="editmodelabel" pref="15" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="genMode" max="32767" attributes="0"/>
-                                  <Component id="genmodelabel" pref="15" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JToggleButton" name="editMode">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editModeActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JToggleButton" name="genMode">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genModeActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="editmodelabel">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Edit Mode"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="genmodelabel">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Gen Mode"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -756,9 +773,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="408" max="32767" attributes="0"/>
+                      <EmptySpace pref="395" max="32767" attributes="0"/>
                       <Component id="jTextField1" max="-2" attributes="0"/>
-                      <EmptySpace pref="420" max="32767" attributes="0"/>
+                      <EmptySpace pref="402" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

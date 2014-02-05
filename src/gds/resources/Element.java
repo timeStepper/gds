@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 public class Element {
     private ArrayList< Child > children;
     private ArrayList< Connection > connections;
+    String name = "";
     
     Element ( ) {
         children  = new ArrayList<  >( );
@@ -62,11 +63,14 @@ public class Element {
         Connection c = new Connection ( a, b );
         connections.add( c );
     }
+    public void rename( String nm ){
+        name = nm;
+    }
     
     @Override
     public String toString(  ) {
         if ( isEmpty() ) return "Empty";
-        else return children.toString();
+        else return name;
     }
     
     @Override
