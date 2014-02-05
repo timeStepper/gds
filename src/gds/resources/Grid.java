@@ -25,6 +25,7 @@ public class Grid {
         int originX;
         int originY;
         boolean select = false;
+        boolean paintGrid = true;
         
         public void selectOn() {
             select = true;
@@ -79,7 +80,21 @@ public class Grid {
         public void changeHeight( int h ) { height = h; }
         public void changeModuleSize( int m ) { mS = m; }
         
+        public void toggleGrid(){
+            if( paintGrid )paintGrid=false;
+            else paintGrid = true;
+            
+        }
         public void paintGrid ( Graphics2D g, int w, int h ) {
+            if ( paintGrid )paintGridCall(g,w,h);
+            g.setStroke(new BasicStroke(3F));
+            g.setColor( new Color( 0,200,0,100 ) );
+            g.drawLine( w / 2, 0, w / 2, h );
+            g.setColor( new Color( 200,0,0,100 ) );
+            g.drawLine( 0, h / 2, w, h / 2);
+            g.setStroke(new BasicStroke(1F));
+        }
+        public void paintGridCall ( Graphics2D g, int w, int h ) {
             int offX = ( w - width*mS ) / 2;
             int offY = ( h - height*mS ) / 2;
             
@@ -97,12 +112,7 @@ public class Grid {
             }
             
             //draws the axis lines
-            g.setStroke(new BasicStroke(3F));
-            g.setColor( new Color( 0,200,0,100 ) );
-            g.drawLine( w / 2, 0, w / 2, h );
-            g.setColor( new Color( 200,0,0,100 ) );
-            g.drawLine( 0, h / 2, w, h / 2);
-            g.setStroke(new BasicStroke(1F));
+            
             
             //paints select circle or not
             

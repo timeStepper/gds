@@ -54,9 +54,7 @@ public class EditElement {
             root = dynamicTree.root();
 //            System.out.println( "aft " + root);
         }
-        public void makeElement(){
-            addableList.addElement(selected.childElement().clone());
-        }
+        
         public void setAddable( Element e ){
             addable = e;
         }
@@ -88,6 +86,14 @@ public class EditElement {
                 Child b = highlighted.get(1);
                 selected.childElement().addConnection(a, b);
             }
+        }
+        public void makeElement(){
+            addableList.addElement(selected.childElement().clone());
+        }
+        public void breakElement(){
+            ArrayList<Child> childs = new ArrayList<>();
+            ArrayList<Connection> conns = new ArrayList<>();
+            
         }
         /*
         allows moving around in the global element
@@ -131,25 +137,35 @@ public class EditElement {
             }
             
         }
+        public void translate(int x, int y){
+            for ( Child c : selected.childElement().children() )
+                c.translate( x, y );
+            dynamicTree.updateUI();
+        }
         public void rotateLeft(){
             for ( Child c : selected.childElement().children() )
                 c.rotateLeft();
+            dynamicTree.updateUI();
         }
         public void rotateRight(){
             for ( Child c : selected.childElement().children() )
                 c.rotateRight();
+            dynamicTree.updateUI();
         }
         public void reflectX(){
             for ( Child c : selected.childElement().children() )
                 c.reflectX();
+            dynamicTree.updateUI();
         }
         public void reflectY(){
             for ( Child c : selected.childElement().children() )
                 c.reflectY();
+            dynamicTree.updateUI();
         }
         public void scale(int s){
             for ( Child c : selected.childElement().children() )
                 c.scale(s);
+            dynamicTree.updateUI();
         }
         public Element addable() {
             return addable;
@@ -227,11 +243,8 @@ public class EditElement {
         public void paintAddable( Graphics2D g){
             grid.paintAddable(g, addable);
         }
-        public void paintEmptyOnly(){
-            paintEmpties = true;
+        public void togglePaintEmpty(){
+            if(paintEmpties)paintEmpties = false;
+            else paintEmpties = true;
         }
-        public void paintChildOnly(){
-            paintEmpties = false;
-        }
-         
     }

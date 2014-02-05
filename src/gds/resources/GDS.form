@@ -164,7 +164,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="gridX" alignment="0" min="-2" pref="52" max="-2" attributes="0"/>
                               <Component id="gridXlabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -178,12 +178,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="moduleSize" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="gridSize" min="-2" pref="52" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="gridToggleButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                   <Component id="imageOpacity" min="-2" pref="137" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -199,67 +201,50 @@
                       <Component id="genMode" pref="101" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="hereXr" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="readX" min="-2" pref="61" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="labelX" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="readY" min="-2" pref="61" max="-2" attributes="0"/>
-                      <Component id="hereYr" min="-2" pref="61" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelY" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="hereXr" min="-2" pref="61" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="hereYr" min="-2" pref="61" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="gridY" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="gridX" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="gridSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="gridY" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gridX" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gridSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gridToggleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="moduleSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="moduleSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="gridcontrolLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="readY" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="editMode" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="genMode" alignment="3" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="editMode" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="genMode" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -312,20 +297,6 @@
             <Property name="text" type="java.lang.String" value="unit Size"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="readY">
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelY">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Y"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelX">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="X"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="readX">
-        </Component>
         <Component class="javax.swing.JTextField" name="hereYr">
         </Component>
         <Component class="javax.swing.JTextField" name="hereXr">
@@ -370,6 +341,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genModeActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="gridToggleButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Toggle Grid"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gridToggleButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JSplitPane" name="verticalSplit">
@@ -404,7 +383,7 @@
                     <EtchetBorder/>
                   </Border>
                 </Property>
-                <Property name="dividerLocation" type="int" value="495"/>
+                <Property name="dividerLocation" type="int" value="496"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
@@ -480,34 +459,55 @@
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
+                                          <Component id="viewEmptiesButton" min="-2" pref="103" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="makeConnectionButton" pref="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="makeElementButton" pref="103" max="32767" attributes="0"/>
-                                              <Component id="viewEmptiesButton" max="32767" attributes="0"/>
                                               <Component id="renameAddableButton" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="renameAddable" max="32767" attributes="0"/>
-                                              <Component id="viewChildrenButton" max="32767" attributes="0"/>
-                                              <Component id="resetRootButton" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="resetRootButton" alignment="0" pref="97" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Component id="makeConnectionButton" max="-2" attributes="0"/>
-                                      <Component id="rotateRightButton" min="-2" max="-2" attributes="0"/>
-                                      <Component id="rotateLeftButton" min="-2" max="-2" attributes="0"/>
-                                      <Component id="reflectXButton" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="scaleElementButton" max="32767" attributes="0"/>
-                                              <Component id="reflectYButton" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="rotateRightButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="scaleField" min="-2" pref="59" max="-2" attributes="0"/>
+                                          <Component id="rotateLeftButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="reflectXButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="reflectYButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="translateButton" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="readX" min="-2" pref="23" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="labelX" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                                  <Component id="readY" min="-2" pref="22" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="scaleElementButton" min="-2" pref="75" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="scaleField" min="-2" pref="59" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="labelY" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                                  <EmptySpace pref="11" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -521,30 +521,38 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="viewChildrenButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="viewEmptiesButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="renameAddableButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="renameAddable" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="makeConnectionButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
-                                  <Component id="rotateRightButton" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="makeConnectionButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="viewEmptiesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="rotateRightButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rotateLeftButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="rotateLeftButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="reflectXButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="reflectYButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="reflectXButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="reflectYButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="scaleElementButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="scaleField" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="translateButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="readX" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelX" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="readY" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelY" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="82" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -568,21 +576,16 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="viewEmptiesButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="View Empties"/>
+                            <Property name="text" type="java.lang.String" value="Toggle View"/>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewEmptiesButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="viewChildrenButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="View Children"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewChildrenButtonActionPerformed"/>
-                          </Events>
-                        </Component>
                         <Component class="javax.swing.JTextField" name="renameAddable">
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renameAddableActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="renameAddableButton">
                           <Properties>
@@ -641,6 +644,28 @@
                           </Events>
                         </Component>
                         <Component class="javax.swing.JTextField" name="scaleField">
+                        </Component>
+                        <Component class="javax.swing.JButton" name="translateButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Translate"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="translateButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="readX">
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="labelX">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="X"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="readY">
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="labelY">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Y"/>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>

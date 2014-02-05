@@ -136,6 +136,9 @@ class Child {
         return new Child ( child, location.add( l ));
     }
     
+    public void translate( int x, int y ){
+        location = location().add(new Location( x, y));
+    }
     public void transform( Transform t ){
         if (isEmpty()) location =  Transform.transform(t, location);
         else {
