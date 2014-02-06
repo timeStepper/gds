@@ -86,9 +86,9 @@ public class DynamicTree extends JTree{
                 }
                 else childNode = childNode.getNextSibling();
                 
-            System.out.println( "childNode "+childNode);
-            System.out.println( "lastNode "+lastChild);
-            System.out.println();
+//            System.out.println( "childNode "+childNode);
+//            System.out.println( "lastNode "+lastChild);
+//            System.out.println();
             if (childNode==null)return;
         } while ( !childNode.equals(lastChild));
         Child last = (Child)childNode.getUserObject();
@@ -137,5 +137,15 @@ public class DynamicTree extends JTree{
                 scrollPathToVisible(new TreePath(childNode.getPath()));
             }
             return parentNode;
+    }
+    public void setRoot(Child c){
+        clear();
+        DefaultMutableTreeNode dmt = new DefaultMutableTreeNode(c);
+        treeModel.setRoot(dmt);
+        rootNode = dmt;
+        setSelectionPath( new TreePath(rootNode.getPath()));
+        for( Child ch : c.childElement().children() )
+            addChild(ch);
+        setSelectionPath( new TreePath(rootNode.getPath()));
     }
 }

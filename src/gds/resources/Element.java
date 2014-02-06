@@ -52,9 +52,18 @@ public class Element {
     public void addChild( Child c ) {
         children.add( c );
     }
-    public void removeChild( Child c ){;
+    public void removeChild( Child c ){
         if ( children.contains( c ) )
             children.remove( c );
+    }
+    public void removeConnection( Child ch ){
+        ArrayList<Connection> removes = new ArrayList<>();
+        for ( Connection cn : connections ){
+            if( cn.a().equals(ch) || cn.b().equals(ch))
+                removes.add(cn);
+        }
+        for ( Connection cn : removes )
+            connections.remove(cn);
     }
     public Child childAt( Location l )throws NoSuchElementException{
         for( Child c: children)
@@ -183,15 +192,24 @@ class Child {
         return  child.equals( c.childElement( ) ) &&
                 location.equals( c.location( ) );
     }
-    public void display(){
-        display("");
+    public void displayChildren(){
+        System.out.println("Children:");
+        for(Child c : childElement().children())
+            //System.out.println(c);
+            display("", c);
     }
-    public void display( String tab ){
-        if ( child.isEmpty() ) System.out.println( tab+toString());
-        else {
-            for ( Child c : child.children() )
-                c.display(tab+="  ");
+    public void display( String tab, Child ch ){
+        System.out.println( tab+ch);
+        for (Child c : ch.childElement().children()) {
+            display(tab + "  ", c);
         }
+    }
+    public void displayConnections(){
+        System.out.println("Connections:");
+        for ( Connection cn : childElement().connections() ){
+            System.out.println(cn);
+        }
+        System.out.println();
     }
 }
 class Location {
@@ -224,6 +242,14 @@ class Location {
         }
         Location l = ( Location ) obj;
         return l.xCoord == xCoord && l.yCoord == yCoord;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + this.xCoord;
+        hash = 29 * hash + this.yCoord;
+        return hash;
     }
 }
 class Connection {
@@ -261,6 +287,10 @@ class Connection {
         if ( a.equals( c.a( ) ) ) return b.equals( c.b( ) );
         else if ( a.equals( c.b ( ) ) ) return b.equals( c.a( ) );
         else return false;
+    }
+    @Override
+    public String toString(){
+        return "["+a().location()+", "+b().location()+"]";
     }
     
 }

@@ -60,6 +60,11 @@ public class GDS extends javax.swing.JFrame {
         editMode = new javax.swing.JToggleButton();
         genMode = new javax.swing.JToggleButton();
         gridToggleButton = new javax.swing.JButton();
+        readX = new javax.swing.JTextField();
+        labelX = new javax.swing.JLabel();
+        readY = new javax.swing.JTextField();
+        labelY = new javax.swing.JLabel();
+        toJsonButton = new javax.swing.JButton();
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
@@ -78,12 +83,13 @@ public class GDS extends javax.swing.JFrame {
         reflectYButton = new javax.swing.JButton();
         scaleElementButton = new javax.swing.JButton();
         scaleField = new javax.swing.JTextField();
-        translateButton = new javax.swing.JButton();
-        readX = new javax.swing.JTextField();
-        labelX = new javax.swing.JLabel();
-        readY = new javax.swing.JTextField();
-        labelY = new javax.swing.JLabel();
-        toJsonButton = new javax.swing.JButton();
+        xLeftButton = new javax.swing.JButton();
+        xRightButton = new javax.swing.JButton();
+        yUpButton = new javax.swing.JButton();
+        yDownButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        displayChButton = new javax.swing.JButton();
+        displayCNButton = new javax.swing.JButton();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -181,6 +187,17 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        labelX.setText("X");
+
+        labelY.setText("Y");
+
+        toJsonButton.setText("printJson");
+        toJsonButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toJsonButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bottomBarLayout = new javax.swing.GroupLayout(bottomBar);
         bottomBar.setLayout(bottomBarLayout);
         bottomBarLayout.setHorizontalGroup(
@@ -211,13 +228,25 @@ public class GDS extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(gridcontrolLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(toJsonButton)
+                .addGap(63, 63, 63)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(editMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(bottomBarLayout.createSequentialGroup()
+                        .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelX)))
                 .addGap(41, 41, 41)
-                .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bottomBarLayout.createSequentialGroup()
+                        .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelY))
+                    .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
         bottomBarLayout.setVerticalGroup(
@@ -245,12 +274,18 @@ public class GDS extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(bottomBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(editMode)
+                .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(editMode)
+                    .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelX)
+                    .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelY))
                 .addGap(11, 11, 11)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(toJsonButton))
                 .addContainerGap())
         );
 
@@ -359,21 +394,47 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
-        translateButton.setText("Translate");
-        translateButton.addActionListener(new java.awt.event.ActionListener() {
+        xLeftButton.setText("Right");
+        xLeftButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                translateButtonActionPerformed(evt);
+                xLeftButtonActionPerformed(evt);
             }
         });
 
-        labelX.setText("X");
-
-        labelY.setText("Y");
-
-        toJsonButton.setText("printJson");
-        toJsonButton.addActionListener(new java.awt.event.ActionListener() {
+        xRightButton.setText("Left");
+        xRightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toJsonButtonActionPerformed(evt);
+                xRightButtonActionPerformed(evt);
+            }
+        });
+
+        yUpButton.setText("Up");
+        yUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yUpButtonActionPerformed(evt);
+            }
+        });
+
+        yDownButton.setText("Down");
+        yDownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yDownButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Translate Element");
+
+        displayChButton.setText("displayCH");
+        displayChButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayChButtonActionPerformed(evt);
+            }
+        });
+
+        displayCNButton.setText("display CN");
+        displayCNButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayCNButtonActionPerformed(evt);
             }
         });
 
@@ -382,7 +443,7 @@ public class GDS extends javax.swing.JFrame {
         editControlsLayout.setHorizontalGroup(
             editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editControlsLayout.createSequentialGroup()
-                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(editControlsLayout.createSequentialGroup()
                         .addComponent(viewEmptiesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -404,25 +465,29 @@ public class GDS extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(reflectYButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
-                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
-                                .addComponent(scaleElementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
-                                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(toJsonButton)
-                                    .addGroup(editControlsLayout.createSequentialGroup()
-                                        .addComponent(translateButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(labelX)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelY)))
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(xLeftButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(yUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(xRightButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(yDownButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, editControlsLayout.createSequentialGroup()
+                        .addComponent(scaleElementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(11, Short.MAX_VALUE))
+            .addGroup(editControlsLayout.createSequentialGroup()
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(editControlsLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel2))
+                    .addGroup(editControlsLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(displayChButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(displayCNButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         editControlsLayout.setVerticalGroup(
             editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,7 +504,11 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(makeConnectionButton)
                     .addComponent(viewEmptiesButton))
-                .addGap(176, 176, 176)
+                .addGap(63, 63, 63)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(displayChButton)
+                    .addComponent(displayCNButton))
+                .addGap(90, 90, 90)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rotateRightButton)
                     .addComponent(rotateLeftButton))
@@ -453,14 +522,15 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(scaleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(translateButton)
-                    .addComponent(readX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelX)
-                    .addComponent(readY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelY))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(toJsonButton)
-                .addGap(19, 19, 19))
+                    .addComponent(xLeftButton)
+                    .addComponent(xRightButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(yUpButton)
+                    .addComponent(yDownButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Edit", editControls);
@@ -807,17 +877,10 @@ public class GDS extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_renameAddableActionPerformed
 
-    private void translateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_translateButtonActionPerformed
-        int x, y;
-        try{
-            x = Integer.parseInt(readX.getText());
-            y = Integer.parseInt(readY.getText());
-            edit.translate(x, y);
-            ((MyPanel)displayArea).repaint();
-        }catch(NumberFormatException nfe) {}
-        
-        
-    }//GEN-LAST:event_translateButtonActionPerformed
+    private void xLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xLeftButtonActionPerformed
+        edit.translate(-1, 0);
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_xLeftButtonActionPerformed
 
     private void toJsonButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toJsonButtonActionPerformed
         System.out.println("Json: ");
@@ -866,6 +929,29 @@ public class GDS extends javax.swing.JFrame {
             System.out.println("File load cancelled by user.");
         }
     }//GEN-LAST:event_loadElementMenuActionPerformed
+
+    private void xRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xRightButtonActionPerformed
+        edit.translate(1, 0);
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_xRightButtonActionPerformed
+
+    private void yUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yUpButtonActionPerformed
+        edit.translate(0,-1);
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_yUpButtonActionPerformed
+
+    private void yDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yDownButtonActionPerformed
+        edit.translate(0,1);
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_yDownButtonActionPerformed
+
+    private void displayChButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayChButtonActionPerformed
+        edit.selected.displayChildren();
+    }//GEN-LAST:event_displayChButtonActionPerformed
+
+    private void displayCNButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayCNButtonActionPerformed
+        edit.selected.displayConnections();
+    }//GEN-LAST:event_displayCNButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1082,6 +1168,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JList connectionList;
     private javax.swing.JScrollPane connectionScroll;
     private javax.swing.JPanel displayArea;
+    private javax.swing.JButton displayCNButton;
+    private javax.swing.JButton displayChButton;
     private javax.swing.JTree dynamicTree;
     private javax.swing.JLabel dynamicTreeLabel;
     private javax.swing.JPanel editControls;
@@ -1102,6 +1190,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JSlider imageOpacity;
     private javax.swing.JFileChooser importImage;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1133,10 +1222,13 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JButton toJsonButton;
     private javax.swing.JPanel topBar;
-    private javax.swing.JButton translateButton;
     private javax.swing.JMenuItem translateImage;
     private javax.swing.JSplitPane verticalSplit;
     private javax.swing.JButton viewEmptiesButton;
+    private javax.swing.JButton xLeftButton;
+    private javax.swing.JButton xRightButton;
+    private javax.swing.JButton yDownButton;
+    private javax.swing.JButton yUpButton;
     // End of variables declaration//GEN-END:variables
     private Mode mode = new Mode( );
     Grid grid = new Grid();

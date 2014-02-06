@@ -126,6 +126,7 @@ public class EditElement {
             try{
                 Child c = new Child( addable, l );
                 selected.childElement().removeChild(c);
+                selected.childElement().removeConnection(c);
                 selected_ChildrenList.removeChild(c);
                 dynamicTree.removeChild(c);
                 //the following commented out for testing in case dynamic tree throws this error
@@ -251,6 +252,8 @@ public class EditElement {
             return gson.toJson(selected);
         }
         public void fromJson(String input){
-            selected = gson.fromJson(input, Child.class);
+            Child son = gson.fromJson(input, Child.class).clone();
+            dynamicTree.setRoot(son);
+            
         }
     }
