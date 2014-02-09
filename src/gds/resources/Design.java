@@ -45,7 +45,7 @@ public class Design {
     
 }
 class Source extends Element{
-    HashMap<Location, ArrayList<Child>> rules;//adjacency list for Child
+    HashMap<Child, ArrayList<Child>> rules;//adjacency list for Child
 
     Source() {
         super();
@@ -56,18 +56,18 @@ class Source extends Element{
         for ( Connection conn : connections() ){
             Child a = conn.a();
             Child b = conn.b();
-            addRule( a.location(), b);
-            addRule( b.location(), a);
+            addRule( a, b);
+            addRule( b, a);
         }
     }
-    public void addRule( Location l, Child c){
-        if (rules.containsKey(l)){
-            rules.get(l).add(c);
+    public void addRule( Child lhs, Child c){
+        if (rules.containsKey(lhs)){
+            rules.get(lhs).add(c);
         }
         else {
-            ArrayList<Child> newrule = new ArrayList<>();
-            newrule.add(c);
-            rules.put(l, newrule);
+            ArrayList<Child> rhs = new ArrayList<>();
+            rhs.add(c);
+            rules.put(lhs , rhs);
         }
     }
 }

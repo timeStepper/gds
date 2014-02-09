@@ -394,14 +394,14 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
-        xLeftButton.setText("Right");
+        xLeftButton.setText("Left");
         xLeftButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 xLeftButtonActionPerformed(evt);
             }
         });
 
-        xRightButton.setText("Left");
+        xRightButton.setText("Right");
         xRightButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 xRightButtonActionPerformed(evt);
@@ -911,8 +911,7 @@ public class GDS extends javax.swing.JFrame {
         int loadVal = loadElement.showOpenDialog(this);
         if (loadVal == JFileChooser.APPROVE_OPTION) {
             BufferedReader read = null;
-            try{
-                String sCurrentLine;
+            try{ 
 		read = new BufferedReader(new FileReader(loadElement.getSelectedFile()));
                 try {
                     edit.fromJson(read.readLine());
@@ -947,10 +946,14 @@ public class GDS extends javax.swing.JFrame {
 
     private void displayChButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayChButtonActionPerformed
         edit.selected.displayChildren();
+//        System.out.println("empties:");
+//        System.out.println(Child.flattenChildren(edit.selected));
     }//GEN-LAST:event_displayChButtonActionPerformed
 
     private void displayCNButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayCNButtonActionPerformed
         edit.selected.displayConnections();
+//        System.out.println("edges:");
+//        System.out.println(Child.flattenConnections(edit.selected));
     }//GEN-LAST:event_displayCNButtonActionPerformed
 
     /**

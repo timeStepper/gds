@@ -86,11 +86,11 @@ public class EditElement {
             if (highlighted.size() > 1){
                 Child a = highlighted.get(0);
                 Child b = highlighted.get(1);
-                selected.childElement().addConnection(a, b);
+                selected.element().addConnection(a, b);
             }
         }
         public void makeElement(){
-            addableList.addElement(selected.childElement().clone());
+            addableList.addElement(selected.element().clone());
         }
         public void breakElement(){
             ArrayList<Child> childs = new ArrayList<>();
@@ -109,13 +109,13 @@ public class EditElement {
         }
         public void updateChildrenList( Child c ){
             selected_ChildrenList.removeAll();
-            for ( Child child : c.childElement().children() )
+            for ( Child child : c.children() )
                 selected_ChildrenList.addChild(child);
         }
         public void addChild( Child c ){
-            if ( c.childElement().isEmpty() ) c = new Child( new Element(), c.location() );
+            if ( c.element().isEmpty() ) c = new Child( new Element(), c.location() );
             if ( selected_ChildrenList.alreadyInList(c) )return;
-            selected.childElement().addChild(c);
+            selected.element().addChild(c);
             dynamicTree.addChild(c);
             selected_ChildrenList.addChild(c);
 //            new Child( element, new Location(0,0)).display();
@@ -125,8 +125,8 @@ public class EditElement {
             //Child c = new Child ( addable, l );
             try{
                 Child c = new Child( addable, l );
-                selected.childElement().removeChild(c);
-                selected.childElement().removeConnection(c);
+                selected.element().removeChild(c);
+                selected.element().removeConnection(c);
                 selected_ChildrenList.removeChild(c);
                 dynamicTree.removeChild(c);
                 //the following commented out for testing in case dynamic tree throws this error
@@ -141,32 +141,32 @@ public class EditElement {
             
         }
         public void translate(int x, int y){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.translate( x, y );
             dynamicTree.updateUI();
         }
         public void rotateLeft(){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.rotateLeft();
             dynamicTree.updateUI();
         }
         public void rotateRight(){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.rotateRight();
             dynamicTree.updateUI();
         }
         public void reflectX(){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.reflectX();
             dynamicTree.updateUI();
         }
         public void reflectY(){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.reflectY();
             dynamicTree.updateUI();
         }
         public void scale(int s){
-            for ( Child c : selected.childElement().children() )
+            for ( Child c : selected.children() )
                 c.scale(s);
             dynamicTree.updateUI();
         }
@@ -179,9 +179,9 @@ public class EditElement {
         
         //painting methods;  the current selected child's element is what is painted
         public void paintEdit( Graphics2D g ) {
-            if ( selected.childElement() != null ) {
+            if ( selected.element() != null ) {
                 if(paintEmpties) paintEmpties( g, selected );
-                else paintElement( g, selected.childElement() );
+                else paintElement( g, selected.element() );
             }
         }
         
@@ -212,14 +212,14 @@ public class EditElement {
         }
         
         public void paintEmpties( Graphics2D g, Child c ){
-            if ( c.childElement().isEmpty()) {
+            if ( c.element().isEmpty()) {
                 
                 paintLocation( g, c.location());
             }
             else {
-                for ( Connection conn : c.childElement().connections() )
+                for ( Connection conn : c.connections() )
                     paintEmptyConnection( g, conn.locate(c.location()));
-                for ( Child child : c.childElement().children())
+                for ( Child child : c.children())
                     paintEmpties( g, child.locate(c.location()));
             }
         }

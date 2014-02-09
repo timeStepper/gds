@@ -20,7 +20,7 @@ import javax.swing.tree.TreeSelectionModel;
  *
  * @author owenpaulmeyer
  */
-public class DynamicTree extends JTree{
+public class DynamicTree extends JTree {
     DefaultMutableTreeNode rootNode;
     DefaultTreeModel treeModel;
     EditElement edit;
@@ -115,7 +115,7 @@ public class DynamicTree extends JTree{
             DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(child);
             if ( child.isEmpty())return addChild(childNode, parentNode, true );
             else {
-                for ( Child c : child.childElement().children() ) {
+                for ( Child c : child.children() ) {
                     childNode = addChild( c, childNode);
                 }
                 addChild(childNode,parentNode,true);
@@ -144,7 +144,7 @@ public class DynamicTree extends JTree{
         treeModel.setRoot(dmt);
         rootNode = dmt;
         setSelectionPath( new TreePath(rootNode.getPath()));
-        for( Child ch : c.childElement().children() )
+        for( Child ch : c.children() )
             addChild(ch);
         setSelectionPath( new TreePath(rootNode.getPath()));
     }

@@ -33,6 +33,7 @@ public class Element {
     ArrayList< Connection > connections( ) {
         return connections;
     }
+    @Override
     public Element clone(){
         ArrayList<Child> childs = new ArrayList<>();
         ArrayList<Connection> conns = new ArrayList<>();
@@ -70,7 +71,6 @@ public class Element {
             if (c.location().equals(l))return c;
         throw new NoSuchElementException();
     }
-    
     public void addConnection( Child a, Child b ) {
         Connection c = new Connection ( a, b );
         connections.add( c );
@@ -123,8 +123,14 @@ class Child {
     public boolean isEmpty(){
         return child.isEmpty();
     }
-    Element childElement( ) {
+    Element element( ) {
         return child;
+    }
+    ArrayList< Child > children(){
+        return element().children();
+    }
+    ArrayList< Connection > connections() {
+        return element().connections();
     }
     Location location( ) {
         return location;
@@ -139,12 +145,27 @@ class Child {
         }catch(NoSuchElementException nse){
             throw nse;
         }
-        
     }
     public Child locate( Location l ){
         return new Child ( child, location.add( l ));
     }
-    
+    //this version will double up on recurances
+    public static ArrayList<Child> flattenChildren( Child c){
+        ArrayList<Child> empties = new ArrayList<>();
+        if ( c.isEmpty() ) empties.add(c);
+        else for ( Child ch : c.children() )
+            empties.addAll( flattenChildren( ch ));
+        return empties;
+    }
+    public static ArrayList<Connection> flattenConnections( Child c ){
+        ArrayList<Connection> edges = new ArrayList<>();
+        if ( c.isEmpty())return edges;
+        else for ( Child ch : c.children() )
+            edges.addAll( flattenConnections( ch ));
+        for ( Connection cn : c.connections() )
+            if ( cn.a().isEmpty() ) edges.add(cn);
+        return edges;
+    }
     public void translate( int x, int y ){
         location = location().add(new Location( x, y));
     }
@@ -152,7 +173,7 @@ class Child {
         if (isEmpty()) location =  Transform.transform(t, location);
         else {
             location =  Transform.transform(t, location);
-            for ( Child c : childElement().children() )
+            for ( Child c : children() )
                 c.transform( t );
         }
     }
@@ -189,24 +210,24 @@ class Child {
         }
         Child c = ( Child ) obj;
         
-        return  child.equals( c.childElement( ) ) &&
+        return  child.equals( c.element( ) ) &&
                 location.equals( c.location( ) );
     }
     public void displayChildren(){
         System.out.println("Children:");
-        for(Child c : childElement().children())
+        for(Child c : children())
             //System.out.println(c);
             display("", c);
     }
     public void display( String tab, Child ch ){
         System.out.println( tab+ch);
-        for (Child c : ch.childElement().children()) {
+        for (Child c : ch.children()) {
             display(tab + "  ", c);
         }
     }
     public void displayConnections(){
         System.out.println("Connections:");
-        for ( Connection cn : childElement().connections() ){
+        for ( Connection cn : connections() ){
             System.out.println(cn);
         }
         System.out.println();

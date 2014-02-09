@@ -734,7 +734,7 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="xLeftButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Right"/>
+                            <Property name="text" type="java.lang.String" value="Left"/>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xLeftButtonActionPerformed"/>
@@ -742,7 +742,7 @@
                         </Component>
                         <Component class="javax.swing.JButton" name="xRightButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Left"/>
+                            <Property name="text" type="java.lang.String" value="Right"/>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xRightButtonActionPerformed"/>
