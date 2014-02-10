@@ -123,17 +123,17 @@ class Child {
     public boolean isEmpty(){
         return child.isEmpty();
     }
-    Element element( ) {
+    public Element element( ) {
         return child;
+    }
+    public Location location(){
+        return location;
     }
     ArrayList< Child > children(){
         return element().children();
     }
     ArrayList< Connection > connections() {
         return element().connections();
-    }
-    Location location( ) {
-        return location;
     }
     
     public void setName( String n ){
@@ -146,26 +146,40 @@ class Child {
             throw nse;
         }
     }
+    //this is used for paint purposes only
     public Child locate( Location l ){
-        return new Child ( child, location.add( l ));
+        return new Child ( element(), location().add( l ));
     }
-    //this version will double up on recurances
-    public static ArrayList<Child> flattenChildren( Child c){
-        ArrayList<Child> empties = new ArrayList<>();
-        if ( c.isEmpty() ) empties.add(c);
-        else for ( Child ch : c.children() )
-            empties.addAll( flattenChildren( ch ));
-        return empties;
+    //this is the method to call for getting the located version of a child
+    public static Child locate( Child c, Location l ){
+        Child rtn = c.clone();
+        rtn.located(l);
+        return rtn;
     }
-    public static ArrayList<Connection> flattenConnections( Child c ){
-        ArrayList<Connection> edges = new ArrayList<>();
-        if ( c.isEmpty())return edges;
-        else for ( Child ch : c.children() )
-            edges.addAll( flattenConnections( ch ));
-        for ( Connection cn : c.connections() )
-            if ( cn.a().isEmpty() ) edges.add(cn);
-        return edges;
+    private void located( Location l ){
+        if (!isEmpty())
+            for ( Child ch : children() ){
+                ch.location = ch.location.add(l);
+                ch.located(ch.location());
+            }
     }
+//    //this version will double up on recurances
+//    public static ArrayList<Child> flattenChildren( Child c){
+//        ArrayList<Child> empties = new ArrayList<>();
+//        if ( c.isEmpty() ) empties.add(c);
+//        else for ( Child ch : c.children() )
+//            empties.addAll( flattenChildren( ch ));
+//        return empties;
+//    }
+//    public static ArrayList<Connection> flattenConnections( Child c ){
+//        ArrayList<Connection> edges = new ArrayList<>();
+//        if ( c.isEmpty())return edges;
+//        else for ( Child ch : c.children() )
+//            edges.addAll( flattenConnections( ch ));
+//        for ( Connection cn : c.connections() )
+//            if ( cn.a().isEmpty() ) edges.add(cn);
+//        return edges;
+//    }
     public void translate( int x, int y ){
         location = location().add(new Location( x, y));
     }

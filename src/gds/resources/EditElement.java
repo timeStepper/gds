@@ -190,10 +190,11 @@ public class EditElement {
         for ( Connection c : e.connections() )
             paintConnection(g, c);
         for ( Child c : e.children() )
-            paintLocation(g, c.location());
+            if (c.isEmpty())paintLocation(g, c.location());
+            else paintCenter(g,c.location());
         }
         public void paintLocation(Graphics2D g, Location l) {
-            g.setColor(Color.WHITE);
+            g.setColor(Color.ORANGE);
             g.fillOval(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
             g.setColor(Color.BLACK);
             g.drawOval(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
@@ -210,30 +211,30 @@ public class EditElement {
             //g.setColor(Color.BLACK);
             //g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
         }
-        
+        public void paintCenter( Graphics2D g, Location l ){
+            g.setColor(Color.PINK);
+            g.fillRect(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
+            g.setColor(Color.BLACK);
+            g.drawRect(originX+(l.xLoc()*module)-4, originY+(l.yLoc()*module)-4, 8, 8);
+        }
+        public void recPaint( Graphics2D g, Child ch ){
+            if (ch.isEmpty())paintLocation(g,ch.location());
+            else for ( Child c:ch.children())recPaint(g,c);
+        }
         public void paintEmpties( Graphics2D g, Child c ){
+//           Child p = Child.locate(c,c.location());
+//           recPaint(g,p);
             if ( c.element().isEmpty()) {
-                
                 paintLocation( g, c.location());
             }
             else {
                 for ( Connection conn : c.connections() )
-                    paintEmptyConnection( g, conn.locate(c.location()));
-                for ( Child child : c.children())
+                    if ( conn.a().isEmpty())
+                        paintConnection( g, conn.locate(c.location()));
+                for ( Child child : c.children()){
                     paintEmpties( g, child.locate(c.location()));
+                }
             }
-        }
-        public void paintEmptyConnection( Graphics2D g, Connection c ) {
-            g.setColor(Color.WHITE);
-            //g.setStroke(new BasicStroke(2F));
-            int x1 = c.a().location( ).xLoc( );
-            int y1 = c.a().location( ).yLoc( );
-            int x2 = c.b().location( ).xLoc( );
-            int y2 = c.b().location( ).yLoc( );
-            g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
-            //g.setStroke(new BasicStroke(1F));
-            //g.setColor(Color.BLACK);
-            //g.drawLine( x1*module + originX, y1*module + originY, x2*module + originX, y2*module + originY );
         }
         public void paintHighlighted( Graphics2D g ){
             for ( Child c : highlighted ){
@@ -244,9 +245,11 @@ public class EditElement {
         public void paintAddable( Graphics2D g){
             grid.paintAddable(g, addable);
         }
-        public void togglePaintEmpty(){
-            if(paintEmpties)paintEmpties = false;
-            else paintEmpties = true;
+        public void paintGlobal(){
+            paintEmpties = true;
+        }
+        public void paintLocal(){
+            paintEmpties = false;
         }
         public String toJson(){
             return gson.toJson(selected);
