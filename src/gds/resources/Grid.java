@@ -83,7 +83,6 @@ public class Grid {
         public void toggleGrid(){
             if( paintGrid )paintGrid=false;
             else paintGrid = true;
-            
         }
         public void paintGrid ( Graphics2D g, int w, int h ) {
             if ( paintGrid )paintGridCall(g,w,h);
@@ -94,7 +93,7 @@ public class Grid {
             g.drawLine( 0, h / 2, w, h / 2);
             g.setStroke(new BasicStroke(1F));
         }
-        public void paintGridCall ( Graphics2D g, int w, int h ) {
+        private void paintGridCall ( Graphics2D g, int w, int h ) {
             int offX = ( w - width*mS ) / 2;
             int offY = ( h - height*mS ) / 2;
             
@@ -110,20 +109,11 @@ public class Grid {
             for (int y = 0; y <= height; ++y ) {
                 g.drawLine( offX, y*mS + offY, width*mS + offX, y*mS + offY);
             }
-            
-            //draws the axis lines
-            
-            
-            //paints select circle or not
-            
         }
-        
         public void setOpacity( int o ) {
             opacity = o;
             col = new Color ( 100, 100, 100, opacity );
         }
-        
-        
         public void paintAddable(Graphics2D g, Element e){
             if ( select ) {
                 if ( e.isEmpty() ){

@@ -14,38 +14,78 @@ import java.util.HashMap;
  * @author owenpaulmeyer
  */
 public class Design {
-    boolean[][] grid;
-    int width;
-    int height;
-    ArrayList<WeightedEdge> edges = new ArrayList<>();
-    Source source;
+    private HashMap<Location,Child> grid = new HashMap<>();
+    private int width;
+    private int height;
+    private ArrayList<WeightedEdge> edges = new ArrayList<>();
     
     Design( int x, int y ){
         width = x;
         height = y;
-        grid = new boolean[x][y];
-        initialize();
     }
     public boolean isOccupied(int x, int y ){
-        return grid[x][y];
+        return contains(new Location(x,y));
     }
-    public void initialize(){
-        for ( int x = 0; x < width; ++x )
-            for ( int y = 0; y < height; ++y )
-                grid[x][y] = false;
+    public boolean contains(Location l){
+        if ( grid.containsKey(l))return true;
+        else return false;
     }
-    public void setSource( Source s ){
-        source = s;
+    public HashMap<Location,Child> grid(){
+        return grid;
+    }
+    public ArrayList<WeightedEdge> edges(){
+        return edges;
+    }
+    public int width(){
+        return width;
+    }
+    public int height(){
+        return height;
+    }
+    
+    public void setSeed( Child child ){
+        ArrayList<Child> kids = Child.flattenChildren(child);
+        ArrayList<Connection> conns = Child.flattenConnections(child);
+        for ( Child c : kids )
+            plant(c);
+        for ( Connection con : conns )
+            edges.add(new WeightedEdge(con.a(),con.b()));
+//        Child located = child.locate(new Location(0,0));
+//        for ( Child c : located.children() ){
+//            plant(c);
+//        }
+//        for ( Connection con : child.connections()){
+//            edges.add(new WeightedEdge(con.a(),con.b()));
+//        }
+    }
+    //helper to setSeed
+    private void plant( Child child ){
+        for ( Child c : child.children() ){
+            if (c.isEmpty()) addNode(c);
+            else {
+                plant(c);
+                addEdges( child );  
+            }
+        }
     }
     public void addEdge( WeightedEdge we ){
         edges.add(we);
     }
+    public void addEdges( Child c ){
+        for ( Connection cn : c.connections() )
+            addEdge( new WeightedEdge(cn.a(),cn.b()));
+    }
+    public void addNode( Child child ){
+        Location l = child.location();
+        grid.put(l,child);
+    }
+    //used for getting the Bounded region of the Design
     public Design bounded( Bounds bounds ){
         Design rtn = new Design( width, height );
         for ( int x = 0; x < width; ++x )
             for ( int y = 0; y < height; ++y ){
                 if ( bounds.isBounded(x,y))
-                    rtn.grid[x][y] = true;
+                    rtn.grid.put(new Location(x, y),new Child());
             }
         for ( WeightedEdge we : edges )
             if(bounds.isBounded(we))
@@ -54,8 +94,31 @@ public class Design {
     }
     public ArrayList<Child> intersection( Source source, Location loc ){
         ArrayList<Child> intersection = new ArrayList<>();
-        //Child located = 
-        return intersection;
+        Child located = Child.locate(source.element(), loc);
+        Bounds bounds = Source.bounds(located);
+        Design bounded = bounded(bounds);
+        return intersect( located, bounded );
+    }
+    private ArrayList<Child> intersect( Child located, Design bounded ){
+        ArrayList<Child> intersections = new ArrayList<>();
+        if ( located.isEmpty() ){
+            if ( bounded.contains( located.location()))
+                intersections.add(located);
+        }
+        else {
+            for ( Child c:located.children())
+                intersections.addAll(intersect(c,bounded));
+            if ( containsAll(intersections, located.children()))
+                intersections.add(located);
+        }
+        return intersections;
+    }
+    //a contains all b
+    private static boolean containsAll(ArrayList<Child> a, ArrayList<Child> b){
+        boolean rtn = true;
+        for (Child c : b)
+            rtn &= a.contains(c);
+        return rtn;
     }
     
 }
@@ -68,7 +131,14 @@ class Source {
         super();
         rules = new HashMap<>();
         //computeRules();
+        
+    }
+    public void setSource( Child c ){
+        element = c;
         bounds();
+    }
+    public Child element(){
+        return element;
     }
     private void bounds(){
         int xmin = Integer.MAX_VALUE;
@@ -120,18 +190,34 @@ class Source {
 
 class WeightedEdge{
     private Weight weight = new Weight();
-    private Location start;
-    private Location fin;
+    private Child start;
+    private Child fin;
     
-    WeightedEdge( Location a, Location b ){
+    WeightedEdge( Child a, Child b ){
         start = a;
         fin = b;
     }
-    public Location start(){
+    public Child start(){
         return start;
     }
-    public Location fin(){
+    public Child fin(){
         return fin;
+    }
+    public int startX(){
+        return start.xLoc();
+    }
+    public int startY(){
+        return start.yLoc();
+    }
+    public int finX(){
+        return fin.xLoc();
+    }
+    public int finY(){
+        return fin.yLoc();
+    }
+    @Override
+    public String toString(){
+        return "["+start+", "+fin+"]";
     }
 }
 class Weight{

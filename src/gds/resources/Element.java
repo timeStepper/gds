@@ -163,23 +163,23 @@ class Child {
                 ch.located(ch.location());
             }
     }
-//    //this version will double up on recurances
-//    public static ArrayList<Child> flattenChildren( Child c){
-//        ArrayList<Child> empties = new ArrayList<>();
-//        if ( c.isEmpty() ) empties.add(c);
-//        else for ( Child ch : c.children() )
-//            empties.addAll( flattenChildren( ch ));
-//        return empties;
-//    }
-//    public static ArrayList<Connection> flattenConnections( Child c ){
-//        ArrayList<Connection> edges = new ArrayList<>();
-//        if ( c.isEmpty())return edges;
-//        else for ( Child ch : c.children() )
-//            edges.addAll( flattenConnections( ch ));
-//        for ( Connection cn : c.connections() )
-//            if ( cn.a().isEmpty() ) edges.add(cn);
-//        return edges;
-//    }
+    //this version will double up on recurances
+    public static ArrayList<Child> flattenChildren( Child c){
+        ArrayList<Child> empties = new ArrayList<>();
+        if ( c.isEmpty() ) empties.add(c);
+        else for ( Child ch : c.children() )
+            empties.addAll( flattenChildren( ch ));
+        return empties;
+    }
+    public static ArrayList<Connection> flattenConnections( Child c ){
+        ArrayList<Connection> edges = new ArrayList<>();
+        if ( c.isEmpty())return edges;
+        else for ( Child ch : c.children() )
+            edges.addAll( flattenConnections( ch ));
+        for ( Connection cn : c.connections() )
+            if ( cn.a().isEmpty() ) edges.add(cn);
+        return edges;
+    }
     public void translate( int x, int y ){
         location = location().add(new Location( x, y));
     }
@@ -190,6 +190,12 @@ class Child {
             for ( Child c : children() )
                 c.transform( t );
         }
+    }
+    public int xLoc(){
+        return location().xLoc();
+    }
+    public int yLoc(){
+        return location().yLoc();
     }
     public void rotateRight( ){
         transform(new Transform(0,(-1),1,0) );
