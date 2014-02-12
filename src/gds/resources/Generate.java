@@ -6,6 +6,7 @@
 
 package gds.resources;
 
+import static gds.resources.Design.intersect;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -31,13 +32,25 @@ public class Generate {
     public void setSeed(Child c){
         design.setSeed(c);
     }
+    public ArrayList<Child> intersection( Location loc ){
+        ArrayList<Child> intersection = new ArrayList<>();
+        Child located = Child.locate(source.element(), loc);
+        
+        Bounds bounds = Source.bounds(located);
+        Design bounded = Design.bounded(bounds, design);
+//        System.out.println("Bounded:\n"+bounded);
+//        System.out.println("Located:");
+//        located.displayChildren();
+        return intersect( located, bounded );
+        
+    }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
-        Design des = design.bounded(b);
+        Design des = Design.bounded(b, design);
         System.out.println("Bounded:\n"+des);
     }
     public void intersectionTest(Location l){
-        ArrayList<Child> intersection = design.intersection(source, l);
+        ArrayList<Child> intersection = intersection(l);
         System.out.println("Intersection:\n"+intersection);
     }
     //the parent call for painting this object

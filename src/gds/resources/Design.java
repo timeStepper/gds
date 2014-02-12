@@ -36,7 +36,6 @@ public class Design {
         ArrayList<Child> kids = Child.flattenChildren(child);
         ArrayList<Connection> conns = Child.flattenConnections(child);
         for ( Child c : kids ){
-            System.out.println(c);
             plant(c);
         }
         for ( Connection con : conns )
@@ -66,9 +65,9 @@ public class Design {
         nodes.add(l);
     }
     //used for getting the Bounded region of the Design
-    public Design bounded( Bounds bounds ){
+    public static Design bounded( Bounds bounds, Design d ){
         Design rtn = new Design( );
-        for ( Location l : nodes ){
+        for ( Location l : d.nodes ){
             int x = l.xLoc();
             int y = l.yLoc();
             if ( bounds.isBounded(x, y) ){
@@ -76,43 +75,38 @@ public class Design {
                 rtn.nodes.add(loc);
             }
         }
-        for ( WeightedEdge we : edges )
+        for ( WeightedEdge we : d.edges )
             if(bounds.isBounded(we))
                 rtn.addEdge(we);
         return rtn;
     }
-    public ArrayList<Child> intersection( Source source, Location loc ){
-        ArrayList<Child> intersection = new ArrayList<>();
-        Child located = Child.locate(source.element(), loc);
-        Bounds bounds = Source.bounds(located);
-        Design bounded = bounded(bounds);
-//        System.out.println("Bounded:\n"+bounded);
-//        System.out.println("Located:");
-//        located.displayChildren();
-        return intersect( located, bounded );
-        
-    }
+    
     //helper to intersection
-    private ArrayList<Child> intersect( Child located, Design bounded ){
+        public static ArrayList<Child> intersect( Child located, Design bounded ){
+        //System.out.println("located: "+located);
+        //located.displayChildren();
         ArrayList<Child> intersections = new ArrayList<>();
         if ( located.isEmpty() ){
             if ( bounded.contains( located.location()))
                 intersections.add(located);
         }
         else {
-            for ( Child c:located.children())
+            for ( Child c : located.children())
                 intersections.addAll(intersect(c,bounded));
-            if ( containsAll(intersections, located.children()))
+//                    System.out.println("located.children():\n"+located.children());
+//                    System.out.println("intersections:\n"+intersections);
+            if ( containsAll(intersections, located.children())){
+                
                 intersections.add(located);
+            }
         }
         return intersections;
     }
     //a contains all b
     private static boolean containsAll(ArrayList<Child> a, ArrayList<Child> b){
-        boolean rtn = true;
         for (Child c : b)
-            rtn &= a.contains(c);
-        return rtn;
+            if ( !a.contains(c) )return false;
+        return true;
     }
     @Override
     public String toString(){

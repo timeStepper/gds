@@ -993,7 +993,7 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_displayBoundsButtonActionPerformed
 
     private void displayLocateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayLocateButtonActionPerformed
-        Child located = Child.locate(edit.selected, edit.selected.location());
+        Child located = Child.locate(edit.selected, new Location(2,2));//edit.selected.location());
         located.displayChildren();
     }//GEN-LAST:event_displayLocateButtonActionPerformed
 

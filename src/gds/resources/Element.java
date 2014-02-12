@@ -158,12 +158,14 @@ class Child {
     }
     //helper to static locate
     private void located( Location l ){
+        
         if (!isEmpty())
             for ( Child ch : children() ){
                 ch.location = ch.location.add(l);
                 ch.located(ch.location());
             }
     }
+    
     //public static ArrayList<Child> 
     //this version will double up on recurances
     public static ArrayList<Child> flattenChildren( Child c){
@@ -228,7 +230,9 @@ class Child {
     }
     @Override
     public String toString() {
-        return "[ "+name+", "+location.toString()+"  ]";
+        if (isEmpty())
+            return "[E: "+location.toString()+"]";
+        else return "[P: "+location.toString()+"]";
     }
     @Override
     public boolean equals(Object obj) {
@@ -244,7 +248,7 @@ class Child {
                 location.equals( c.location( ) );
     }
     public void displayChildren(){
-        System.out.println("Children:");
+        System.out.println("ChildrenOf: "+this);
         for(Child c : children())
             //System.out.println(c);
             display("", c);
