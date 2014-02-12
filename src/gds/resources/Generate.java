@@ -9,6 +9,7 @@ package gds.resources;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Set;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Generate {
     Grid grid;
     
     Generate(int x, int y, Grid g){
-        design = new Design(x,y);
+        design = new Design();
         grid = g;
     }
     public void setSource(Child c){
@@ -37,15 +38,11 @@ public class Generate {
     
         
     public void paintDesign( Graphics2D g ) {
-        for(int x = 0;x<design.width();++x)
-            for(int y=0;y<design.height();++y){
-                Location l = new Location( x,y);
-                if (design.contains(l))
-                    paintLocation(g,l);
-            }
+        for ( Location l : design.grid() ){
+            paintLocation(g,l);
+        }
         for ( WeightedEdge we : design.edges() ){
             paintEdge(g,we);
-            System.out.println(we);
         }
     }
     public void paintLocation(Graphics2D g, Location l) {

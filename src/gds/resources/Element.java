@@ -163,19 +163,28 @@ class Child {
                 ch.located(ch.location());
             }
     }
+    //public static ArrayList<Child> 
     //this version will double up on recurances
     public static ArrayList<Child> flattenChildren( Child c){
+        Child ch = locate(c,c.location());
+        return flattenChildrenCall(ch);
+    }
+    private static ArrayList<Child> flattenChildrenCall( Child c){
         ArrayList<Child> empties = new ArrayList<>();
         if ( c.isEmpty() ) empties.add(c);
         else for ( Child ch : c.children() )
-            empties.addAll( flattenChildren( ch ));
+            empties.addAll( flattenChildrenCall( ch ));
         return empties;
     }
     public static ArrayList<Connection> flattenConnections( Child c ){
+        Child ch = locate(c,c.location());
+        return flattenConnectionsCall(ch);
+    }
+    public static ArrayList<Connection> flattenConnectionsCall( Child c ){
         ArrayList<Connection> edges = new ArrayList<>();
         if ( c.isEmpty())return edges;
         else for ( Child ch : c.children() )
-            edges.addAll( flattenConnections( ch ));
+            edges.addAll( flattenConnectionsCall( ch ));
         for ( Connection cn : c.connections() )
             if ( cn.a().isEmpty() ) edges.add(cn);
         return edges;

@@ -8,55 +8,38 @@ package gds.resources;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author owenpaulmeyer
  */
 public class Design {
-    private HashMap<Location,Child> grid = new HashMap<>();
-    private int width;
-    private int height;
+    private HashSet<Location> grid = new HashSet<>();
     private ArrayList<WeightedEdge> edges = new ArrayList<>();
     
-    Design( int x, int y ){
-        width = x;
-        height = y;
-    }
     public boolean isOccupied(int x, int y ){
         return contains(new Location(x,y));
     }
     public boolean contains(Location l){
-        if ( grid.containsKey(l))return true;
-        else return false;
+        return grid.contains(l);
     }
-    public HashMap<Location,Child> grid(){
+    public HashSet<Location> grid(){
         return grid;
     }
     public ArrayList<WeightedEdge> edges(){
         return edges;
     }
-    public int width(){
-        return width;
-    }
-    public int height(){
-        return height;
-    }
     
     public void setSeed( Child child ){
         ArrayList<Child> kids = Child.flattenChildren(child);
         ArrayList<Connection> conns = Child.flattenConnections(child);
-        for ( Child c : kids )
+        for ( Child c : kids ){
             plant(c);
+        }
         for ( Connection con : conns )
             edges.add(new WeightedEdge(con.a(),con.b()));
-//        Child located = child.locate(new Location(0,0));
-//        for ( Child c : located.children() ){
-//            plant(c);
-//        }
-//        for ( Connection con : child.connections()){
-//            edges.add(new WeightedEdge(con.a(),con.b()));
-//        }
     }
     //helper to setSeed
     private void plant( Child child ){
@@ -77,16 +60,17 @@ public class Design {
     }
     public void addNode( Child child ){
         Location l = child.location();
-        grid.put(l,child);
+        grid.add(l);
     }
     //used for getting the Bounded region of the Design
     public Design bounded( Bounds bounds ){
-        Design rtn = new Design( width, height );
-        for ( int x = 0; x < width; ++x )
-            for ( int y = 0; y < height; ++y ){
-                if ( bounds.isBounded(x,y))
-                    rtn.grid.put(new Location(x, y),new Child());
-            }
+        Design rtn = new Design( );
+        for ( Location l : grid ){
+            int x = l.xLoc();
+            int y = l.yLoc();
+            if ( bounds.isBounded(x, y) )
+                rtn.grid.add(new Location(x, y));
+        }
         for ( WeightedEdge we : edges )
             if(bounds.isBounded(we))
                 rtn.addEdge(we);

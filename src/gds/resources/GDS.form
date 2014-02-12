@@ -151,7 +151,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" pref="950" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -218,8 +218,6 @@
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="setSeedButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="editMode" max="32767" attributes="0"/>
                       <Component id="genMode" pref="101" max="32767" attributes="0"/>
@@ -289,7 +287,6 @@
                       <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="genMode" alignment="3" max="32767" attributes="0"/>
-                      <Component id="setSeedButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -408,14 +405,6 @@
             <Property name="text" type="java.lang.String" value="Y"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="setSeedButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Set Seed"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setSeedButtonActionPerformed"/>
-          </Events>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JSplitPane" name="verticalSplit">
@@ -484,7 +473,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="344" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="479" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -563,11 +552,6 @@
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="displayLocateButton" min="-2" pref="101" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="toJsonButton" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
                                           <Component id="makeElementButton" min="-2" pref="93" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="resetRootButton" min="-2" pref="103" max="-2" attributes="0"/>
@@ -577,14 +561,9 @@
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="renameAddable" min="-2" pref="85" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="displayChButton" min="-2" pref="93" max="-2" attributes="0"/>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="displayCNButton" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="displayBoundsButton" min="-2" max="-2" attributes="0"/>
+                                      <Component id="setSeedButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="142" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -606,19 +585,9 @@
                                       <Component id="viewLocalButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="viewGlobalButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="displayChButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="displayCNButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="displayLocateButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="toJsonButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="displayBoundsButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                                  <Component id="setSeedButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="rotateRightButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="rotateLeftButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -730,14 +699,6 @@
                             <Property name="text" type="java.lang.String" value="Translate Element"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="displayCNButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="display CN"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayCNButtonActionPerformed"/>
-                          </Events>
-                        </Component>
                         <Component class="javax.swing.JButton" name="viewLocalButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value=" View Local"/>
@@ -795,36 +756,12 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewGlobalButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="displayChButton">
+                        <Component class="javax.swing.JButton" name="setSeedButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="displayCH"/>
+                            <Property name="text" type="java.lang.String" value="Set Seed"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayChButtonActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="displayLocateButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="displaylocate"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayLocateButtonActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="displayBoundsButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="displaybounds"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayBoundsButtonActionPerformed"/>
-                          </Events>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="toJsonButton">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="printJson"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toJsonButtonActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="setSeedButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -890,6 +827,125 @@
                               <Color blue="b4" green="b4" red="b4" type="rgb"/>
                             </Property>
                           </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel1">
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="tab4">
+                            <Property name="tabTitle" type="java.lang.String" value="tab4"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="displayChButton" min="-2" pref="93" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="displayCNButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="displayLocateButton" min="-2" pref="101" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="displayBoundsButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="toJsonButton" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="displayFlattenedEdges" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="displayFlattenedChildren" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="displayChButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="displayCNButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="displayLocateButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="displayBoundsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                  <Component id="toJsonButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="displayFlattenedEdges" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="displayFlattenedChildren" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="223" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JButton" name="displayChButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="displayCH"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayChButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="displayCNButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="display CN"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayCNButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="displayLocateButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="displaylocate"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayLocateButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="displayBoundsButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="displaybounds"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayBoundsButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="toJsonButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="printJson"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toJsonButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="displayFlattenedEdges">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="flattended edges"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayFlattenedEdgesActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="displayFlattenedChildren">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value=" flattened childs"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="displayFlattenedChildrenActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -1027,9 +1083,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="417" max="32767" attributes="0"/>
+                      <EmptySpace pref="442" max="32767" attributes="0"/>
                       <Component id="jTextField1" max="-2" attributes="0"/>
-                      <EmptySpace pref="417" max="32767" attributes="0"/>
+                      <EmptySpace pref="443" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
