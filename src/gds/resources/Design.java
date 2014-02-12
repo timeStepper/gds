@@ -16,17 +16,17 @@ import java.util.Set;
  * @author owenpaulmeyer
  */
 public class Design {
-    private HashSet<Location> grid = new HashSet<>();
+    private HashSet<Location> nodes = new HashSet<>();
     private ArrayList<WeightedEdge> edges = new ArrayList<>();
     
     public boolean isOccupied(int x, int y ){
         return contains(new Location(x,y));
     }
     public boolean contains(Location l){
-        return grid.contains(l);
+        return nodes.contains(l);
     }
     public HashSet<Location> grid(){
-        return grid;
+        return nodes;
     }
     public ArrayList<WeightedEdge> edges(){
         return edges;
@@ -36,6 +36,7 @@ public class Design {
         ArrayList<Child> kids = Child.flattenChildren(child);
         ArrayList<Connection> conns = Child.flattenConnections(child);
         for ( Child c : kids ){
+            System.out.println(c);
             plant(c);
         }
         for ( Connection con : conns )
@@ -43,33 +44,37 @@ public class Design {
     }
     //helper to setSeed
     private void plant( Child child ){
-        for ( Child c : child.children() ){
-            if (c.isEmpty()) addNode(c);
-            else {
+        if (child.isEmpty()) {
+            addNode(child);
+        }
+        else {
+            for ( Child c : child.children() ){
                 plant(c);
-                addEdges( child );  
             }
+            addEdges( child );  
         }
     }
     public void addEdge( WeightedEdge we ){
         edges.add(we);
     }
-    public void addEdges( Child c ){
+    private void addEdges( Child c ){
         for ( Connection cn : c.connections() )
             addEdge( new WeightedEdge(cn.a(),cn.b()));
     }
     public void addNode( Child child ){
         Location l = child.location();
-        grid.add(l);
+        nodes.add(l);
     }
     //used for getting the Bounded region of the Design
     public Design bounded( Bounds bounds ){
         Design rtn = new Design( );
-        for ( Location l : grid ){
+        for ( Location l : nodes ){
             int x = l.xLoc();
             int y = l.yLoc();
-            if ( bounds.isBounded(x, y) )
-                rtn.grid.add(new Location(x, y));
+            if ( bounds.isBounded(x, y) ){
+                Location loc = new Location(x,y);
+                rtn.nodes.add(loc);
+            }
         }
         for ( WeightedEdge we : edges )
             if(bounds.isBounded(we))
@@ -81,8 +86,13 @@ public class Design {
         Child located = Child.locate(source.element(), loc);
         Bounds bounds = Source.bounds(located);
         Design bounded = bounded(bounds);
+//        System.out.println("Bounded:\n"+bounded);
+//        System.out.println("Located:");
+//        located.displayChildren();
         return intersect( located, bounded );
+        
     }
+    //helper to intersection
     private ArrayList<Child> intersect( Child located, Design bounded ){
         ArrayList<Child> intersections = new ArrayList<>();
         if ( located.isEmpty() ){
@@ -104,26 +114,29 @@ public class Design {
             rtn &= a.contains(c);
         return rtn;
     }
-    
+    @Override
+    public String toString(){
+        return nodes.toString();
+    }
 }
 class Source {
     Child element;
     HashMap<Child, ArrayList<Child>> rules;//adjacency list for Child
     Bounds bounds;  //used for quickening rebounding per location for intersection
 
-    Source() {
-        super();
+    Source( Child c ) {
+        element = c;
         rules = new HashMap<>();
         //computeRules();
-        
     }
-    public void setSource( Child c ){
-        element = c;
-        bounds();
-    }
+//    public void setSource( Child c ){
+//        element = c;
+//        bounds();
+//    }
     public Child element(){
         return element;
     }
+    //computes the field for this object
     private void bounds(){
         int xmin = Integer.MAX_VALUE;
         int xmax = Integer.MIN_VALUE;
@@ -134,6 +147,7 @@ class Source {
             bs = Bounds.maxminBounds(bs,bounds(c));
         bounds = bs;
     }
+    //used external to this class
     public static Bounds bounds(Child ch){
         int xmin = Integer.MAX_VALUE;
         int xmax = Integer.MIN_VALUE;
@@ -152,6 +166,7 @@ class Source {
         }
         return rtn;
     }
+    //not recursive
     private void computeRules(){
         for ( Connection conn : element.connections() ){
             Child a = conn.a();
@@ -248,7 +263,11 @@ class Bounds {
         return ymax;
     }
     public boolean isBounded( int x, int y ){
-        return x<=xmax&&x>=xmin&&y<=ymax&&y>=ymin;
+//        System.out.println("xmin -> xmax, x:" + xmin+" -> "+xmax+", "+x);
+//        System.out.println("ymin -> ymax, y:" + ymin+" -> "+ymax+", "+y);
+        boolean rtn = x<=xmax&&x>=xmin&&y<=ymax&&y>=ymin;
+//        System.out.println(rtn);
+        return rtn;
     }
     public boolean isBounded( WeightedEdge we ){
         return isBounded(we.start().xLoc(),we.start().yLoc())&&

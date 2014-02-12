@@ -9,7 +9,7 @@ package gds.resources;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.Set;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,23 +25,30 @@ public class Generate {
         grid = g;
     }
     public void setSource(Child c){
-        source.setSource(c);
+        
+        source = new Source(c);
     }
     public void setSeed(Child c){
         design.setSeed(c);
     }
+    public void boundTest(Bounds b){
+        System.out.println("Seed:\n"+design);
+        Design des = design.bounded(b);
+        System.out.println("Bounded:\n"+des);
+    }
+    public void intersectionTest(Location l){
+        ArrayList<Child> intersection = design.intersection(source, l);
+        System.out.println("Intersection:\n"+intersection);
+    }
+    //the parent call for painting this object
     public void paint(Graphics2D g){
         paintDesign(g);
     }
-    
-    
-    
-        
     public void paintDesign( Graphics2D g ) {
         for ( Location l : design.grid() ){
             paintLocation(g,l);
         }
-        for ( WeightedEdge we : design.edges() ){
+        for ( WeightedEdge we :design.edges() ){
             paintEdge(g,we);
         }
     }

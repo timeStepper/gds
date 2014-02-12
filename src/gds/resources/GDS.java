@@ -88,6 +88,7 @@ public class GDS extends javax.swing.JFrame {
         renameAddableButton = new javax.swing.JButton();
         viewGlobalButton = new javax.swing.JButton();
         setSeedButton = new javax.swing.JButton();
+        setSourceButton = new javax.swing.JButton();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -100,6 +101,8 @@ public class GDS extends javax.swing.JFrame {
         toJsonButton = new javax.swing.JButton();
         displayFlattenedEdges = new javax.swing.JButton();
         displayFlattenedChildren = new javax.swing.JButton();
+        boundTestButton = new javax.swing.JButton();
+        intersectionTestButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -431,6 +434,13 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        setSourceButton.setText("Set Source");
+        setSourceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setSourceButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editControlsLayout = new javax.swing.GroupLayout(editControls);
         editControls.setLayout(editControlsLayout);
         editControlsLayout.setHorizontalGroup(
@@ -472,8 +482,10 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(renameAddableButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(renameAddable, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(setSeedButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(setSeedButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(setSourceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         editControlsLayout.setVerticalGroup(
             editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,7 +504,9 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(viewGlobalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72)
                 .addComponent(setSeedButton)
-                .addGap(81, 81, 81)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(setSourceButton)
+                .addGap(52, 52, 52)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rotateRightButton)
                     .addComponent(rotateLeftButton))
@@ -514,7 +528,7 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(yDownButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Edit", editControls);
@@ -585,6 +599,20 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        boundTestButton.setText("boundTest");
+        boundTestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boundTestButtonActionPerformed(evt);
+            }
+        });
+
+        intersectionTestButton.setText("intersectionTest");
+        intersectionTestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intersectionTestButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -604,7 +632,13 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(displayFlattenedEdges)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(displayFlattenedChildren)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 42, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(intersectionTestButton)
+                    .addComponent(boundTestButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -623,7 +657,11 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(displayFlattenedEdges)
                     .addComponent(displayFlattenedChildren))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addGap(48, 48, 48)
+                .addComponent(boundTestButton)
+                .addGap(18, 18, 18)
+                .addComponent(intersectionTestButton)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("tab4", jPanel1);
@@ -662,13 +700,13 @@ public class GDS extends javax.swing.JFrame {
         leftFlankLayout.setVerticalGroup(
             leftFlankLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftFlankLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
+                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE))
         );
 
         centerPanels.setLeftComponent(leftFlank);
@@ -801,7 +839,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 950, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1061,6 +1099,22 @@ public class GDS extends javax.swing.JFrame {
         System.out.println(Child.flattenChildren(edit.selected));
     }//GEN-LAST:event_displayFlattenedChildrenActionPerformed
 
+    private void boundTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boundTestButtonActionPerformed
+        Bounds bs = new Bounds(0,3,0,3);
+        genit.boundTest(bs);
+        //globalDisplayArea.repaint();
+    }//GEN-LAST:event_boundTestButtonActionPerformed
+
+    private void intersectionTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectionTestButtonActionPerformed
+        Location l = new Location( 1,-1 );
+        genit.intersectionTest(l);
+    }//GEN-LAST:event_intersectionTestButtonActionPerformed
+
+    private void setSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setSourceButtonActionPerformed
+        genit.setSource(edit.selected);
+        System.out.println("source set!");
+    }//GEN-LAST:event_setSourceButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1280,6 +1334,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JList addableElementList;
     private javax.swing.JLabel addableElementListLabel;
     private javax.swing.JPanel bottomBar;
+    private javax.swing.JButton boundTestButton;
     private javax.swing.JSplitPane centerPanels;
     private javax.swing.JSplitPane centerRightPanels;
     private javax.swing.JList childList;
@@ -1312,6 +1367,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenu imageMenu;
     private javax.swing.JSlider imageOpacity;
     private javax.swing.JFileChooser importImage;
+    private javax.swing.JButton intersectionTestButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -1344,6 +1400,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JTextField scaleField;
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JButton setSeedButton;
+    private javax.swing.JButton setSourceButton;
     private javax.swing.JButton toJsonButton;
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;

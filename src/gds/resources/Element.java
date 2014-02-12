@@ -147,7 +147,7 @@ class Child {
         }
     }
     //this is used for paint purposes only
-    public Child locate( Location l ){
+    public Child locatePaint( Location l ){
         return new Child ( element(), location().add( l ));
     }
     //this is the method to call for getting the located version of a child
@@ -156,6 +156,7 @@ class Child {
         rtn.located(l);
         return rtn;
     }
+    //helper to static locate
     private void located( Location l ){
         if (!isEmpty())
             for ( Child ch : children() ){
@@ -320,8 +321,8 @@ class Connection {
         return new Connection( a.clone(), b.clone());
     }
     public Connection locate( Location l ){
-        Child newA = a.locate(l);
-        Child newB = b.locate(l);
+        Child newA = a.locatePaint(l);
+        Child newB = b.locatePaint(l);
         return new Connection( newA, newB );
     }
     

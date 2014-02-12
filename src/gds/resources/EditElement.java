@@ -232,7 +232,7 @@ public class EditElement {
                     if ( conn.a().isEmpty())
                         paintConnection( g, conn.locate(c.location()));
                 for ( Child child : c.children()){
-                    paintEmpties( g, child.locate(c.location()));
+                    paintEmpties( g, child.locatePaint(c.location()));
                 }
             }
         }
