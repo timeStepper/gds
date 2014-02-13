@@ -3,6 +3,7 @@ package gds.resources;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -52,6 +53,7 @@ public class Element {
     
     public void addChild( Child c ) {
         children.add( c );
+        //c.setParent(this);
     }
     public void removeChild( Child c ){
         if ( children.contains( c ) )
@@ -105,6 +107,7 @@ class Child {
     private Element child;
     private Location location;
     private String name;
+    //private Element parent;
     
     Child ( Element e, Location l ) {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
@@ -117,6 +120,9 @@ class Child {
         child = new Element();
         location = new Location( 0, 0 );
     }
+//    public void setParent( Element p ){
+//        parent = p;
+//    }
     public void empty(){
         child = new Element();
     }
@@ -135,6 +141,9 @@ class Child {
     ArrayList< Connection > connections() {
         return element().connections();
     }
+//    Element parent(){
+//        return parent;
+//    }
     
     public void setName( String n ){
         name = n;
@@ -246,6 +255,13 @@ class Child {
         
         return  child.equals( c.element( ) ) &&
                 location.equals( c.location( ) );
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.location);
+        return hash;
     }
     public void displayChildren(){
         System.out.println("ChildrenOf: "+this);

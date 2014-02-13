@@ -81,18 +81,40 @@ public class Design {
         return rtn;
     }
     
+    
+//    public static Rules intersectRules( Child located, Design bounded, Child parent ){
+//        Rules rules = new Rules();
+//        HashSet<Child> intersections = new HashSet<>();
+//        for ( Child c : located.children()){
+//            if ( c.isEmpty() ){
+//                if ( bounded.contains( c.location()))
+//                    if (!rules.containsKey(c)){
+//                        rules.makeAddRules(located, c);
+//                    }
+//            }
+//            else
+//                rules.union(intersectRules(c,bounded,located));
+//        }
+//        if ( rules.containsAll(located.children())){
+//            rules.makeAddRules(parent,located);
+//        }
+//        return rules;
+//    }
+
+
     //helper to intersection
-        public static ArrayList<Child> intersect( Child located, Design bounded ){
+    public static HashSet<Child> intersect( Child located, Design bounded ){
         //System.out.println("located: "+located);
         //located.displayChildren();
-        ArrayList<Child> intersections = new ArrayList<>();
+        HashSet<Child> intersections = new HashSet<>();
         if ( located.isEmpty() ){
             if ( bounded.contains( located.location()))
-                intersections.add(located);
+                if (!intersections.contains(located))
+                    intersections.add(located);
         }
         else {
             for ( Child c : located.children())
-                intersections.addAll(intersect(c,bounded));
+                intersections = union(intersections,intersect(c,bounded));
 //                    System.out.println("located.children():\n"+located.children());
 //                    System.out.println("intersections:\n"+intersections);
             if ( containsAll(intersections, located.children())){
@@ -103,30 +125,46 @@ public class Design {
         return intersections;
     }
     //a contains all b
-    private static boolean containsAll(ArrayList<Child> a, ArrayList<Child> b){
+    private static boolean containsAll(HashSet<Child> a, ArrayList<Child> b){
         for (Child c : b)
             if ( !a.contains(c) )return false;
         return true;
+    }
+    private static HashSet<Child> union(HashSet<Child> a, HashSet<Child> b){
+        HashSet<Child> rtn = new HashSet<>();
+        for ( Child ca : a )
+            rtn.add(ca);
+        for (Child cb : b )
+            if (!rtn.contains(cb))
+                rtn.add(cb);
+        //System.out.println("union: "+rtn);
+        return rtn;
     }
     @Override
     public String toString(){
         return nodes.toString();
     }
+//    public static void displayRules(HashSet<Child> intersection){
+//        for ( Child c : intersection ){
+//            ArrayList<Connection> rhs = new ArrayList<>();
+//            Element parent = c.parent();
+//            if ( parent!=null )
+//                for( Connection con : parent.connections()){
+//                    if ( con.a().equals(c) || con.b().equals(con) )
+//                        rhs.add(con);
+//                }
+//            System.out.println(c+" -> " + rhs);
+//        }
+//    }
 }
 class Source {
     Child element;
-    HashMap<Child, ArrayList<Child>> rules;//adjacency list for Child
+    Rules adjacencyList = new Rules();
     Bounds bounds;  //used for quickening rebounding per location for intersection
 
     Source( Child c ) {
         element = c;
-        rules = new HashMap<>();
-        //computeRules();
     }
-//    public void setSource( Child c ){
-//        element = c;
-//        bounds();
-//    }
     public Child element(){
         return element;
     }
@@ -160,25 +198,42 @@ class Source {
         }
         return rtn;
     }
+    //returns the connections between children. for use after the input is located
+    //the initial call notes that there is always a global child ( the parent element )
+    private Rules adjacencyList(Child located){
+        Rules rtn = new Rules();
+        System.out.println("located: "+located);
+        System.out.println("located children: "+located.children());
+        System.out.println("located connections: "+located.connections());
+        for ( Child child : located.children() ){
+            rtn.makeAddRules(located, child);
+            if (!child.isEmpty()) rtn.union(adjacencyList(child));
+        }
+        return rtn;
+    }
+    public void setAdjacencyList(Child located){
+        Rules adj = adjacencyList(located);
+        adjacencyList = adj;
+    }
     //not recursive
-    private void computeRules(){
-        for ( Connection conn : element.connections() ){
-            Child a = conn.a();
-            Child b = conn.b();
-            addRule( a, b);
-            addRule( b, a);
-        }
-    }
-    public void addRule( Child lhs, Child c){
-        if (rules.containsKey(lhs)){
-            rules.get(lhs).add(c);
-        }
-        else {
-            ArrayList<Child> rhs = new ArrayList<>();
-            rhs.add(c);
-            rules.put(lhs , rhs);
-        }
-    }
+//    private void computeRules(){
+//        for ( Connection conn : element.connections() ){
+//            Child a = conn.a();
+//            Child b = conn.b();
+//            addRule( a, b);
+//            addRule( b, a);
+//        }
+//    }
+//    public void addRule( Child lhs, Child c){
+//        if (rules.containsKey(lhs)){
+//            rules.get(lhs).add(c);
+//        }
+//        else {
+//            ArrayList<Child> rhs = new ArrayList<>();
+//            rhs.add(c);
+//            rules.put(lhs , rhs);
+//        }
+//    }
 }
 
 class WeightedEdge{
@@ -281,5 +336,43 @@ class Bounds {
     @Override
     public String toString(){
         return "xmin: "+xmin+"\nxmax: "+xmax+"\nymin: "+ymin+"\nymax: "+ymax;
+    }
+}
+class Rules extends HashMap<Child, ArrayList<Child>>{
+    
+    public Rules intersectToRules( HashSet<Child> intersection, Child locatedSource ){
+        Rules rtn = new Rules();
+        for ( Child lhs : intersection ){
+            
+        }
+        return rtn;
+    }
+    public void addRule(Child lhs, Child rhs){
+        if (containsKey(lhs))
+            get(lhs).add(rhs);
+        else {
+            ArrayList<Child> r = new ArrayList<>();
+            r.add(rhs);
+            put(lhs,r);
+        }
+    }
+    public void makeAddRules(Child parent, Child c){
+        for ( Connection cn : parent.connections()){
+            if ( cn.a().equals(c) ) addRule(c,cn.b());
+            if ( cn.b().equals(c) ) addRule(c,cn.a());
+        }
+    }
+    public void union( Rules rs ){
+        Set<Child> keys = rs.keySet();
+        for ( Child lhs : keys ){
+            ArrayList<Child> cs = rs.get(lhs);
+            for ( Child rhs : cs )
+                addRule(lhs,rhs);
+        }
+    }
+    public boolean containsAll( ArrayList<Child> cs ){
+        for (Child c : cs)
+            if ( !containsKey(c) ) return false;
+        return true;
     }
 }

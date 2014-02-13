@@ -6,11 +6,11 @@
 
 package gds.resources;
 
-import static gds.resources.Design.intersect;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -26,23 +26,19 @@ public class Generate {
         grid = g;
     }
     public void setSource(Child c){
-        
         source = new Source(c);
     }
     public void setSeed(Child c){
         design.setSeed(c);
     }
-    public ArrayList<Child> intersection( Location loc ){
-        ArrayList<Child> intersection = new ArrayList<>();
+    public HashSet<Child> intersection( Location loc ){
+        HashSet<Child> intersection = new HashSet<>();
         Child located = Child.locate(source.element(), loc);
-        
+        source.setAdjacencyList(located);
+        System.out.println("rules: "+source.adjacencyList);
         Bounds bounds = Source.bounds(located);
         Design bounded = Design.bounded(bounds, design);
-//        System.out.println("Bounded:\n"+bounded);
-//        System.out.println("Located:");
-//        located.displayChildren();
-        return intersect( located, bounded );
-        
+        return Design.intersect( located, bounded );
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
@@ -50,8 +46,10 @@ public class Generate {
         System.out.println("Bounded:\n"+des);
     }
     public void intersectionTest(Location l){
-        ArrayList<Child> intersection = intersection(l);
-        System.out.println("Intersection:\n"+intersection);
+        HashSet<Child> intersection = intersection(l);
+        for ( Child lhs : intersection ){
+            System.out.println(lhs+" -> "+source.adjacencyList.get(lhs));
+        }
     }
     //the parent call for painting this object
     public void paint(Graphics2D g){
