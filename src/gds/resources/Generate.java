@@ -10,7 +10,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -33,12 +32,10 @@ public class Generate {
     }
     public HashSet<Child> intersection( Location loc ){
         HashSet<Child> intersection = new HashSet<>();
-        Child located = Child.locate(source.element(), loc);
-        source.setAdjacencyList(located);
-        System.out.println("rules: "+source.adjacencyList);
-        Bounds bounds = Source.bounds(located);
+        source.locate(loc);
+        Bounds bounds = Source.bounds(source.located);
         Design bounded = Design.bounded(bounds, design);
-        return Design.intersect( located, bounded );
+        return Design.intersect( source.located, bounded );
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);

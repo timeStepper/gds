@@ -167,7 +167,6 @@ class Child {
     }
     //helper to static locate
     private void located( Location l ){
-        
         if (!isEmpty())
             for ( Child ch : children() ){
                 ch.location = ch.location.add(l);

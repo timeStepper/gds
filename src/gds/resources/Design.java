@@ -80,48 +80,31 @@ public class Design {
                 rtn.addEdge(we);
         return rtn;
     }
-    
-    
-//    public static Rules intersectRules( Child located, Design bounded, Child parent ){
-//        Rules rules = new Rules();
-//        HashSet<Child> intersections = new HashSet<>();
-//        for ( Child c : located.children()){
-//            if ( c.isEmpty() ){
-//                if ( bounded.contains( c.location()))
-//                    if (!rules.containsKey(c)){
-//                        rules.makeAddRules(located, c);
-//                    }
-//            }
-//            else
-//                rules.union(intersectRules(c,bounded,located));
-//        }
-//        if ( rules.containsAll(located.children())){
-//            rules.makeAddRules(parent,located);
-//        }
-//        return rules;
-//    }
-
-
+    public static Design difference( Child located, Design bounded ){
+        Design difference = new Design();
+        return difference;
+    }
     //helper to intersection
     public static HashSet<Child> intersect( Child located, Design bounded ){
         //System.out.println("located: "+located);
         //located.displayChildren();
         HashSet<Child> intersections = new HashSet<>();
-        if ( located.isEmpty() ){
-            if ( bounded.contains( located.location()))
-                if (!intersections.contains(located))
-                    intersections.add(located);
-        }
-        else {
-            for ( Child c : located.children())
-                intersections = union(intersections,intersect(c,bounded));
+        for ( Child c : located.children())
+            if (c.isEmpty()) {
+                if (bounded.contains(c.location())) {
+                    if (!intersections.contains(c)) {
+                        intersections.add(c);
+                    }
+                }
+            }
+            else intersections = union(intersections,intersect(c,bounded));
 //                    System.out.println("located.children():\n"+located.children());
 //                    System.out.println("intersections:\n"+intersections);
             if ( containsAll(intersections, located.children())){
                 
                 intersections.add(located);
             }
-        }
+        
         return intersections;
     }
     //a contains all b
@@ -159,6 +142,7 @@ public class Design {
 }
 class Source {
     Child element;
+    Child located;
     Rules adjacencyList = new Rules();
     Bounds bounds;  //used for quickening rebounding per location for intersection
 
@@ -215,25 +199,10 @@ class Source {
         Rules adj = adjacencyList(located);
         adjacencyList = adj;
     }
-    //not recursive
-//    private void computeRules(){
-//        for ( Connection conn : element.connections() ){
-//            Child a = conn.a();
-//            Child b = conn.b();
-//            addRule( a, b);
-//            addRule( b, a);
-//        }
-//    }
-//    public void addRule( Child lhs, Child c){
-//        if (rules.containsKey(lhs)){
-//            rules.get(lhs).add(c);
-//        }
-//        else {
-//            ArrayList<Child> rhs = new ArrayList<>();
-//            rhs.add(c);
-//            rules.put(lhs , rhs);
-//        }
-//    }
+    public void locate(Location l){
+        located = Child.locate(element, l);
+        setAdjacencyList(located);
+    }
 }
 
 class WeightedEdge{
