@@ -1106,7 +1106,7 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_boundTestButtonActionPerformed
 
     private void intersectionTestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectionTestButtonActionPerformed
-        Location l = new Location( 1,-1 );
+        Location l = new Location( 0, 0 );
         genit.intersectionTest(l);
     }//GEN-LAST:event_intersectionTestButtonActionPerformed
 

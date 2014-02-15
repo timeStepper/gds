@@ -9,6 +9,7 @@ package gds.resources;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 public class Design {
     private HashSet<Location> nodes = new HashSet<>();
-    private ArrayList<WeightedEdge> edges = new ArrayList<>();
+    private HashMap<Edge, Weight> edges = new HashMap<>();
     
     public boolean isOccupied(int x, int y ){
         return contains(new Location(x,y));
@@ -25,21 +26,30 @@ public class Design {
     public boolean contains(Location l){
         return nodes.contains(l);
     }
+//    public boolean contains(Child c){
+//        return contains(c.location());
+//    }
+    private boolean contains(Connection conn){
+        Edge e = new Edge(conn.aLoc(),conn.bLoc());
+        return edges.containsKey(e);
+    }
     public HashSet<Location> grid(){
         return nodes;
     }
-    public ArrayList<WeightedEdge> edges(){
-        return edges;
+    public Set<Edge> edges(){
+        return edges.keySet();
     }
     
     public void setSeed( Child child ){
+        nodes.clear();
+        edges.clear();
         ArrayList<Child> kids = Child.flattenChildren(child);
         ArrayList<Connection> conns = Child.flattenConnections(child);
         for ( Child c : kids ){
             plant(c);
         }
         for ( Connection con : conns )
-            edges.add(new WeightedEdge(con.a(),con.b()));
+            edges.put(new Edge(con.aLoc(),con.bLoc()), new Weight());
     }
     //helper to setSeed
     private void plant( Child child ){
@@ -53,12 +63,12 @@ public class Design {
             addEdges( child );  
         }
     }
-    public void addEdge( WeightedEdge we ){
-        edges.add(we);
+    public void addEdge( Edge e ){
+        edges.put(e,new Weight());
     }
     private void addEdges( Child c ){
         for ( Connection cn : c.connections() )
-            addEdge( new WeightedEdge(cn.a(),cn.b()));
+            addEdge( new Edge(cn.aLoc(),cn.bLoc()));
     }
     public void addNode( Child child ){
         Location l = child.location();
@@ -75,20 +85,28 @@ public class Design {
                 rtn.nodes.add(loc);
             }
         }
-        for ( WeightedEdge we : d.edges )
-            if(bounds.isBounded(we))
-                rtn.addEdge(we);
+        Set<Edge> keys = d.edges.keySet();
+        for ( Edge e : keys )
+            if(bounds.isBounded(e))
+                rtn.addEdge(e);
         return rtn;
     }
     public static Design difference( Child located, Design bounded ){
         Design difference = new Design();
+        ArrayList<Connection> edges = Child.flattenConnections(located);
+        for ( Connection cn : edges ){
+            if ( !bounded.contains(cn) ) {
+                Edge e = new Edge(cn.aLoc(),cn.bLoc());
+                difference.addEdge(e);
+            }
+        }
         return difference;
     }
     //helper to intersection
     public static HashSet<Child> intersect( Child located, Design bounded ){
-        //System.out.println("located: "+located);
-        //located.displayChildren();
         HashSet<Child> intersections = new HashSet<>();
+        //this method starts on the following for loop
+        //recognizing that 'locted' will always be the root Child.
         for ( Child c : located.children())
             if (c.isEmpty()) {
                 if (bounded.contains(c.location())) {
@@ -98,21 +116,24 @@ public class Design {
                 }
             }
             else intersections = union(intersections,intersect(c,bounded));
-//                    System.out.println("located.children():\n"+located.children());
-//                    System.out.println("intersections:\n"+intersections);
-            if ( containsAll(intersections, located.children())){
-                
-                intersections.add(located);
-            }
-        
+        if ( containsAll(intersections, located.children()) ){
+                //&& bounded.containsAllConnections(located.connections())){
+//            if ( areAllEmpties(located.children())){
+//                if ( bounded.containsAllConnections(located.connections()))
+//                    intersections.add(located);
+//            }
+//            else 
+              intersections.add(located);
+        }
         return intersections;
     }
-    //a contains all b
+    //helper to intersect;  a contains all b
     private static boolean containsAll(HashSet<Child> a, ArrayList<Child> b){
         for (Child c : b)
             if ( !a.contains(c) )return false;
         return true;
     }
+    //helper to intersect
     private static HashSet<Child> union(HashSet<Child> a, HashSet<Child> b){
         HashSet<Child> rtn = new HashSet<>();
         for ( Child ca : a )
@@ -123,22 +144,30 @@ public class Design {
         //System.out.println("union: "+rtn);
         return rtn;
     }
+    //helper to intersect
+//    private static boolean areAllEmpties(ArrayList<Child> cs){
+//        for( Child c : cs)
+//            if (!c.isEmpty())return false;
+//        return true; 
+//    }
+    //helper to intersect
+//    private boolean containsAllConnections( ArrayList<Connection> conns ){
+//        for ( Connection cn : conns )
+//            if ( contains(cn) )return false;
+//        return true;
+//    }
+    public void applyRules( Rules rules, Weight weight ){
+        Set<Child> keys = rules.keySet();
+        for( Child lhs : keys )
+            for ( Child rhs : rules.get(lhs) ){
+                Edge e = new Edge( lhs.location(), rhs.location() );
+                
+            }
+    }
     @Override
     public String toString(){
         return nodes.toString();
     }
-//    public static void displayRules(HashSet<Child> intersection){
-//        for ( Child c : intersection ){
-//            ArrayList<Connection> rhs = new ArrayList<>();
-//            Element parent = c.parent();
-//            if ( parent!=null )
-//                for( Connection con : parent.connections()){
-//                    if ( con.a().equals(c) || con.b().equals(con) )
-//                        rhs.add(con);
-//                }
-//            System.out.println(c+" -> " + rhs);
-//        }
-//    }
 }
 class Source {
     Child element;
@@ -186,9 +215,9 @@ class Source {
     //the initial call notes that there is always a global child ( the parent element )
     private Rules adjacencyList(Child located){
         Rules rtn = new Rules();
-        System.out.println("located: "+located);
-        System.out.println("located children: "+located.children());
-        System.out.println("located connections: "+located.connections());
+//        System.out.println("located: "+located);
+//        System.out.println("located children: "+located.children());
+//        System.out.println("located connections: "+located.connections());
         for ( Child child : located.children() ){
             rtn.makeAddRules(located, child);
             if (!child.isEmpty()) rtn.union(adjacencyList(child));
@@ -205,36 +234,56 @@ class Source {
     }
 }
 
-class WeightedEdge{
-    private Weight weight = new Weight();
-    private Child start;
-    private Child fin;
+class Edge{
+    private Location nodeA;
+    private Location nodeB;
     
-    WeightedEdge( Child a, Child b ){
-        start = a;
-        fin = b;
+    Edge( Location a, Location b ){
+        nodeA = a;
+        nodeB = b;
     }
-    public Child start(){
-        return start;
+    public Location nodeA(){
+        return nodeA;
     }
-    public Child fin(){
-        return fin;
+    public Location nodeB(){
+        return nodeB;
     }
-    public int startX(){
-        return start.xLoc();
+    
+    public int aX(){
+        return nodeA.xLoc();
     }
-    public int startY(){
-        return start.yLoc();
+    public int aY(){
+        return nodeA.yLoc();
     }
-    public int finX(){
-        return fin.xLoc();
+    public int bX(){
+        return nodeB.xLoc();
     }
-    public int finY(){
-        return fin.yLoc();
+    public int bY(){
+        return nodeB.yLoc();
     }
     @Override
     public String toString(){
-        return "["+start+", "+fin+"]";
+        return "["+nodeA+", "+nodeB+"]";
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        Edge e = ( Edge ) obj;
+        
+        return  (nodeA.equals( e.nodeA( ) ) && nodeB.equals( e.nodeB( ) )) ||
+                (nodeA.equals( e.nodeB( ) ) && nodeB.equals( e.nodeA( ) ));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash;
+        hash = (nodeA.xLoc()*nodeA.yLoc()) + (nodeB.xLoc()*nodeB.yLoc());
+        return hash;
     }
 }
 class Weight{
@@ -248,6 +297,10 @@ class Weight{
     Weight( double a, double b){
         intersect = a;
         difference = b;
+    }
+    public void applyWeight(Weight weight){
+        intersect += weight.intersectValue();
+        difference += weight.differenceValue();
     }
     public double intersectValue(){
         return intersect;
@@ -287,9 +340,9 @@ class Bounds {
 //        System.out.println(rtn);
         return rtn;
     }
-    public boolean isBounded( WeightedEdge we ){
-        return isBounded(we.start().xLoc(),we.start().yLoc())&&
-                isBounded(we.fin().xLoc(),we.fin().yLoc());
+    public boolean isBounded( Edge e ){
+        return isBounded(e.aX(),e.aY())&&
+                isBounded(e.bX(),e.bY());
     }
     public static Bounds maxminBounds( Bounds b1, Bounds b2 ){
         int xmn;

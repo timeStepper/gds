@@ -19,14 +19,17 @@ public class Element {
     private ArrayList< Child > children;
     private ArrayList< Connection > connections;
     String name = "!";
+    private double value;
     
     Element ( ) {
         children  = new ArrayList<  >( );
         connections = new ArrayList<  >( );
+        value = 1;
     }
-    Element( ArrayList<Child> childs, ArrayList<Connection> conns){
+    Element( ArrayList<Child> childs, ArrayList<Connection> conns, double val ){
         children = childs;
         connections = conns;
+        value = val;
     }
     ArrayList< Child > children( ) {
         return children;
@@ -34,8 +37,12 @@ public class Element {
     ArrayList< Connection > connections( ) {
         return connections;
     }
+    double value(){
+        return value;
+    }
     @Override
     public Element clone(){
+        double val = value();
         ArrayList<Child> childs = new ArrayList<>();
         ArrayList<Connection> conns = new ArrayList<>();
         for ( Child c : children )
@@ -45,15 +52,14 @@ public class Element {
             int idxB = childs.indexOf(cn.b());
             conns.add(new Connection( childs.get(idxA), childs.get(idxB) ));
         }
-        return new Element( childs, conns );
+        return new Element( childs, conns, val );
     }
     boolean isEmpty( ) {
         return children.isEmpty();
     }
-    
     public void addChild( Child c ) {
         children.add( c );
-        //c.setParent(this);
+        value += 1.5*c.getValue();
     }
     public void removeChild( Child c ){
         if ( children.contains( c ) )
@@ -101,13 +107,10 @@ public class Element {
                 connections.equals( e.connections( ) );
     }
 }
-
-
 class Child {
     private Element child;
     private Location location;
     private String name;
-    //private Element parent;
     
     Child ( Element e, Location l ) {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
@@ -120,9 +123,6 @@ class Child {
         child = new Element();
         location = new Location( 0, 0 );
     }
-//    public void setParent( Element p ){
-//        parent = p;
-//    }
     public void empty(){
         child = new Element();
     }
@@ -141,10 +141,6 @@ class Child {
     ArrayList< Connection > connections() {
         return element().connections();
     }
-//    Element parent(){
-//        return parent;
-//    }
-    
     public void setName( String n ){
         name = n;
     }
@@ -154,6 +150,9 @@ class Child {
         }catch(NoSuchElementException nse){
             throw nse;
         }
+    }
+    public double getValue(){
+        return element().value();
     }
     //this is used for paint purposes only
     public Child locatePaint( Location l ){
@@ -187,11 +186,12 @@ class Child {
             empties.addAll( flattenChildrenCall( ch ));
         return empties;
     }
+    //flattens to empty edges
     public static ArrayList<Connection> flattenConnections( Child c ){
         Child ch = locate(c,c.location());
         return flattenConnectionsCall(ch);
     }
-    public static ArrayList<Connection> flattenConnectionsCall( Child c ){
+    private static ArrayList<Connection> flattenConnectionsCall( Child c ){
         ArrayList<Connection> edges = new ArrayList<>();
         if ( c.isEmpty())return edges;
         else for ( Child ch : c.children() )
@@ -239,8 +239,8 @@ class Child {
     @Override
     public String toString() {
         if (isEmpty())
-            return "[E: "+location.toString()+"]";
-        else return "[P: "+location.toString()+"]";
+            return "[E: "+location.toString()+", "+getValue()+"]";
+        else return "[P: "+location.toString()+", "+getValue()+"]";
     }
     @Override
     public boolean equals(Object obj) {
@@ -336,6 +336,12 @@ class Connection {
     Child b( ) {
         return b;
     }
+    Location aLoc(){
+        return a.location();
+    }
+    Location bLoc(){
+        return b.location();
+    }
     public Connection clone(){
         return new Connection( a.clone(), b.clone());
     }
@@ -364,7 +370,6 @@ class Connection {
     }
     
 }
-
 class Transform{
     int a;
     int b;
@@ -384,5 +389,4 @@ class Transform{
         ly = (t.c*l.xLoc())+(t.d*l.yLoc());
         return new Location( lx, ly );
     }
-    
 }

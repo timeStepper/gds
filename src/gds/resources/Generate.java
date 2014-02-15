@@ -32,7 +32,7 @@ public class Generate {
     }
     public HashSet<Child> intersection( Location loc ){
         HashSet<Child> intersection = new HashSet<>();
-        source.locate(loc);
+        source.locate(loc); //sets source.located and source.adjacencyList at "loc"
         Bounds bounds = Source.bounds(source.located);
         Design bounded = Design.bounded(bounds, design);
         return Design.intersect( source.located, bounded );
@@ -56,8 +56,8 @@ public class Generate {
         for ( Location l : design.grid() ){
             paintLocation(g,l);
         }
-        for ( WeightedEdge we :design.edges() ){
-            paintEdge(g,we);
+        for ( Edge e : design.edges() ){
+            paintEdge(g,e);
         }
     }
     public void paintLocation(Graphics2D g, Location l) {
@@ -66,13 +66,13 @@ public class Generate {
         g.setColor(Color.BLACK);
         g.drawOval(grid.originX+(l.xLoc()*grid.mS)-2, grid.originY+(l.yLoc()*grid.mS)-2, 4, 4);
     }
-    public void paintEdge( Graphics2D g, WeightedEdge we ) {
+    public void paintEdge( Graphics2D g, Edge e ) {
         g.setColor(Color.WHITE);
         
-        int x1 = we.startX();
-        int y1 = we.startY();
-        int x2 = we.finX();
-        int y2 = we.finY();
+        int x1 = e.aX();
+        int y1 = e.aY();
+        int x2 = e.bX();
+        int y2 = e.bY();
         g.setStroke(new BasicStroke(2F));
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
         g.setStroke(new BasicStroke(1F));
