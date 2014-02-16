@@ -160,9 +160,18 @@ public class Design {
         Set<Child> keys = rules.keySet();
         for( Child lhs : keys )
             for ( Child rhs : rules.get(lhs) ){
-                Edge e = new Edge( lhs.location(), rhs.location() );
-                
+                applyRule( lhs.location(), rhs, weight );
             }
+    }
+    public void applyRule( Location lhs, Child rhs, Weight weight ){
+        if (rhs.isEmpty()){
+            Edge e = new Edge( lhs, rhs.location() );
+            Weight w = edges.get(e);
+            w.applyWeight(weight);
+        }
+        else 
+            for (Child child_rhs : rhs.children())
+                applyRule( lhs, child_rhs, weight );
     }
     @Override
     public String toString(){
@@ -171,18 +180,20 @@ public class Design {
 }
 class Source {
     Child element;
-    Child located;
-    Rules adjacencyList = new Rules();
     Bounds bounds;  //used for quickening rebounding per location for intersection
 
     Source( Child c ) {
         element = c;
+        setBounds();
     }
     public Child element(){
         return element;
     }
+    public Bounds bounds(){
+        return bounds;
+    }
     //computes the field for this object
-    private void bounds(){
+    private void setBounds(){
         int xmin = Integer.MAX_VALUE;
         int xmax = Integer.MIN_VALUE;
         int ymin = Integer.MAX_VALUE;
@@ -213,11 +224,8 @@ class Source {
     }
     //returns the connections between children. for use after the input is located
     //the initial call notes that there is always a global child ( the parent element )
-    private Rules adjacencyList(Child located){
+    public static Rules adjacencyList(Child located){
         Rules rtn = new Rules();
-//        System.out.println("located: "+located);
-//        System.out.println("located children: "+located.children());
-//        System.out.println("located connections: "+located.connections());
         for ( Child child : located.children() ){
             rtn.makeAddRules(located, child);
             if (!child.isEmpty()) rtn.union(adjacencyList(child));
@@ -226,11 +234,10 @@ class Source {
     }
     public void setAdjacencyList(Child located){
         Rules adj = adjacencyList(located);
-        adjacencyList = adj;
     }
-    public void locate(Location l){
-        located = Child.locate(element, l);
-        setAdjacencyList(located);
+    public Source locate(Location l){
+        Source located = new Source(Child.locate(element, l));
+        return located;
     }
 }
 
@@ -362,12 +369,12 @@ class Bounds {
 }
 class Rules extends HashMap<Child, ArrayList<Child>>{
     
-    public Rules intersectToRules( HashSet<Child> intersection, Child locatedSource ){
-        Rules rtn = new Rules();
+    public static Rules intersectToRules( HashSet<Child> intersection, Rules sourceAdjacency ){
+        Rules intersectionRules = new Rules();
         for ( Child lhs : intersection ){
-            
+            intersectionRules.addRule(lhs, sourceAdjacency.get(lhs));
         }
-        return rtn;
+        return intersectionRules;
     }
     public void addRule(Child lhs, Child rhs){
         if (containsKey(lhs))
@@ -377,6 +384,11 @@ class Rules extends HashMap<Child, ArrayList<Child>>{
             r.add(rhs);
             put(lhs,r);
         }
+    }
+    public void addRule( Child lhs, ArrayList<Child> rhs){
+        if (containsKey(lhs))
+            get(lhs).addAll(rhs);
+        else put(lhs,rhs);
     }
     public void makeAddRules(Child parent, Child c){
         for ( Connection cn : parent.connections()){
@@ -396,5 +408,11 @@ class Rules extends HashMap<Child, ArrayList<Child>>{
         for (Child c : cs)
             if ( !containsKey(c) ) return false;
         return true;
+    }
+    public void display(){
+        Set<Child> keys = keySet();
+        for ( Child lhs:keys){
+            System.out.println(lhs+" -> "+get(lhs));
+        }
     }
 }

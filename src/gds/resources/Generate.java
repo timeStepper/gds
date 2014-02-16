@@ -18,6 +18,8 @@ import java.util.HashSet;
 public class Generate {
     Design design;
     Source source;
+    Source locatedSource;
+    Rules locatedSourceRules;
     Grid grid;
     
     Generate(int x, int y, Grid g){
@@ -30,23 +32,32 @@ public class Generate {
     public void setSeed(Child c){
         design.setSeed(c);
     }
+    public void setLocatedSource(Location loc){
+        locatedSource = source.locate(loc);
+    }
+    public void setLocatedSourceRules(Child located){
+        locatedSourceRules = Source.adjacencyList(located);
+    }
     public HashSet<Child> intersection( Location loc ){
         HashSet<Child> intersection = new HashSet<>();
         source.locate(loc); //sets source.located and source.adjacencyList at "loc"
-        Bounds bounds = Source.bounds(source.located);
-        Design bounded = Design.bounded(bounds, design);
-        return Design.intersect( source.located, bounded );
+        //Bounds bounds = Source.bounds(source.located);
+        setLocatedSource(loc);
+        setLocatedSourceRules(locatedSource.element());
+        Design bounded = Design.bounded(locatedSource.bounds(), design);
+        return Design.intersect( locatedSource.element(), bounded );
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
         Design des = Design.bounded(b, design);
         System.out.println("Bounded:\n"+des);
     }
-    public void intersectionTest(Location l){
+    public void intersectionTest(Location l ){
         HashSet<Child> intersection = intersection(l);
-        for ( Child lhs : intersection ){
-            System.out.println(lhs+" -> "+source.adjacencyList.get(lhs));
-        }
+        Rules.intersectToRules( intersection, locatedSourceRules ).display();
+//        for ( Child lhs : intersection ){
+//            System.out.println(lhs+" -> "+source.adjacencyList.get(lhs));
+//        }
     }
     //the parent call for painting this object
     public void paint(Graphics2D g){
@@ -73,10 +84,10 @@ public class Generate {
         int y1 = e.aY();
         int x2 = e.bX();
         int y2 = e.bY();
-        g.setStroke(new BasicStroke(2F));
+        g.setStroke(new BasicStroke(2.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
-        g.setStroke(new BasicStroke(1F));
-        g.setColor(Color.BLACK);
-        g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
+//        g.setStroke(new BasicStroke(1F));
+//        g.setColor(Color.BLACK);
+//        g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
     }
 }
