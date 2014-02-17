@@ -1127,7 +1127,9 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_setSourceButtonActionPerformed
 
     private void generationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationButtonActionPerformed
+//        System.out.println("bounds: " + genit.design.bounds);
         genit.generation();
+//        System.out.println("bounds: " + genit.design.bounds);
     }//GEN-LAST:event_generationButtonActionPerformed
 
     /**

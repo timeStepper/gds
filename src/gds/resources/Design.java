@@ -80,11 +80,21 @@ public class Design {
         int xmax = Integer.MIN_VALUE;
         int ymin = Integer.MAX_VALUE;
         int ymax = Integer.MIN_VALUE;
-        for( Location l : nodes ){
-            if ( l.xLoc() < xmin ) xmin = l.xLoc();
-            if ( l.xLoc() > xmax ) xmax = l.xLoc();
-            if ( l.yLoc() < ymin ) ymin = l.yLoc();
-            if ( l.yLoc() > ymax ) ymax = l.yLoc();
+//        for( Location l : nodes ){
+//            if ( l.xLoc() < xmin ) xmin = l.xLoc();
+//            if ( l.xLoc() > xmax ) xmax = l.xLoc();
+//            if ( l.yLoc() < ymin ) ymin = l.yLoc();
+//            if ( l.yLoc() > ymax ) ymax = l.yLoc();
+//        }
+        for ( Edge e : edges.keySet() ){
+            if ( e.aX() < xmin ) xmin = e.aX();
+            if ( e.bX() < xmin ) xmin = e.bX();
+            if ( e.aX() > xmax ) xmax = e.aX();
+            if ( e.bX() > xmax ) xmax = e.bX();
+            if ( e.aY() < ymin ) ymin = e.aY();
+            if ( e.bY() < ymin ) ymin = e.bY();
+            if ( e.aY() > ymax ) ymax = e.aY();
+            if ( e.bY() > ymax ) ymax = e.bY();
         }
         Bounds rtn = new Bounds(xmin,xmax,ymin,ymax);
         bounds = rtn;
@@ -121,7 +131,7 @@ public class Design {
     public static HashSet<Child> intersect( Child located, Design bounded ){
         HashSet<Child> intersections = new HashSet<>();
         //this method starts on the following for loop
-        //recognizing that 'locted' will always be the root Child.
+        //recognizing that 'located' will always be the root Child.
         for ( Child c : located.children())
             if (c.isEmpty()) {
                 if (bounded.contains(c.location())) {
@@ -132,12 +142,6 @@ public class Design {
             }
             else intersections = union(intersections,intersect(c,bounded));
         if ( containsAll(intersections, located.children()) ){
-                //&& bounded.containsAllConnections(located.connections())){
-//            if ( areAllEmpties(located.children())){
-//                if ( bounded.containsAllConnections(located.connections()))
-//                    intersections.add(located);
-//            }
-//            else 
               intersections.add(located);
         }
         return intersections;
@@ -171,15 +175,13 @@ public class Design {
 //            if ( contains(cn) )return false;
 //        return true;
 //    }
-    public void applyRules( Rules rules, Weight weight ){
-        Set<Child> keys = rules.keySet();
-        for( Child lhs : keys ){
-            ArrayList<Child> rhs = rules.get(lhs);
-            if ( rhs != null )
-            for ( Child c : rhs ){
-                    applyRule( lhs.location(), c, weight );
-                    //System.out.println(lhs.location()+" -> "+c.location()+", "+weight);
-            }
+    public void applyRules( HashSet<Child> intersection, Rules lookup, Weight weight ){
+        for( Child lhs : intersection ){
+            ArrayList< Child > rhss = lookup.get(lhs);
+            if ( rhss != null )
+                for ( Child rhs : rhss ){
+                    applyRule( lhs.location(), rhs, weight );
+                }
         }
     }
     public void applyRule( Location lhs, Child rhs, Weight weight ){
@@ -188,28 +190,27 @@ public class Design {
             if ( !edges.containsKey(e) )
                 edges.put(e,new Weight(0,0));
             Weight w = edges.get(e);
-            //System.out.println("weight: "+w);
-            if ( w != null ){
-                w.applyWeight(weight);
-                System.out.println(lhs+" -> "+rhs.location()+"\n");
-                System.out.println("bounds: "+bounds);
-            }
+            w.applyWeight(weight);
         }
         else 
             for (Child child_rhs : rhs.children())
                 applyRule( lhs, child_rhs, weight );
     }
     public void decide(double threshold){
-        HashMap<Edge, Weight> buffer = new HashMap<>();
+        HashMap<Edge, Weight> bufferEdges = new HashMap<>();
+        HashSet<Location> bufferNodes = new HashSet<>();
         Set<Edge> keys = edges.keySet();
         for( Edge e : keys ){
             double edgeValue = edges.get(e).decide();
             //System.out.println("edgevalue: "+edgeValue);
             if (edgeValue > threshold){
-                buffer.put(e, new Weight(1,1));
+                bufferEdges.put(e, new Weight(1,1));
+                bufferNodes.add(new Location(e.aX(),e.aY()));
+                bufferNodes.add(new Location(e.bX(),e.bY()));
             }
         }
-        edges = buffer;
+        edges = bufferEdges;
+        nodes = bufferNodes;
         setBounds();
     }
     @Override
@@ -219,6 +220,10 @@ public class Design {
 }
 class Source {
     Child element;
+    //the adjacencyList serves as a lookup for Rule application,
+    //where the Childs in the intersection of the Source and the
+    //Design are looked up in this table
+    Rules adjacencyList;
     Bounds bounds;  //used for quickening rebounding per location for intersection
 
     Source( Child c ) {
@@ -261,9 +266,12 @@ class Source {
         }
         return rtn;
     }
+    public Rules lookupTable(){
+        return adjacencyList;
+    }
     //returns the connections between children. for use after the input is located
     //the initial call notes that there is always a global child ( the parent element )
-    public static Rules adjacencyList(Child located){
+    private static Rules adjacencyList(Child located){
         Rules rtn = new Rules();
         for ( Child child : located.children() ){
             rtn.makeAddRules(located, child);
@@ -271,11 +279,14 @@ class Source {
         }
         return rtn;
     }
-    public void setAdjacencyList(Child located){
-        Rules adj = adjacencyList(located);
+    public void setAdjacencyList(){
+        adjacencyList = adjacencyList(element);
     }
+    //this returns the Source @ the specified location with it's
+    //located adjacencyList which serves as a lookup for Rule application
     public Source locate(Location l){
         Source located = new Source(Child.locate(element, l));
+        located.setAdjacencyList();
         return located;
     }
 }

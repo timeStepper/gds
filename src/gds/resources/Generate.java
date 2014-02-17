@@ -20,7 +20,6 @@ public class Generate {
     double decisionThreshold = 1;
     Source source;
     Source locatedSource;
-    Rules locatedSourceRules;
     Grid grid;
     
     Generate(int x, int y, Grid g){
@@ -38,14 +37,10 @@ public class Generate {
     public void setLocatedSource(Location loc){
         locatedSource = source.locate(loc);
     }
-    public void setLocatedSourceRules(Child located){
-        locatedSourceRules = Source.adjacencyList(located);
-    }
     public HashSet<Child> intersection( Location loc ){
         //HashSet<Child> intersection = new HashSet<>();
         //Bounds bounds = Source.bounds(source.located);
         setLocatedSource(loc);
-        setLocatedSourceRules(locatedSource.element());
         Design bounded = Design.bounded(locatedSource.bounds(), design);
         return Design.intersect( locatedSource.element(), bounded );
     }
@@ -53,11 +48,12 @@ public class Generate {
         for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x )
             for ( int y = design.bounds.ymin(); y <= design.bounds.ymax(); ++y){
                 HashSet<Child> intersection = intersection(new Location(x,y));
-                //System.out.println("At: "+new Location(x,y));
-                Rules intersectionRules = 
-                        Rules.intersectToRules(intersection, locatedSourceRules);
-                //intersectionRules.display();
-                design.applyRules(intersectionRules, new Weight(1.1,1));
+//                System.out.println("At: "+new Location(x,y));
+//                System.out.println("intersection: "+intersection);
+//                locatedSource.lookupTable().display();
+                
+                design.applyRules(intersection, 
+                        locatedSource.lookupTable(), new Weight(1.1,1));
             }
         design.decide(decisionThreshold);
     }
@@ -68,7 +64,7 @@ public class Generate {
     }
     public void intersectionTest(Location l ){
         HashSet<Child> intersection = intersection(l);
-        Rules.intersectToRules( intersection, locatedSourceRules ).display();
+        Rules.intersectToRules( intersection, locatedSource.lookupTable() ).display();
 //        for ( Child lhs : intersection ){
 //            System.out.println(lhs+" -> "+source.adjacencyList.get(lhs));
 //        }
