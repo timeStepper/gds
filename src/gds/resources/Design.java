@@ -6,6 +6,7 @@
 
 package gds.resources;
 
+import static gds.resources.Source.bounds;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class Design {
     private HashSet<Location> nodes = new HashSet<>();
     private HashMap<Edge, Weight> edges = new HashMap<>();
+    Bounds bounds;
     
     public boolean isOccupied(int x, int y ){
         return contains(new Location(x,y));
@@ -39,7 +41,6 @@ public class Design {
     public Set<Edge> edges(){
         return edges.keySet();
     }
-    
     public void setSeed( Child child ){
         nodes.clear();
         edges.clear();
@@ -73,6 +74,20 @@ public class Design {
     public void addNode( Child child ){
         Location l = child.location();
         nodes.add(l);
+    }
+    public void setBounds(){
+        int xmin = Integer.MAX_VALUE;
+        int xmax = Integer.MIN_VALUE;
+        int ymin = Integer.MAX_VALUE;
+        int ymax = Integer.MIN_VALUE;
+        for( Location l : nodes ){
+            if ( l.xLoc() < xmin ) xmin = l.xLoc();
+            if ( l.xLoc() > xmax ) xmax = l.xLoc();
+            if ( l.yLoc() < ymin ) ymin = l.yLoc();
+            if ( l.yLoc() > ymax ) ymax = l.yLoc();
+        }
+        Bounds rtn = new Bounds(xmin,xmax,ymin,ymax);
+        bounds = rtn;
     }
     //used for getting the Bounded region of the Design
     public static Design bounded( Bounds bounds, Design d ){
@@ -158,20 +173,44 @@ public class Design {
 //    }
     public void applyRules( Rules rules, Weight weight ){
         Set<Child> keys = rules.keySet();
-        for( Child lhs : keys )
-            for ( Child rhs : rules.get(lhs) ){
-                applyRule( lhs.location(), rhs, weight );
+        for( Child lhs : keys ){
+            ArrayList<Child> rhs = rules.get(lhs);
+            if ( rhs != null )
+            for ( Child c : rhs ){
+                    applyRule( lhs.location(), c, weight );
+                    //System.out.println(lhs.location()+" -> "+c.location()+", "+weight);
             }
+        }
     }
     public void applyRule( Location lhs, Child rhs, Weight weight ){
         if (rhs.isEmpty()){
             Edge e = new Edge( lhs, rhs.location() );
+            if ( !edges.containsKey(e) )
+                edges.put(e,new Weight(0,0));
             Weight w = edges.get(e);
-            w.applyWeight(weight);
+            //System.out.println("weight: "+w);
+            if ( w != null ){
+                w.applyWeight(weight);
+                System.out.println(lhs+" -> "+rhs.location()+"\n");
+                System.out.println("bounds: "+bounds);
+            }
         }
         else 
             for (Child child_rhs : rhs.children())
                 applyRule( lhs, child_rhs, weight );
+    }
+    public void decide(double threshold){
+        HashMap<Edge, Weight> buffer = new HashMap<>();
+        Set<Edge> keys = edges.keySet();
+        for( Edge e : keys ){
+            double edgeValue = edges.get(e).decide();
+            //System.out.println("edgevalue: "+edgeValue);
+            if (edgeValue > threshold){
+                buffer.put(e, new Weight(1,1));
+            }
+        }
+        edges = buffer;
+        setBounds();
     }
     @Override
     public String toString(){
@@ -305,6 +344,9 @@ class Weight{
         intersect = a;
         difference = b;
     }
+    public double decide(){
+        return intersect/difference;
+    }
     public void applyWeight(Weight weight){
         intersect += weight.intersectValue();
         difference += weight.differenceValue();
@@ -314,6 +356,9 @@ class Weight{
     }
     public double differenceValue(){
         return difference;
+    }
+    public String toString(){
+        return "["+intersect+", "+difference+"]";
     }
 }
 class Bounds {

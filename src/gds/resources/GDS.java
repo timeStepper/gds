@@ -103,6 +103,7 @@ public class GDS extends javax.swing.JFrame {
         displayFlattenedChildren = new javax.swing.JButton();
         boundTestButton = new javax.swing.JButton();
         intersectionTestButton = new javax.swing.JButton();
+        generationButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -613,6 +614,13 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        generationButton.setText("Generation");
+        generationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generationButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -632,10 +640,11 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(displayFlattenedEdges)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(displayFlattenedChildren)))
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addGap(0, 29, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(generationButton)
                     .addComponent(intersectionTestButton)
                     .addComponent(boundTestButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -661,7 +670,9 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(boundTestButton)
                 .addGap(18, 18, 18)
                 .addComponent(intersectionTestButton)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(generationButton)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("tab4", jPanel1);
@@ -1115,6 +1126,10 @@ public class GDS extends javax.swing.JFrame {
         System.out.println("source set!");
     }//GEN-LAST:event_setSourceButtonActionPerformed
 
+    private void generationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationButtonActionPerformed
+        genit.generation();
+    }//GEN-LAST:event_generationButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1355,6 +1370,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JToggleButton editMode;
     private javax.swing.JTabbedPane elementTabs;
     private javax.swing.JToggleButton genMode;
+    private javax.swing.JButton generationButton;
     private javax.swing.JSpinner gridSize;
     private javax.swing.JButton gridToggleButton;
     private javax.swing.JSpinner gridX;

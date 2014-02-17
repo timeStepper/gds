@@ -17,6 +17,7 @@ import java.util.HashSet;
  */
 public class Generate {
     Design design;
+    double decisionThreshold = 1;
     Source source;
     Source locatedSource;
     Rules locatedSourceRules;
@@ -31,6 +32,8 @@ public class Generate {
     }
     public void setSeed(Child c){
         design.setSeed(c);
+        design.setBounds();
+        //System.out.println(designBounds);
     }
     public void setLocatedSource(Location loc){
         locatedSource = source.locate(loc);
@@ -39,13 +42,24 @@ public class Generate {
         locatedSourceRules = Source.adjacencyList(located);
     }
     public HashSet<Child> intersection( Location loc ){
-        HashSet<Child> intersection = new HashSet<>();
-        source.locate(loc); //sets source.located and source.adjacencyList at "loc"
+        //HashSet<Child> intersection = new HashSet<>();
         //Bounds bounds = Source.bounds(source.located);
         setLocatedSource(loc);
         setLocatedSourceRules(locatedSource.element());
         Design bounded = Design.bounded(locatedSource.bounds(), design);
         return Design.intersect( locatedSource.element(), bounded );
+    }
+    public void generation(){
+        for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x )
+            for ( int y = design.bounds.ymin(); y <= design.bounds.ymax(); ++y){
+                HashSet<Child> intersection = intersection(new Location(x,y));
+                //System.out.println("At: "+new Location(x,y));
+                Rules intersectionRules = 
+                        Rules.intersectToRules(intersection, locatedSourceRules);
+                //intersectionRules.display();
+                design.applyRules(intersectionRules, new Weight(1.1,1));
+            }
+        design.decide(decisionThreshold);
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
