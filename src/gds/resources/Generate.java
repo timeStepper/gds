@@ -17,6 +17,7 @@ import java.util.HashSet;
  */
 public class Generate {
     Design design;
+    Design boundedDesign;
     double decisionThreshold = 1;
     Source source;
     Source locatedSource;
@@ -37,12 +38,33 @@ public class Generate {
     public void setLocatedSource(Location loc){
         locatedSource = source.locate(loc);
     }
+    public void setBoundedDesign(Location loc){
+        boundedDesign = Design.bounded(locatedSource.bounds(), design);
+    }
     public HashSet<Child> intersection( Location loc ){
-        //HashSet<Child> intersection = new HashSet<>();
-        //Bounds bounds = Source.bounds(source.located);
         setLocatedSource(loc);
-        Design bounded = Design.bounded(locatedSource.bounds(), design);
-        return Design.intersect( locatedSource.element(), bounded );
+        setBoundedDesign(loc);
+        HashSet<Child> rtn = Design.intersect( locatedSource.element(), boundedDesign );
+        for ( Child c : rtn ){
+            double value = valuate(c);
+            c.setValue(value);
+        }
+        return rtn;
+    }
+    private double valuate(Child c){
+        double value = 0;
+        if ( c.isEmpty() ){
+            for ( Child ch : locatedSource.lookupTable().get(c) ){
+                if ( boundedDesign.contains(ch.location()))
+                    value += 1;
+            }
+            //value += 1;
+        }
+        else {
+            for ( Child ch : c.children() )
+                value += valuate(ch);
+        }
+        return value;
     }
     public void generation(){
         for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x )
@@ -51,7 +73,6 @@ public class Generate {
 //                System.out.println("At: "+new Location(x,y));
 //                System.out.println("intersection: "+intersection);
 //                locatedSource.lookupTable().display();
-                
                 design.applyRules(intersection, 
                         locatedSource.lookupTable(), new Weight(1.1,1));
             }
@@ -74,9 +95,9 @@ public class Generate {
         paintDesign(g);
     }
     public void paintDesign( Graphics2D g ) {
-        for ( Location l : design.grid() ){
-            paintLocation(g,l);
-        }
+//        for ( Location l : design.grid() ){
+//            paintLocation(g,l);
+//        }
         for ( Edge e : design.edges() ){
             paintEdge(g,e);
         }

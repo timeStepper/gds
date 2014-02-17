@@ -31,9 +31,10 @@ public class Design {
 //    public boolean contains(Child c){
 //        return contains(c.location());
 //    }
-    private boolean contains(Connection conn){
-        Edge e = new Edge(conn.aLoc(),conn.bLoc());
-        return edges.containsKey(e);
+    public boolean contains(Connection conn){
+        Edge e1 = new Edge(conn.aLoc(),conn.bLoc());
+        Edge e2 = new Edge(conn.bLoc(),conn.aLoc());
+        return edges.containsKey(e1) || edges.containsKey(e2);
     }
     public HashSet<Location> grid(){
         return nodes;

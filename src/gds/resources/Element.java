@@ -19,17 +19,17 @@ public class Element {
     private ArrayList< Child > children;
     private ArrayList< Connection > connections;
     String name = "!";
-    private double value;
+    //private double value=0;
     
     Element ( ) {
         children  = new ArrayList<  >( );
         connections = new ArrayList<  >( );
-        value = 1;
+        //value = 1;
     }
-    Element( ArrayList<Child> childs, ArrayList<Connection> conns, double val ){
+    Element( ArrayList<Child> childs, ArrayList<Connection> conns ){
         children = childs;
         connections = conns;
-        value = val;
+        //value = val;
     }
     ArrayList< Child > children( ) {
         return children;
@@ -37,12 +37,15 @@ public class Element {
     ArrayList< Connection > connections( ) {
         return connections;
     }
-    double value(){
-        return value;
-    }
+//    double value(){
+//        return value;
+//    }
+//    public void setValue( double v ){
+//        value = v;
+//    }
     @Override
     public Element clone(){
-        double val = value();
+        //double val = value();
         ArrayList<Child> childs = new ArrayList<>();
         ArrayList<Connection> conns = new ArrayList<>();
         for ( Child c : children )
@@ -52,14 +55,14 @@ public class Element {
             int idxB = childs.indexOf(cn.b());
             conns.add(new Connection( childs.get(idxA), childs.get(idxB) ));
         }
-        return new Element( childs, conns, val );
+        return new Element( childs, conns );
     }
     boolean isEmpty( ) {
         return children.isEmpty();
     }
     public void addChild( Child c ) {
         children.add( c );
-        value += 1.5*c.getValue();
+        //value += 1.5*c.getValue();
     }
     public void removeChild( Child c ){
         if ( children.contains( c ) )
@@ -111,6 +114,7 @@ class Child {
     private Element child;
     private Location location;
     private String name;
+    private double value = 0;
     
     Child ( Element e, Location l ) {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
@@ -151,11 +155,17 @@ class Child {
             throw nse;
         }
     }
-    public double getValue(){
-        return element().value();
+    public double value(){
+        return value;
     }
+    public void setValue(double v){
+        value = v;
+    }
+//    public double getValue(){
+//        return element().value();
+//    }
     //this is used for paint purposes only
-    public Child locatePaint( Location l ){
+    public Child locateToPaint( Location l ){
         return new Child ( element(), location().add( l ));
     }
     //this is the method to call for getting the located version of a child
@@ -172,7 +182,6 @@ class Child {
                 ch.located(ch.location());
             }
     }
-    
     //public static ArrayList<Child> 
     //this version will double up on recurances
     public static ArrayList<Child> flattenChildren( Child c){
@@ -239,8 +248,8 @@ class Child {
     @Override
     public String toString() {
         if (isEmpty())
-            return "[E: "+location.toString()+", "+getValue()+"]";
-        else return "[P: "+location.toString()+", "+getValue()+"]";
+            return "[E: "+location.toString()+", "+value+"]";
+        else return "[P: "+location.toString()+", "+value+"]";
     }
     @Override
     public boolean equals(Object obj) {
@@ -346,8 +355,8 @@ class Connection {
         return new Connection( a.clone(), b.clone());
     }
     public Connection locate( Location l ){
-        Child newA = a.locatePaint(l);
-        Child newB = b.locatePaint(l);
+        Child newA = a.locateToPaint(l);
+        Child newB = b.locateToPaint(l);
         return new Connection( newA, newB );
     }
     
