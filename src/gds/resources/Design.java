@@ -128,6 +128,14 @@ public class Design {
         }
         return difference;
     }
+    public void applyDifference(Design difference, Weight weight){
+        for ( Edge e : difference.edges()){
+            if ( !edges.containsKey(e) )
+                edges.put(e,new Weight(0,0));
+            Weight w = edges.get(e);
+            w.applyWeight(weight);
+        }
+    }
     //helper to intersection
     public static HashSet<Child> intersect( Child located, Design bounded ){
         HashSet<Child> intersections = new HashSet<>();
@@ -208,6 +216,7 @@ public class Design {
         }
     }
     public void decide(double threshold){
+        //System.out.println("Edges: "+edges.keySet());
         HashMap<Edge, Weight> bufferEdges = new HashMap<>();
         HashSet<Location> bufferNodes = new HashSet<>();
         Set<Edge> keys = edges.keySet();
@@ -299,6 +308,13 @@ class Source {
         Source located = new Source(Child.locate(element, l));
         located.setAdjacencyList();
         return located;
+    }
+    @Override
+    public String toString(){
+        return element.toString();
+    }
+    public void display(){
+        element.displayChildren();
     }
 }
 
@@ -444,8 +460,10 @@ class Rules extends HashMap<Child, ArrayList<Child>>{
         return intersectionRules;
     }
     public void addRule(Child lhs, Child rhs){
-        if (containsKey(lhs))
-            get(lhs).add(rhs);
+        if (containsKey(lhs)){
+            ArrayList<Child> list = get(lhs);
+            if ( !list.contains(rhs))list.add(rhs);
+        }
         else {
             ArrayList<Child> r = new ArrayList<>();
             r.add(rhs);
@@ -460,12 +478,11 @@ class Rules extends HashMap<Child, ArrayList<Child>>{
     public void makeAddRules(Child parent, Child c){
         for ( Connection cn : parent.connections()){
             if ( cn.a().equals(c) ) addRule(c,cn.b());
-            if ( cn.b().equals(c) ) addRule(c,cn.a());
+            else if ( cn.b().equals(c) ) addRule(c,cn.a());
         }
     }
     public void union( Rules rs ){
-        Set<Child> keys = rs.keySet();
-        for ( Child lhs : keys ){
+        for ( Child lhs : rs.keySet() ){
             ArrayList<Child> cs = rs.get(lhs);
             for ( Child rhs : cs )
                 addRule(lhs,rhs);

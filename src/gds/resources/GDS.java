@@ -104,6 +104,8 @@ public class GDS extends javax.swing.JFrame {
         boundTestButton = new javax.swing.JButton();
         intersectionTestButton = new javax.swing.JButton();
         generationButton = new javax.swing.JButton();
+        thresholdField = new javax.swing.JTextField();
+        setThresholdButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -621,6 +623,13 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        setThresholdButton.setText("threshold");
+        setThresholdButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                setThresholdButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -648,6 +657,12 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(intersectionTestButton)
                     .addComponent(boundTestButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(setThresholdButton)
+                .addGap(18, 18, 18)
+                .addComponent(thresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -672,7 +687,11 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(intersectionTestButton)
                 .addGap(33, 33, 33)
                 .addComponent(generationButton)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(thresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(setThresholdButton))
+                .addContainerGap())
         );
 
         elementTabs.addTab("tab4", jPanel1);
@@ -1129,8 +1148,13 @@ public class GDS extends javax.swing.JFrame {
     private void generationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationButtonActionPerformed
 //        System.out.println("bounds: " + genit.design.bounds);
         genit.generation();
+        ((MyPanel)displayArea).repaint();
 //        System.out.println("bounds: " + genit.design.bounds);
     }//GEN-LAST:event_generationButtonActionPerformed
+
+    private void setThresholdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setThresholdButtonActionPerformed
+        genit.setThreshold(Double.parseDouble(thresholdField.getText()));
+    }//GEN-LAST:event_setThresholdButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1419,6 +1443,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JMenuItem scaleImage;
     private javax.swing.JButton setSeedButton;
     private javax.swing.JButton setSourceButton;
+    private javax.swing.JButton setThresholdButton;
+    private javax.swing.JTextField thresholdField;
     private javax.swing.JButton toJsonButton;
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;

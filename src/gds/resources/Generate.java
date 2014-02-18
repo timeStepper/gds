@@ -28,6 +28,9 @@ public class Generate {
         design = new Design();
         grid = g;
     }
+    public void setThreshold(double t){
+        decisionThreshold = t;
+    }
     public void setSource(Child c){
         source = new Source(c);
     }
@@ -43,12 +46,9 @@ public class Generate {
         boundedDesign = Design.bounded(locatedSource.bounds(), design);
     }
     public HashSet<Child> intersection( Location loc ){
-        setLocatedSource(loc);
-        setBoundedDesign(loc);
         HashSet<Child> rtn = Design.intersect( locatedSource.element(), boundedDesign );
         for ( Child c : rtn ){
-            double value = valuate(c);
-            c.setValue(value);
+            c.setValue(valuate(c));
         }
         return rtn;
     }
@@ -57,7 +57,7 @@ public class Generate {
         if ( c.isEmpty() ){
             ArrayList<Child> rhss = locatedSource.lookupTable().get(c);
             if (rhss!=null)
-                for ( Child ch : locatedSource.lookupTable().get(c) ){
+                for ( Child ch : rhss ){
                     if ( boundedDesign.contains(ch.location()))
                         value += 1;
                 }
@@ -69,16 +69,66 @@ public class Generate {
         return value;
     }
     public void generation(){
-        for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x )
+        Design buffer = new Design();
+        for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x ){
             for ( int y = design.bounds.ymin(); y <= design.bounds.ymax(); ++y){
+                Location here = new Location(x,y);
+                setLocatedSource(here);
+                setBoundedDesign(here);
                 HashSet<Child> intersection = intersection(new Location(x,y));
+                Design difference = Design.difference(locatedSource.element(), boundedDesign);
+                Weight diff = new Weight(difference.edges().size(),
+                        boundedDesign.edges().size());
 //                System.out.println("At: "+new Location(x,y));
 //                System.out.println("intersection: "+intersection);
 //                locatedSource.lookupTable().display();
-                design.applyRules(intersection, 
-                        locatedSource.lookupTable(), new Weight(1.1,1));
+                buffer.applyRules(intersection, 
+                        locatedSource.lookupTable(), diff);
+                buffer.applyDifference(difference, new Weight(boundedDesign.edges().size(),
+                    difference.edges().size()));
+//                if ( x==0&&y==-2) {
+//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
+//                    for ( Child c : intersection ){
+//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
+//                    }
+//                    System.out.println(intersection+"\n");
+//                }
+//                
+//                if ( x==0&&y==2) {
+//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
+//                    for ( Child c : intersection ){
+//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
+//                    }
+//                    System.out.println(intersection+"\n");
+//                    
+//                }
+//                
+//                if ( x==-2&&y==0) {
+//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
+//                    for ( Child c : intersection ){
+//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
+//                    }
+//                    System.out.println(intersection+"\n");
+//                }
+//                
+                if ( x==2&&y==0) {
+                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
+                    for ( Child c : intersection ){
+                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
+                    }
+                    locatedSource.element.displayChildren();
+                }
+                
             }
-        design.decide(decisionThreshold);
+        }
+        buffer.decide(decisionThreshold);
+        design = buffer;
+    }
+    public double intrVal(HashSet<Child> cs){
+        double rtn = 0;
+        for ( Child c :cs)
+            rtn+=c.value();
+        return rtn;
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
@@ -117,10 +167,10 @@ public class Generate {
         int y1 = e.aY();
         int x2 = e.bX();
         int y2 = e.bY();
-        g.setStroke(new BasicStroke(2.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
+        g.setStroke(new BasicStroke(3F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
-//        g.setStroke(new BasicStroke(1F));
-//        g.setColor(Color.BLACK);
-//        g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
+        g.setStroke(new BasicStroke(.5F));
+        g.setColor(Color.BLACK);
+        g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
     }
 }

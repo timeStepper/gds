@@ -114,7 +114,7 @@ class Child {
     private Element child;
     private Location location;
     private String name;
-    private double value = 0;
+    private double value = 1;
     
     Child ( Element e, Location l ) {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
