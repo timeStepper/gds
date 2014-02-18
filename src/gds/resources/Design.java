@@ -193,9 +193,19 @@ public class Design {
             Weight w = edges.get(e);
             w.applyWeight(weight);
         }
-        else 
-            for (Child child_rhs : rhs.children())
-                applyRule( lhs, child_rhs, weight );
+        else
+            applyElement(rhs, weight);
+//            for (Child c : rhs.children())
+//                applyRule( c.location(), c, weight );
+    }
+    public void applyElement(Child elem, Weight weight){
+        for ( Connection cn : elem.connections()){
+            if (cn.a().isEmpty()) applyRule(cn.a().location(),cn.b(),weight);
+            else {
+                applyElement(cn.a(),weight);
+                applyElement(cn.b(),weight);
+            }
+        }
     }
     public void decide(double threshold){
         HashMap<Edge, Weight> bufferEdges = new HashMap<>();
@@ -221,7 +231,7 @@ public class Design {
 }
 class Source {
     Child element;
-    //the adjacencyList serves as a lookup for Rule application,
+    //the adjacencyList serves as a lookup table for Rule application,
     //where the Childs in the intersection of the Source and the
     //Design are looked up in this table
     Rules adjacencyList;

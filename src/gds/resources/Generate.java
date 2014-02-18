@@ -9,6 +9,7 @@ package gds.resources;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -54,11 +55,12 @@ public class Generate {
     private double valuate(Child c){
         double value = 0;
         if ( c.isEmpty() ){
-            for ( Child ch : locatedSource.lookupTable().get(c) ){
-                if ( boundedDesign.contains(ch.location()))
-                    value += 1;
-            }
-            //value += 1;
+            ArrayList<Child> rhss = locatedSource.lookupTable().get(c);
+            if (rhss!=null)
+                for ( Child ch : locatedSource.lookupTable().get(c) ){
+                    if ( boundedDesign.contains(ch.location()))
+                        value += 1;
+                }
         }
         else {
             for ( Child ch : c.children() )
