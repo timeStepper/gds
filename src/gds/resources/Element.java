@@ -19,17 +19,17 @@ public class Element {
     private ArrayList< Child > children;
     private ArrayList< Connection > connections;
     String name = "!";
-    //private double value=0;
+    private double value=0;
     
     Element ( ) {
         children  = new ArrayList<  >( );
         connections = new ArrayList<  >( );
-        //value = 1;
+        value = .1;
     }
-    Element( ArrayList<Child> childs, ArrayList<Connection> conns ){
+    Element( ArrayList<Child> childs, ArrayList<Connection> conns, double val ){
         children = childs;
         connections = conns;
-        //value = val;
+        value = val;
     }
     ArrayList< Child > children( ) {
         return children;
@@ -37,12 +37,12 @@ public class Element {
     ArrayList< Connection > connections( ) {
         return connections;
     }
-//    double value(){
-//        return value;
-//    }
-//    public void setValue( double v ){
-//        value = v;
-//    }
+    double value(){
+        return value;
+    }
+    public void setValue( double v ){
+        value = v;
+    }
     @Override
     public Element clone(){
         //double val = value();
@@ -55,14 +55,15 @@ public class Element {
             int idxB = childs.indexOf(cn.b());
             conns.add(new Connection( childs.get(idxA), childs.get(idxB) ));
         }
-        return new Element( childs, conns );
+        return new Element( childs, conns, value );
     }
     boolean isEmpty( ) {
         return children.isEmpty();
     }
     public void addChild( Child c ) {
         children.add( c );
-        //value += 1.5*c.getValue();
+        if (value==.1)value = c.getValue()*1.25;
+        else value += c.getValue()*1.25;
     }
     public void removeChild( Child c ){
         if ( children.contains( c ) )
@@ -114,7 +115,7 @@ class Child {
     private Element child;
     private Location location;
     private String name;
-    private double value = 1;
+    //private double value = 1;
     
     Child ( Element e, Location l ) {
         if (e==null)return;//prevents:  don't know why the first attempt to make child with null element works???
@@ -155,15 +156,15 @@ class Child {
             throw nse;
         }
     }
-    public double value(){
-        return value;
-    }
-    public void setValue(double v){
-        value = v;
-    }
-//    public double getValue(){
-//        return element().value();
+//    public double value(){
+//        return value;
 //    }
+//    public void setValue(double v){
+//        value = v;
+//    }
+    public double getValue(){
+        return element().value();
+    }
     //this is used for paint purposes only
     public Child locateToPaint( Location l ){
         return new Child ( element(), location().add( l ));
@@ -248,8 +249,8 @@ class Child {
     @Override
     public String toString() {
         if (isEmpty())
-            return "[E: "+location.toString()+", "+value+"]";
-        else return "[P: "+location.toString()+", "+value+"]";
+            return "[E: "+location.toString()+", "+getValue()+"]";
+        else return "[P: "+location.toString()+", "+getValue()+"]";
     }
     @Override
     public boolean equals(Object obj) {

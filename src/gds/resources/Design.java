@@ -184,34 +184,36 @@ public class Design {
 //            if ( contains(cn) )return false;
 //        return true;
 //    }
-    public void applyRules( HashSet<Child> intersection, Rules lookup, Weight weight ){
+    public void applyRules( HashSet<Child> intersection, Rules lookup, double diff ){
         for( Child lhs : intersection ){
             ArrayList< Child > rhss = lookup.get(lhs);
             if ( rhss != null )
                 for ( Child rhs : rhss ){
-                    applyRule( lhs.location(), rhs, weight );
+                    applyRule( lhs.location(), rhs, .1, diff );
                 }
         }
     }
-    public void applyRule( Location lhs, Child rhs, Weight weight ){
+    public void applyRule( Location lhs, Child rhs, double inter, double diff ){
         if (rhs.isEmpty()){
             Edge e = new Edge( lhs, rhs.location() );
             if ( !edges.containsKey(e) )
                 edges.put(e,new Weight(0,0));
             Weight w = edges.get(e);
+            Weight weight = new Weight(inter, 1);
             w.applyWeight(weight);
         }
         else
-            applyElement(rhs, weight);
+            applyElement(rhs, inter, diff);
 //            for (Child c : rhs.children())
 //                applyRule( c.location(), c, weight );
     }
-    public void applyElement(Child elem, Weight weight){
+    public void applyElement(Child elem, double inter, double diff){
+        inter *= 1.5;
         for ( Connection cn : elem.connections()){
-            if (cn.a().isEmpty()) applyRule(cn.a().location(),cn.b(),weight);
+            if (cn.a().isEmpty()) applyRule(cn.a().location(),cn.b(), inter, diff);
             else {
-                applyElement(cn.a(),weight);
-                applyElement(cn.b(),weight);
+                applyElement(cn.a(), inter, diff);
+                applyElement(cn.b(), inter, diff);
             }
         }
     }
@@ -222,7 +224,7 @@ public class Design {
         Set<Edge> keys = edges.keySet();
         for( Edge e : keys ){
             double edgeValue = edges.get(e).decide();
-            //System.out.println("edgevalue: "+edgeValue);
+            System.out.println("edgevalue: "+edgeValue);
             if (edgeValue > threshold){
                 bufferEdges.put(e, new Weight(1,1));
                 bufferNodes.add(new Location(e.aX(),e.aY()));
@@ -383,11 +385,15 @@ class Weight{
         difference = b;
     }
     public double decide(){
-        return intersect/difference;
+        if (difference==0)return 0;
+        else return intersect/difference;
     }
     public void applyWeight(Weight weight){
         intersect += weight.intersectValue();
         difference += weight.differenceValue();
+    }
+    public void addIntersectValue(double v){
+        intersect+=v;
     }
     public double intersectValue(){
         return intersect;

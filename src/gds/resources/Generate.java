@@ -19,10 +19,11 @@ import java.util.HashSet;
 public class Generate {
     Design design;
     Design boundedDesign;
-    double decisionThreshold = 1;
+    double decisionThreshold = .5;
     Source source;
     Source locatedSource;
     Grid grid;
+    int offset = 2;
     
     Generate(int x, int y, Grid g){
         design = new Design();
@@ -47,9 +48,9 @@ public class Generate {
     }
     public HashSet<Child> intersection( Location loc ){
         HashSet<Child> rtn = Design.intersect( locatedSource.element(), boundedDesign );
-        for ( Child c : rtn ){
-            c.setValue(valuate(c));
-        }
+//        for ( Child c : rtn ){
+//            c.setValue(valuate(c));
+//        }
         return rtn;
     }
     private double valuate(Child c){
@@ -70,22 +71,20 @@ public class Generate {
     }
     public void generation(){
         Design buffer = new Design();
-        for ( int x = design.bounds.xmin(); x <= design.bounds.xmax(); ++x ){
-            for ( int y = design.bounds.ymin(); y <= design.bounds.ymax(); ++y){
+        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
+            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
                 Location here = new Location(x,y);
                 setLocatedSource(here);
                 setBoundedDesign(here);
                 HashSet<Child> intersection = intersection(new Location(x,y));
                 Design difference = Design.difference(locatedSource.element(), boundedDesign);
-                Weight diff = new Weight(difference.edges().size(),
-                        boundedDesign.edges().size());
-//                System.out.println("At: "+new Location(x,y));
-//                System.out.println("intersection: "+intersection);
-//                locatedSource.lookupTable().display();
+                double diff;
+                if ( boundedDesign.edges().size()==0 || difference.edges().size()==0) diff = 0;
+                else diff = difference.edges().size() / boundedDesign.edges().size();
+                
                 buffer.applyRules(intersection, 
-                        locatedSource.lookupTable(), diff);
-                buffer.applyDifference(difference, new Weight(boundedDesign.edges().size(),
-                    difference.edges().size()));
+                        locatedSource.lookupTable(), diff);//diff);
+                //buffer.applyDifference(difference, invDiff);//invDiff);
 //                if ( x==0&&y==-2) {
 //                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
 //                    for ( Child c : intersection ){
@@ -111,25 +110,26 @@ public class Generate {
 //                    System.out.println(intersection+"\n");
 //                }
 //                
-                if ( x==2&&y==0) {
-                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
-                    for ( Child c : intersection ){
-                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
-                    }
-                    locatedSource.element.displayChildren();
-                }
+//                if ( x==2&&y==0) {
+//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
+//                    for ( Child c : intersection ){
+//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
+//                    }
+//                    locatedSource.element.displayChildren();
+//                }
+                System.out.println("intersection:\n"+intersection);
                 
             }
         }
         buffer.decide(decisionThreshold);
         design = buffer;
     }
-    public double intrVal(HashSet<Child> cs){
-        double rtn = 0;
-        for ( Child c :cs)
-            rtn+=c.value();
-        return rtn;
-    }
+//    public double intrVal(HashSet<Child> cs){
+//        double rtn = 0;
+//        for ( Child c :cs)
+//            rtn+=c.value();
+//        return rtn;
+//    }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
         Design des = Design.bounded(b, design);
@@ -153,6 +153,9 @@ public class Generate {
         for ( Edge e : design.edges() ){
             paintEdge(g,e);
         }
+        for ( Edge e : design.edges() ){
+            paintEdgeIn(g,e);
+        }
     }
     public void paintLocation(Graphics2D g, Location l) {
         g.setColor(Color.ORANGE);
@@ -162,13 +165,19 @@ public class Generate {
     }
     public void paintEdge( Graphics2D g, Edge e ) {
         g.setColor(Color.WHITE);
-        
         int x1 = e.aX();
         int y1 = e.aY();
         int x2 = e.bX();
         int y2 = e.bY();
         g.setStroke(new BasicStroke(3F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
+
+    }
+    public void paintEdgeIn( Graphics2D g, Edge e ){
+        int x1 = e.aX();
+        int y1 = e.aY();
+        int x2 = e.bX();
+        int y2 = e.bY();
         g.setStroke(new BasicStroke(.5F));
         g.setColor(Color.BLACK);
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
