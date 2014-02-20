@@ -23,14 +23,14 @@ public class Generate {
     Source source;
     Source locatedSource;
     Grid grid;
-    int offset = 2;
+    int offset = 4;
     
     Generate(int x, int y, Grid g){
-        design = new Design();
+        design = new Design(2);
         grid = g;
     }
     public void setThreshold(double t){
-        decisionThreshold = t;
+        design.adjust(t);
     }
     public void setSource(Child c){
         source = new Source(c);
@@ -70,58 +70,37 @@ public class Generate {
         return value;
     }
     public void generation(){
-        Design buffer = new Design();
+        design.resetThreshold();
+        Design buffer = new Design(design.adjust);
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
             for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
+                
                 Location here = new Location(x,y);
                 setLocatedSource(here);
                 setBoundedDesign(here);
-                HashSet<Child> intersection = intersection(new Location(x,y));
-                Design difference = Design.difference(locatedSource.element(), boundedDesign);
-                double diff;
-                if ( boundedDesign.edges().size()==0 || difference.edges().size()==0) diff = 0;
-                else diff = difference.edges().size() / boundedDesign.edges().size();
-                
-                buffer.applyRules(intersection, 
-                        locatedSource.lookupTable(), diff);//diff);
-                //buffer.applyDifference(difference, invDiff);//invDiff);
-//                if ( x==0&&y==-2) {
-//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
-//                    for ( Child c : intersection ){
-//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
-//                    }
-//                    System.out.println(intersection+"\n");
-//                }
-//                
-//                if ( x==0&&y==2) {
-//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
-//                    for ( Child c : intersection ){
-//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
-//                    }
-//                    System.out.println(intersection+"\n");
-//                    
-//                }
-//                
-//                if ( x==-2&&y==0) {
-//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
-//                    for ( Child c : intersection ){
-//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
-//                    }
-//                    System.out.println(intersection+"\n");
-//                }
-//                
-//                if ( x==2&&y==0) {
-//                    System.out.println("@"+"("+x+", "+y+"): "+intrVal(intersection));
-//                    for ( Child c : intersection ){
-//                        System.out.println(c+"->"+locatedSource.lookupTable().get(c));
-//                    }
-//                    locatedSource.element.displayChildren();
-//                }
-                System.out.println("intersection:\n"+intersection);
-                
+                double bounded = boundedDesign.edges().size();
+                    if ( bounded != 0 ){
+    //                System.out.println("X: "+x);
+    //                System.out.println("Y: "+y);
+                    HashSet<Child> intersection = intersection(new Location(x,y));
+                    Design difference = Design.difference(locatedSource.element(), boundedDesign);
+                    double interVal;
+                    double diffVal;
+                    double differ = difference.edges().size();
+                    interVal = intersection.size() / bounded;
+                    diffVal = differ / bounded;
+                    //System.out.println("diffVal "+diffVal);
+                    //System.out.println("bounded"+bounded);
+                    //System.out.println("interval: "+interVal);
+                    buffer.balanceDiffer(source.intersectValue);
+                    buffer.balanceInter(interVal);
+                    buffer.applyRules(intersection, 
+                            locatedSource.lookupTable(), interVal, source.intersectValue);//diff);
+                    buffer.applyDifference(difference, interVal);//invDiff);
+                }
             }
         }
-        buffer.decide(decisionThreshold);
+        buffer.decide(buffer.threshold());//decisionThreshold);
         design = buffer;
     }
 //    public double intrVal(HashSet<Child> cs){

@@ -257,6 +257,5 @@ public class EditElement {
         public void fromJson(String input){
             Child son = gson.fromJson(input, Child.class).clone();
             dynamicTree.setRoot(son);
-            
         }
     }

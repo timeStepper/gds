@@ -767,6 +767,11 @@ public class GDS extends javax.swing.JFrame {
         verticalSplit.setLeftComponent(topBar);
 
         jMenu1.setText("File");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         saveOutElementMenu.setText("Save Element");
         saveOutElementMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -1120,6 +1125,7 @@ public class GDS extends javax.swing.JFrame {
     private void displayFlattenedEdgesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFlattenedEdgesActionPerformed
         System.out.println("Flattened Edges:");
         System.out.println(Child.flattenConnections(edit.selected));
+        System.out.println("size: "+Child.flattenConnections(edit.selected).size());
     }//GEN-LAST:event_displayFlattenedEdgesActionPerformed
 
     private void displayFlattenedChildrenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFlattenedChildrenActionPerformed
@@ -1153,6 +1159,10 @@ public class GDS extends javax.swing.JFrame {
     private void setThresholdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setThresholdButtonActionPerformed
         genit.setThreshold(Double.parseDouble(thresholdField.getText()));
     }//GEN-LAST:event_setThresholdButtonActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
 
     /**
      * @param args the command line arguments

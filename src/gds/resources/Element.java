@@ -2,6 +2,7 @@ package gds.resources;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -155,6 +156,11 @@ class Child {
         }catch(NoSuchElementException nse){
             throw nse;
         }
+    }
+    public boolean containsAll(HashSet<Connection> cns){
+        for(Connection cn : cns)
+            if (!connections().contains(cn)) return false;
+        return true;
     }
 //    public double value(){
 //        return value;
@@ -360,6 +366,9 @@ class Connection {
         Child newB = b.locateToPaint(l);
         return new Connection( newA, newB );
     }
+    public boolean isEmpty(){
+        return a.isEmpty() && b.isEmpty();
+    }
     
     @Override
     public boolean equals(Object obj) {
@@ -373,6 +382,12 @@ class Connection {
         if ( a.equals( c.a( ) ) ) return b.equals( c.b( ) );
         else if ( a.equals( c.b ( ) ) ) return b.equals( c.a( ) );
         else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = (a.xLoc()*a.yLoc()) + (b.xLoc()*b.yLoc());
+        return hash;
     }
     @Override
     public String toString(){
