@@ -42,6 +42,11 @@ public class Design {
         Edge e2 = new Edge(conn.bLoc(),conn.aLoc());
         return edges.containsKey(e1) || edges.containsKey(e2);
     }
+    public boolean contains(Location a, Location b){
+        Edge e1 = new Edge(a, b);
+        Edge e2 = new Edge(b, a);
+        return edges.containsKey(e1) || edges.containsKey(e2);
+    }
     public HashSet<Location> grid(){
         return nodes;
     }
@@ -167,19 +172,28 @@ public class Design {
         }
     }
     //helper to intersection
-    public static HashSet<Child> intersect( Child located, Design bounded ){
+    public static HashSet<Child> intersect( Child located, Rules rules,Design bounded ){
         HashSet<Child> intersections = new HashSet<>();
         //this method starts on the following for loop
         //recognizing that 'located' will always be the root Child.
         for ( Child c : located.children())
             if (c.isEmpty()) {
-                if (bounded.contains(c.location())) {
-                    if (!intersections.contains(c)) {
+                
+                ArrayList<Child> connects = rules.get(c);
+                for ( Child r : connects ){
+                    if ( bounded.contains(c.location(),r.location())){
                         intersections.add(c);
+                        intersections.add(r);
                     }
                 }
+                
+//                if (bounded.contains(c.location())) {
+//                    if (!intersections.contains(c)) {
+//                        intersections.add(c);
+//                    }
+//                }
             }
-            else intersections = union(intersections,intersect(c,bounded));
+            else intersections = union(intersections, intersect(c,rules, bounded));
         if ( containsAll(intersections, located.children()) ){
               intersections.add(located);
         }

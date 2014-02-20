@@ -47,7 +47,8 @@ public class Generate {
         boundedDesign = Design.bounded(locatedSource.bounds(), design);
     }
     public HashSet<Child> intersection( Location loc ){
-        HashSet<Child> rtn = Design.intersect( locatedSource.element(), boundedDesign );
+        HashSet<Child> rtn = Design.intersect(
+                    locatedSource.element(), locatedSource.lookupTable(), boundedDesign );
 //        for ( Child c : rtn ){
 //            c.setValue(valuate(c));
 //        }
