@@ -32,6 +32,9 @@ public class Generate {
     public void setThreshold(double t){
         design.adjust(t);
     }
+    public void setDiffThreshold(double t){
+        design.adjustDiff(t);
+    }
     public void setSource(Child c){
         source = new Source(c);
     }
@@ -84,12 +87,12 @@ public class Generate {
     //                System.out.println("X: "+x);
     //                System.out.println("Y: "+y);
                     HashSet<Child> intersection = intersection(new Location(x,y));
-                    Design difference = Design.difference(locatedSource.element(), boundedDesign);
+                    //Design difference = Design.difference(locatedSource.element(), boundedDesign);
                     double interVal;
                     double diffVal;
-                    double differ = difference.edges().size();
+                    //double differ = difference.edges().size();
                     interVal = intersection.size() / bounded;
-                    diffVal = differ / bounded;
+                    //diffVal = differ / bounded;
                     //System.out.println("diffVal "+diffVal);
                     //System.out.println("bounded"+bounded);
                     //System.out.println("interval: "+interVal);
@@ -97,12 +100,44 @@ public class Generate {
                     buffer.balanceInter(interVal);
                     buffer.applyRules(intersection, 
                             locatedSource.lookupTable(), interVal, source.intersectValue);//diff);
-                    buffer.applyDifference(difference, interVal);//invDiff);
+                    //buffer.applyDifference(difference, interVal);//invDiff);
                 }
             }
         }
         buffer.decide(buffer.threshold());//decisionThreshold);
         design = buffer;
+    }
+    public void differentiate(){
+        design.resetThreshold();
+        Design buffer = new Design(design.adjust);
+        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
+            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
+                
+                Location here = new Location(x,y);
+                setLocatedSource(here);
+                setBoundedDesign(here);
+                double bounded = boundedDesign.edges().size();
+                    if ( bounded != 0 ){
+    //                System.out.println("X: "+x);
+    //                System.out.println("Y: "+y);
+                    //HashSet<Child> intersection = intersection(new Location(x,y));
+                    Design difference = Design.difference(locatedSource.element(), boundedDesign);
+                    double interVal;
+                    double diffVal;
+                    double differ = difference.edges().size();
+                    //interVal = intersection.size() / bounded;
+                    diffVal = differ / bounded;
+                    //System.out.println("diffVal "+diffVal);
+                    //System.out.println("bounded"+bounded);
+                    //System.out.println("interval: "+interVal);
+                    buffer.balanceDiffNum(diffVal);
+                    buffer.balanceDiffDen(source.intersectValue);
+                    buffer.applyDifference(difference, diffVal);//invDiff);
+                }
+            }
+        }
+        design.applyDifferenceBuffer(buffer);
+        design.decide(buffer.diffThreshold());
     }
 //    public double intrVal(HashSet<Child> cs){
 //        double rtn = 0;

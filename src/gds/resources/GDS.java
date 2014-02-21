@@ -92,6 +92,9 @@ public class GDS extends javax.swing.JFrame {
         generationButton = new javax.swing.JButton();
         setThresholdButton = new javax.swing.JButton();
         thresholdField = new javax.swing.JTextField();
+        differenceButton = new javax.swing.JButton();
+        diffThresholdButton = new javax.swing.JButton();
+        diffThreshField = new javax.swing.JTextField();
         childScroll = new javax.swing.JScrollPane();
         childList = childrenList;
         connectionScroll = new javax.swing.JScrollPane();
@@ -312,7 +315,7 @@ public class GDS extends javax.swing.JFrame {
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 544, Short.MAX_VALUE)
+            .addGap(0, 541, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -458,6 +461,20 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        differenceButton.setText("Difference");
+        differenceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                differenceButtonActionPerformed(evt);
+            }
+        });
+
+        diffThresholdButton.setText("diffThrsh");
+        diffThresholdButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                diffThresholdButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout editControlsLayout = new javax.swing.GroupLayout(editControls);
         editControls.setLayout(editControlsLayout);
         editControlsLayout.setHorizontalGroup(
@@ -488,25 +505,35 @@ public class GDS extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel2))
                     .addGroup(editControlsLayout.createSequentialGroup()
-                        .addComponent(makeElementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(resetRootButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(editControlsLayout.createSequentialGroup()
                         .addComponent(renameAddableButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(renameAddable, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(editControlsLayout.createSequentialGroup()
                         .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(viewGlobalButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(generationButton)
                             .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(setSeedButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(setSourceButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(viewLocalButton))
+                    .addGroup(editControlsLayout.createSequentialGroup()
+                        .addComponent(makeElementButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(resetRootButton, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editControlsLayout.createSequentialGroup()
                         .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(thresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editControlsLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(generationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(differenceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(setThresholdButton)
-                            .addComponent(viewLocalButton))))
+                            .addComponent(diffThresholdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(diffThreshField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(thresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         editControlsLayout.setVerticalGroup(
@@ -524,17 +551,21 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewLocalButton)
                     .addComponent(viewGlobalButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(38, 38, 38)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(generationButton)
-                    .addComponent(setThresholdButton))
+                    .addComponent(setThresholdButton)
+                    .addComponent(diffThreshField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(setSeedButton)
+                    .addComponent(differenceButton)
+                    .addComponent(diffThresholdButton)
                     .addComponent(thresholdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addComponent(setSeedButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(setSourceButton)
-                .addGap(52, 52, 52)
+                .addGap(18, 18, 18)
                 .addGroup(editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rotateRightButton)
                     .addComponent(rotateLeftButton))
@@ -556,7 +587,7 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(yDownButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Edit", editControls);
@@ -689,7 +720,7 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(boundTestButton)
                 .addGap(18, 18, 18)
                 .addComponent(intersectionTestButton)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("tab4", jPanel1);
@@ -730,11 +761,11 @@ public class GDS extends javax.swing.JFrame {
             .addGroup(leftFlankLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE))
+                .addComponent(addableElementListLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         centerPanels.setLeftComponent(leftFlank);
@@ -878,7 +909,7 @@ public class GDS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1164,6 +1195,15 @@ public class GDS extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1ActionPerformed
 
+    private void differenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_differenceButtonActionPerformed
+        genit.differentiate();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_differenceButtonActionPerformed
+
+    private void diffThresholdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diffThresholdButtonActionPerformed
+        genit.setDiffThreshold(Double.parseDouble(diffThreshField.getText()));
+    }//GEN-LAST:event_diffThresholdButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1390,6 +1430,9 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JScrollPane childScroll;
     private javax.swing.JList connectionList;
     private javax.swing.JScrollPane connectionScroll;
+    private javax.swing.JTextField diffThreshField;
+    private javax.swing.JButton diffThresholdButton;
+    private javax.swing.JButton differenceButton;
     private javax.swing.JPanel displayArea;
     private javax.swing.JButton displayBoundsButton;
     private javax.swing.JButton displayCNButton;

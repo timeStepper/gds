@@ -22,7 +22,10 @@ public class Design {
     Bounds bounds;
     double inter;
     double differ;
-    double adjust=2;
+    double adjust=1;
+    double diffnum;
+    double diffden;
+    double diffadj=1;
     
     public Design(double ad){
         adjust = ad;
@@ -66,10 +69,27 @@ public class Design {
     public double threshold(){
 //        System.out.println("inter "+inter);
 //        System.out.println("differ "+differ);
+        if (differ==0||adjust==0)return 0;
         return inter/differ/adjust;
     }
     public void adjust(double a){
         adjust = a;
+    }
+    public void resetDiffThresh(){
+        diffnum=0;diffnum=0;
+    }
+    public void balanceDiffNum(double d){
+        diffnum += d;
+    }
+    public void balanceDiffDen(double d){
+        diffden += d;
+    }
+    public double diffThreshold(){
+        if (diffden==0) return 0;
+        return diffnum/diffden;
+    }
+    public void adjustDiff(double a){
+        diffadj=a;
     }
     public void setSeed( Child child ){
         nodes.clear();
@@ -146,6 +166,9 @@ public class Design {
                 rtn.addEdge(e);
         return rtn;
     }
+    public Weight getWeight(Edge e){
+        return edges.get(e);
+    }
     public static Design difference( Child located, Design bounded ){
         Design difference = new Design(0);
         ArrayList<Connection> edges = Child.flattenConnections(located);
@@ -171,6 +194,14 @@ public class Design {
             }
         }
     }
+    public void applyDifferenceBuffer(Design difference){
+        for ( Edge e : difference.edges()){
+            if ( !edges.containsKey(e) )
+                edges.put(e,new Weight(0,0));
+            Weight w = edges.get(e);
+            w.applyWeight(difference.getWeight(e));
+        }
+    }
     //helper to intersection
     public static HashSet<Child> intersect( Child located, Rules rules,Design bounded ){
         HashSet<Child> intersections = new HashSet<>();
@@ -182,7 +213,7 @@ public class Design {
                 ArrayList<Child> connects = rules.get(c);
                 for ( Child r : connects ){
                     if ( bounded.contains(c.location(),r.location())){
-                        intersections.add(c);
+                        //intersections.add(c);
                         intersections.add(r);
                     }
                 }
