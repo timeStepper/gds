@@ -41,9 +41,8 @@ public class Design {
 //        return contains(c.location());
 //    }
     public boolean contains(Connection conn){
-        Edge e1 = new Edge(conn.aLoc(),conn.bLoc());
-        Edge e2 = new Edge(conn.bLoc(),conn.aLoc());
-        return edges.containsKey(e1) || edges.containsKey(e2);
+        Edge e = new Edge(conn.aLoc(),conn.bLoc());
+        return edges.containsKey(e);
     }
     public boolean contains(Location a, Location b){
         Edge e1 = new Edge(a, b);
@@ -56,46 +55,12 @@ public class Design {
     public Set<Edge> edges(){
         return edges.keySet();
     }
-    public void resetThreshold(){
-        inter=0;
-        differ=0;
-    }
-    public void balanceDiffer(double d){
-        differ+=d;
-    }
-    public void balanceInter(double i){
-        inter+=i;
-    }
-    public double threshold(){
-//        System.out.println("inter "+inter);
-//        System.out.println("differ "+differ);
-        if (differ==0||adjust==0)return 0;
-        return inter/differ/adjust;
-    }
-    public void adjust(double a){
-        adjust = a;
-    }
-    public void resetDiffThresh(){
-        diffnum=0;diffnum=0;
-    }
-    public void balanceDiffNum(double d){
-        diffnum += d;
-    }
-    public void balanceDiffDen(double d){
-        diffden += d;
-    }
-    public double diffThreshold(){
-        if (diffden==0) return 0;
-        return diffnum/diffden;
-    }
-    public void adjustDiff(double a){
-        diffadj=a;
-    }
+    
     public void setSeed( Child child ){
         nodes.clear();
         edges.clear();
         ArrayList<Child> kids = Child.flattenChildren(child);
-        ArrayList<Connection> conns = Child.flattenConnections(child);
+        HashSet<Connection> conns = Child.flattenConnections(child);
         for ( Child c : kids ){
             plant(c);
         }
@@ -169,9 +134,50 @@ public class Design {
     public Weight getWeight(Edge e){
         return edges.get(e);
     }
+    public void resetThreshold(){
+        inter=0;
+        differ=0;
+    }
+    public void balanceDiffer(double d){
+        differ+=d;
+    }
+    public void balanceInter(double i){
+        inter+=i;
+    }
+    public double threshold(){
+//        System.out.println("inter "+inter);
+//        System.out.println("differ "+differ);
+        if (differ==0||adjust==0)return 0;
+        return inter/differ/adjust;
+    }
+    public void adjust(double a){
+        adjust = a;
+    }
+    public void resetDiffThresh(){
+        diffnum=0;
+        diffnum=0;
+    }
+    public void balanceDiffNum(double d){
+        diffnum += d;
+    }
+    public void balanceDiffDen(double d){
+        diffden += d;
+    }
+    public double diffThreshold(){
+        System.out.println("diffnum "+diffnum);
+        System.out.println("diffden "+diffden);
+        System.out.println("diffadj "+diffadj);
+        System.out.println("result "+diffnum/diffden/diffadj+"\n");
+        if (diffden==0) return 0;
+        return diffnum/diffden/diffadj;
+    }
+    public void adjustDiff(double a){
+        diffadj=a;
+        System.out.println("adjusting: "+a);
+    }
     public static Design difference( Child located, Design bounded ){
         Design difference = new Design(0);
-        ArrayList<Connection> edges = Child.flattenConnections(located);
+        HashSet<Connection> edges = Child.flattenConnections(located);
         for(Edge e : bounded.edges()){
             Location a = new Location(e.aX(),e.aY());
             Location b = new Location(e.bX(),e.bY());
@@ -187,23 +193,21 @@ public class Design {
             for ( Edge e : difference.edges()){
                 if ( !edges.containsKey(e) )
                     edges.put(e,new Weight(0,0));
-                Weight w = edges.get(e);
                 Weight app = new Weight(0,diff);
-                w.applyWeight(app);
+                edges.get(e).applyWeight(app);
                 //System.out.println("weight: "+app);
             }
         }
     }
+    //applies the weights in difference to the edges in this
     public void applyDifferenceBuffer(Design difference){
         for ( Edge e : difference.edges()){
-            if ( !edges.containsKey(e) )
-                edges.put(e,new Weight(0,0));
-            Weight w = edges.get(e);
-            w.applyWeight(difference.getWeight(e));
+            if ( edges.containsKey(e) )
+                edges.get(e).applyWeight(difference.getWeight(e));
         }
     }
     //helper to intersection
-    public static HashSet<Child> intersect( Child located, Rules rules,Design bounded ){
+    public static HashSet<Child> intersect( Child located, Rules rules, Design bounded ){
         HashSet<Child> intersections = new HashSet<>();
         //this method starts on the following for loop
         //recognizing that 'located' will always be the root Child.
@@ -217,12 +221,6 @@ public class Design {
                         intersections.add(r);
                     }
                 }
-                
-//                if (bounded.contains(c.location())) {
-//                    if (!intersections.contains(c)) {
-//                        intersections.add(c);
-//                    }
-//                }
             }
             else intersections = union(intersections, intersect(c,rules, bounded));
         if ( containsAll(intersections, located.children()) ){
@@ -231,34 +229,7 @@ public class Design {
         return intersections;
     }
     
-//    public static HashSet<Connection> intersect( Child located, Design bounded ){
-//        return intersectives( located.connections(), bounded );
-//    }
-//    private static HashSet<Connection> intersectives(
-//                        ArrayList<Connection> located, Design bounded ){
-//        HashSet<Connection> intersections = new HashSet<>();
-//        //this method starts on the following for loop
-//        //recognizing that 'located' will always be the root Child.
-//        for ( Connection cn : located){
-//            if (cn.isEmpty()) {
-//                if (bounded.contains(cn)) {
-//                    if (!intersections.contains(cn))
-//                        intersections.add(cn);
-//                }
-//            }
-//            else {
-//                HashSet<Connection> intersectA = intersectives(cn.a().connections(),bounded);
-//                HashSet<Connection> intersectB = intersectives(cn.b().connections(),bounded);
-//                if ( cn.a().containsAll(intersectA))
-//                    intersectA.add(cn);
-//                if ( cn.b().containsAll(intersectB))
-//                    intersectB.add(cn);
-//                intersections = unionC(intersections, intersectA);
-//                intersections = unionC(intersections, intersectB);
-//            }
-//        }
-//        return intersections;
-//    }
+    
     //helper to intersect;  a contains all b
     private static boolean containsAll(HashSet<Child> a, ArrayList<Child> b){
         for (Child c : b)
@@ -353,87 +324,7 @@ public class Design {
         return nodes.toString();
     }
 }
-class Source {
-    Child element;
-    //the adjacencyList serves as a lookup table for Rule application,
-    //where the Childs in the intersection of the Source and the
-    //Design are looked up in this table
-    Rules adjacencyList;
-    Bounds bounds;  //used for quickening rebounding per location for intersection
-    double intersectValue;
 
-    Source( Child c ) {
-        element = c;
-        setBounds();
-        intersectValue = Child.flattenConnections(c).size();
-    }
-    public Child element(){
-        return element;
-    }
-    public Bounds bounds(){
-        return bounds;
-    }
-    //computes the field for this object
-    private void setBounds(){
-        int xmin = Integer.MAX_VALUE;
-        int xmax = Integer.MIN_VALUE;
-        int ymin = Integer.MAX_VALUE;
-        int ymax = Integer.MIN_VALUE;
-        Bounds bs = new Bounds(xmin,xmax,ymin,ymax);
-        for( Child c:element.children())
-            bs = Bounds.maxminBounds(bs,bounds(c));
-        bounds = bs;
-    }
-    //used external to this class
-    public static Bounds bounds(Child ch){
-        int xmin = Integer.MAX_VALUE;
-        int xmax = Integer.MIN_VALUE;
-        int ymin = Integer.MAX_VALUE;
-        int ymax = Integer.MIN_VALUE;
-        Bounds rtn = new Bounds(xmin,xmax,ymin,ymax);
-        if (ch.isEmpty()){
-            xmin = ch.location().xLoc();
-            xmax = ch.location().xLoc();
-            ymin = ch.location().yLoc();
-            ymax = ch.location().yLoc();
-            return new Bounds(xmin,xmax,ymin,ymax);
-        }
-        else for ( Child c:ch.children()){
-            rtn = Bounds.maxminBounds(rtn,bounds(c));
-        }
-        return rtn;
-    }
-    public Rules lookupTable(){
-        return adjacencyList;
-    }
-    //returns the connections between children. for use after the input is located
-    //the initial call notes that there is always a global child ( the parent element )
-    private static Rules adjacencyList(Child located){
-        Rules rtn = new Rules();
-        for ( Child child : located.children() ){
-            rtn.makeAddRules(located, child);
-            if (!child.isEmpty()) rtn.union(adjacencyList(child));
-        }
-        return rtn;
-    }
-    public void setAdjacencyList(){
-        adjacencyList = adjacencyList(element);
-    }
-    //this returns the Source @ the specified location with it's
-    //located adjacencyList which serves as a lookup for Rule application
-    public Source locate(Location l){
-        Source located = new Source(Child.locate(element, l));
-        located.setAdjacencyList();
-        return located;
-    }
-    @Override
-    public String toString(){
-        return element.toString();
-    }
-    public void display(){
-        element.displayChildren();
-    }
-}
 
 class Edge{
     private Location nodeA;
@@ -621,3 +512,4 @@ class Rules extends HashMap<Child, ArrayList<Child>>{
         }
     }
 }
+

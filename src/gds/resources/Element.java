@@ -162,6 +162,14 @@ class Child {
             if (!connections().contains(cn)) return false;
         return true;
     }
+    public boolean containsAllEmpties(){
+        if (isEmpty())return false;
+        else
+            for (Child ch: children()){
+                if (!ch.isEmpty())return false;
+            }
+        return true;
+    }
 //    public double value(){
 //        return value;
 //    }
@@ -203,17 +211,35 @@ class Child {
         return empties;
     }
     //flattens to empty edges
-    public static ArrayList<Connection> flattenConnections( Child c ){
+    public static HashSet<Connection> flattenConnections( Child c ){
         Child ch = locate(c,c.location());
         return flattenConnectionsCall(ch);
     }
-    private static ArrayList<Connection> flattenConnectionsCall( Child c ){
-        ArrayList<Connection> edges = new ArrayList<>();
+    private static HashSet<Connection> flattenConnectionsCall( Child c ){
+        HashSet<Connection> edges = new HashSet<>();
         if ( c.isEmpty())return edges;
         else for ( Child ch : c.children() )
-            edges.addAll( flattenConnectionsCall( ch ));
+            for ( Connection cn : flattenConnectionsCall( ch ) )
+                if (!edges.contains(cn))edges.add(cn);
         for ( Connection cn : c.connections() )
             if ( cn.a().isEmpty() ) edges.add(cn);
+        return edges;
+    }
+    public static HashSet<Edge> flattenEdges(Child c){
+        Child ch = locate(c,c.location());
+        return flattenEdgesCall(ch);
+    }
+    private static HashSet<Edge> flattenEdgesCall(Child c){
+        HashSet<Edge> edges = new HashSet<>();
+        if ( c.isEmpty())return edges;
+        else for ( Child ch : c.children() )
+            for ( Connection cn : flattenConnectionsCall( ch ) ){
+                Edge e = new Edge(cn.aLoc(),cn.bLoc());
+                if (!edges.contains(e))edges.add(e);
+            }
+        for ( Connection cn : c.connections() ){
+            //if ( cn.a().isEmpty() ) edges.add(cn);
+        }
         return edges;
     }
     public void translate( int x, int y ){
@@ -369,7 +395,13 @@ class Connection {
     public boolean isEmpty(){
         return a.isEmpty() && b.isEmpty();
     }
-    
+    public boolean equalsEdge(Edge e){
+        Location la = new Location(e.aX(),e.aY());
+        Location lb = new Location(e.bX(),e.bY());
+        if ( la.equals(aLoc()))return lb.equals(bLoc());
+        else if ( la.equals(bLoc()))return lb.equals(aLoc());
+        else return false;
+    }
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {

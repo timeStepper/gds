@@ -24,7 +24,7 @@ public class EditElement {
         int originX;        //used for painting
         int originY;        //used for painting
         int module = 40;    //used for painting
-        Element element;// = null;//new Element();
+        //Element element;// = null;//new Element();
         Child selected; //rootNode of elementTree must be Child
         ArrayList< Child > highlighted = new ArrayList<>();
         ChildrenList selected_ChildrenList;
