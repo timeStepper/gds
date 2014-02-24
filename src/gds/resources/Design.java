@@ -326,6 +326,11 @@ public class Design {
     public String toString(){
         return nodes.toString();
     }
+    public void displayEdges(){
+        for ( Edge e : edges.keySet()){
+            System.out.println(e);
+        }
+    }
 }
 
 

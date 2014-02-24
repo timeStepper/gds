@@ -44,17 +44,24 @@ public class Intersect {
         if (!bounded.edges().isEmpty()){
             //Child of all empties
             if (located.containsAllEmpties()){
+                int denominator = located.connections().size();
                 //for each intersecting edge increase the weight value by 1
                 for ( Connection cn : located.connections() ){
                     if ( bounded.contains(cn))
                         ++edgecount;
                 }
                 if (edgecount>0){
-                    Weight w = new Weight(edgecount, located.connections().size());
+                    Weight w = new Weight(edgecount, denominator);
                     //accepts the entire Child at the Weight of (intersection/possible intersection)
                     applicates.put(located,w);
                     threshold.applyWeight(w);
+                    //System.out.println(located+" -> "+w);
                     return w;
+                }
+                else {
+                    Weight empty = new Weight(0, denominator);
+                    applicates.put(located,empty);
+                    return empty;
                 }
             }
             //Child of non empties
@@ -64,12 +71,6 @@ public class Intersect {
                     //accumulate the weights of the children of 'located'
                     Weight getW = intersectCall(bounded, c, lookup);
                     w.applyWeight(getW);
-                    //distribute 1/2 w to Connected Childs
-                    ArrayList<Child> adjs = lookup.get(c);
-                    for (Child child : adjs){
-                        Weight halfW = new Weight(getW.intersectValue()/2, getW.differenceValue());
-                        applicates.put(child, halfW);
-                    }
                 }
                 applicates.put(located,w);
                 threshold.applyWeight(w);
@@ -107,11 +108,14 @@ public class Intersect {
         Intersect inter = new Intersect();
         Design design = new Design();
         Source test = setTest();
-        test = test.locate(new Location(0,0));
         design.setSeed(test.element());
+        design.setBounds();
+        test = test.locate(new Location(2,3));
+        
+//        design.displayEdges();
         inter.intersect(design, test);
         for (Child c : inter.applicates.keySet()){
-            System.out.println(c+" -> "+inter.applicates.get(c));
+            System.out.println(c+"-> "+inter.applicates.get(c));
         }
     }
     public static Source setTest(){
@@ -141,3 +145,11 @@ public class Intersect {
 //        applicates.put(c,w);
 //    }
 //}
+//distribute 1/2 w to Connected Childs
+//                    ArrayList<Child> adjs = lookup.get(c);
+//                    for (Child child : adjs){
+//                        double half = getW.intersectValue()/2;
+//                        if (applicates.containsKey(child))
+//                            applicates.get(child).applyWeight(new Weight(half,0));
+//                        else applicates.put(child, new Weight(half,0));
+//                    }

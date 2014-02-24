@@ -147,9 +147,8 @@ class Location {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.xCoord;
-        hash = 29 * hash + this.yCoord;
+        int hash;
+        hash = (this.xCoord*this.xCoord)+(this.yCoord*this.yCoord);
         return hash;
     }
 }
