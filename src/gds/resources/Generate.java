@@ -25,9 +25,14 @@ public class Generate {
     Grid grid;
     int offset = 4;
     
+    
+    public Generate(){}
     Generate(int x, int y, Grid g){
         design = new Design(2);
         grid = g;
+    }
+    public Source source(){
+        return source;
     }
     public void setThreshold(double t){
         design.adjust(t);
@@ -43,6 +48,7 @@ public class Generate {
         design.setBounds();
         //System.out.println(designBounds);
     }
+    
     public void setLocatedSource(Location loc){
         locatedSource = source.locate(loc);
     }

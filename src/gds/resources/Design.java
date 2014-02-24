@@ -27,6 +27,9 @@ public class Design {
     double diffden;
     double diffadj=1;
     
+    
+    public Design(){}
+    
     public Design(double ad){
         adjust = ad;
     }
@@ -334,6 +337,10 @@ class Edge{
         nodeA = a;
         nodeB = b;
     }
+    Edge(Connection cn){
+        nodeA = cn.aLoc();
+        nodeB = cn.bLoc();
+    }
     public Location nodeA(){
         return nodeA;
     }
@@ -391,7 +398,7 @@ class Weight{
         difference = b;
     }
     public double decide(){
-        if (difference==0)return 1;
+        if (difference==0)return 0;
         else return intersect/difference;
     }
     public void applyWeight(Weight weight){

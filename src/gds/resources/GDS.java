@@ -1157,8 +1157,8 @@ public class GDS extends javax.swing.JFrame {
 
     private void displayFlattenedEdgesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFlattenedEdgesActionPerformed
         System.out.println("Flattened Edges:");
-        System.out.println(Child.flattenConnections(edit.selected));
-        System.out.println("size: "+Child.flattenConnections(edit.selected).size());
+        System.out.println(Child.flattenEdges(edit.selected));
+        System.out.println("size: "+Child.flattenEdges(edit.selected).size());
     }//GEN-LAST:event_displayFlattenedEdgesActionPerformed
 
     private void displayFlattenedChildrenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayFlattenedChildrenActionPerformed

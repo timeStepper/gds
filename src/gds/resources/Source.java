@@ -13,7 +13,7 @@ import java.util.HashSet;
  *
  * @author owenpaulmeyer
  */
-class Source {
+public class Source {
     Child element;
     //the adjacencyList serves as a lookup table for Rule application,
     //where the Childs in the intersection of the Source and the
@@ -22,7 +22,7 @@ class Source {
     Bounds bounds;  //used for quickening rebounding per location for intersection
     HashSet<Connection> edges;
 
-    Source( Child c ) {
+    public Source( Child c ) {
         element = c;
         setBounds();
         edges = Child.flattenConnections(c);
@@ -63,32 +63,35 @@ class Source {
         }
         return rtn;
     }
-    
+    public HashSet<Connection> edges(){
+        return edges;
+    }
     public Rules lookupTable(){
         return adjacencyList;
     }
     
     //old adjList for generation without Intersect class
+    private static Rules adjacencyList(Child located){
+        Rules rtn = new Rules();
+        for ( Child child : located.children() ){
+            rtn.makeAddRules(located, child);
+            if (!child.isEmpty()) rtn.union(adjacencyList(child));
+        }
+        return rtn;
+    }
+    
+    //new adjList for Intersect Class
 //    private static Rules adjacencyList(Child located){
 //        Rules rtn = new Rules();
 //        for ( Child child : located.children() ){
-//            rtn.makeAddRules(located, child);
-//            if (!child.isEmpty()) rtn.union(adjacencyList(child));
+//            if(!child.isEmpty()){
+//                rtn.makeAddRules(located, child);
+//                rtn.union(adjacencyList(child));
+//            }
 //        }
 //        return rtn;
 //    }
     
-    //new adjList for Intersect Class
-    private static Rules adjacencyList(Child located){
-        Rules rtn = new Rules();
-        for ( Child child : located.children() ){
-            if(!child.isEmpty()){
-                rtn.makeAddRules(located, child);
-                rtn.union(adjacencyList(child));
-            }
-        }
-        return rtn;
-    }
     
     public void setAdjacencyList(){
         adjacencyList = adjacencyList(element);
