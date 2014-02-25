@@ -64,6 +64,7 @@ public class GDS extends javax.swing.JFrame {
         labelX = new javax.swing.JLabel();
         readY = new javax.swing.JTextField();
         labelY = new javax.swing.JLabel();
+        vizMode = new javax.swing.JToggleButton();
         verticalSplit = new javax.swing.JSplitPane();
         centerPanels = new javax.swing.JSplitPane();
         centerRightPanels = new javax.swing.JSplitPane();
@@ -121,8 +122,9 @@ public class GDS extends javax.swing.JFrame {
         jToolBar2 = new javax.swing.JToolBar();
         seedLeftButton = new javax.swing.JButton();
         seedRightButton = new javax.swing.JButton();
-        vizSeedButton = new javax.swing.JButton();
+        vizSetSeedButton = new javax.swing.JButton();
         vizGenerateButton = new javax.swing.JButton();
+        vizSetSourceButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -220,6 +222,13 @@ public class GDS extends javax.swing.JFrame {
 
         labelY.setText("Y");
 
+        vizMode.setText("Viz Mode");
+        vizMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vizModeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout bottomBarLayout = new javax.swing.GroupLayout(bottomBar);
         bottomBar.setLayout(bottomBarLayout);
         bottomBarLayout.setHorizontalGroup(
@@ -250,9 +259,11 @@ public class GDS extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(gridcontrolLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(vizMode, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(editMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
+                    .addComponent(editMode, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,7 +315,8 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(bottomBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hereXr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hereYr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(genMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vizMode))
                 .addContainerGap())
         );
 
@@ -760,18 +772,33 @@ public class GDS extends javax.swing.JFrame {
         viewSeedButton.setFocusable(false);
         viewSeedButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewSeedButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewSeedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSeedButtonActionPerformed(evt);
+            }
+        });
         viewButtons.add(viewSeedButton);
 
         viewIntersectButton.setText("Intersect");
         viewIntersectButton.setFocusable(false);
         viewIntersectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewIntersectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewIntersectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewIntersectButtonActionPerformed(evt);
+            }
+        });
         viewButtons.add(viewIntersectButton);
 
         viewApplicatesButton.setText("Applicates");
         viewApplicatesButton.setFocusable(false);
         viewApplicatesButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         viewApplicatesButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewApplicatesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewApplicatesButtonActionPerformed(evt);
+            }
+        });
         viewButtons.add(viewApplicatesButton);
 
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -782,12 +809,22 @@ public class GDS extends javax.swing.JFrame {
         seedUpButton.setFocusable(false);
         seedUpButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedUpButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        seedUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seedUpButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(seedUpButton);
 
         seedDownButton.setText("Down");
         seedDownButton.setFocusable(false);
         seedDownButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedDownButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        seedDownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seedDownButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(seedDownButton);
 
         jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -797,20 +834,42 @@ public class GDS extends javax.swing.JFrame {
         seedLeftButton.setFocusable(false);
         seedLeftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedLeftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        seedLeftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seedLeftButtonActionPerformed(evt);
+            }
+        });
         jToolBar2.add(seedLeftButton);
 
         seedRightButton.setText("Right");
         seedRightButton.setFocusable(false);
         seedRightButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedRightButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        seedRightButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seedRightButtonActionPerformed(evt);
+            }
+        });
         jToolBar2.add(seedRightButton);
 
-        vizSeedButton.setText("Set Seed");
+        vizSetSeedButton.setText("Set Seed");
+        vizSetSeedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vizSetSeedButtonActionPerformed(evt);
+            }
+        });
 
         vizGenerateButton.setText("Generate");
         vizGenerateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vizGenerateButtonActionPerformed(evt);
+            }
+        });
+
+        vizSetSourceButton.setText("Set Source");
+        vizSetSourceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vizSetSourceButtonActionPerformed(evt);
             }
         });
 
@@ -820,15 +879,18 @@ public class GDS extends javax.swing.JFrame {
             viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viztoolzPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(viewButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vizSeedButton)
+                    .addGroup(viztoolzPanelLayout.createSequentialGroup()
+                        .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(viewButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(vizSetSourceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(vizSetSeedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(vizGenerateButton))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         viztoolzPanelLayout.setVerticalGroup(
             viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -837,14 +899,16 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(viewButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(viztoolzPanelLayout.createSequentialGroup()
-                        .addComponent(vizSeedButton)
+                        .addComponent(vizSetSeedButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vizGenerateButton)))
+                        .addComponent(vizSetSourceButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(vizGenerateButton)
+                .addContainerGap(304, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Viz", viztoolzPanel);
@@ -1027,7 +1091,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1075,12 +1139,14 @@ public class GDS extends javax.swing.JFrame {
 
     private void editModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editModeActionPerformed
         if ( genMode.isSelected( ) ) genMode.setSelected( false );
+        else if ( vizMode.isSelected() ) vizMode.setSelected( false);
         mode.setEdit();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_editModeActionPerformed
 
     private void genModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genModeActionPerformed
         if ( editMode.isSelected( ) ) editMode.setSelected( false );
+        else if ( vizMode.isSelected() ) vizMode.setSelected( false);
         mode.setGen();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_genModeActionPerformed
@@ -1329,12 +1395,64 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_diffThresholdButtonActionPerformed
 
     private void vizGenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizGenerateButtonActionPerformed
-        // TODO add your handling code here:
+        viz.generation();
+        ((MyPanel)displayArea).repaint();
     }//GEN-LAST:event_vizGenerateButtonActionPerformed
 
     private void viewBufferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBufferButtonActionPerformed
         viz.togglePaintBuffer();
+        ((MyPanel)displayArea).repaint();
     }//GEN-LAST:event_viewBufferButtonActionPerformed
+
+    private void viewSeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSeedButtonActionPerformed
+        viz.togglePaintSeed();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_viewSeedButtonActionPerformed
+
+    private void viewIntersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewIntersectButtonActionPerformed
+        viz.togglePaintIntersect();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_viewIntersectButtonActionPerformed
+
+    private void viewApplicatesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewApplicatesButtonActionPerformed
+        viz.togglePaintApplicates();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_viewApplicatesButtonActionPerformed
+
+    private void seedUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seedUpButtonActionPerformed
+        viz.up();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_seedUpButtonActionPerformed
+
+    private void seedDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seedDownButtonActionPerformed
+        viz.down();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_seedDownButtonActionPerformed
+
+    private void seedLeftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seedLeftButtonActionPerformed
+        viz.left();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_seedLeftButtonActionPerformed
+
+    private void seedRightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seedRightButtonActionPerformed
+        viz.right();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_seedRightButtonActionPerformed
+
+    private void vizSetSeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizSetSeedButtonActionPerformed
+        viz.setSeed(edit.selected);
+    }//GEN-LAST:event_vizSetSeedButtonActionPerformed
+
+    private void vizSetSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizSetSourceButtonActionPerformed
+        viz.setSource(edit.selected);
+    }//GEN-LAST:event_vizSetSourceButtonActionPerformed
+
+    private void vizModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizModeActionPerformed
+        if ( genMode.isSelected( ) ) genMode.setSelected( false );
+        else if ( editMode.isSelected() ) editMode.setSelected( false);
+        mode.setViz();
+        globalDisplayArea.repaint();
+    }//GEN-LAST:event_vizModeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1421,7 +1539,9 @@ public class GDS extends javax.swing.JFrame {
             mode = State.Edit;
             image = State.Off;
         }
-        
+        public void setViz(){
+            mode = State.Viz;
+        }
         @Override
         public void mouseMoved(MouseEvent e) {
             xLoc = e.getX();
@@ -1522,8 +1642,11 @@ public class GDS extends javax.swing.JFrame {
                 edit.paintEdit( g );
                 edit.paintHighlighted(g);
             }
-            if (mode==State.Gen){
+            else if (mode==State.Gen){
                 genit.paint(g);
+            }
+            else if (mode==State.Viz){
+                viz.paintViz(g);
             }
         }
     }
@@ -1646,7 +1769,9 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton viewLocalButton;
     private javax.swing.JToggleButton viewSeedButton;
     private javax.swing.JButton vizGenerateButton;
-    private javax.swing.JButton vizSeedButton;
+    private javax.swing.JToggleButton vizMode;
+    private javax.swing.JButton vizSetSeedButton;
+    private javax.swing.JButton vizSetSourceButton;
     private javax.swing.JPanel viztoolzPanel;
     private javax.swing.JButton xLeftButton;
     private javax.swing.JButton xRightButton;

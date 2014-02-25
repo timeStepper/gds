@@ -42,10 +42,10 @@ public class Generate {
         design.adjustDiff(t);
     }
     public void setSource(Child c){
-        source = new Source(c);
+        source = new Source(c.clone());
     }
     public void setSeed(Child c){
-        design.setSeed(c);
+        design.setSeed(c.clone());
         design.setBounds();
         //System.out.println(designBounds);
     }
@@ -81,31 +81,6 @@ public class Generate {
         return value;
     }
     public void generation(){
-        Design buffer = new Design();
-        intersect.resetThreshold();
-        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x )
-            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
-                
-                Location here = new Location(x,y);
-                setLocatedSource(here);
-                setBoundedDesign(here);
-                intersect.intersect(boundedDesign, locatedSource);
-                intersect.bufferIntersection(locatedSource);
-                for (Edge e:intersect.buffer().keySet()){
-//                System.out.println(e+"->"+intersect.buffer().get(e)+" / "+design.threshold());
-                    if (intersect.buffer().get(e).decide()>design.threshold()){
-                        //System.out.println(e+ "->" + intersect.buffer().get(e));
-                        buffer.setEdge(e,intersect.buffer().get(e));
-                    }
-                }
-            }
-        
-        //System.out.println("buffer "+buffer.edges().size());
-        buffer.decide(intersect.threshold());
-        //System.out.println("buffer "+buffer.edges().size()+", "+design.threshold());
-        design = buffer;
-    }
-    public void QgenerationQ(){
         design.resetThreshold();
         Design buffer = new Design(design.adjust);
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
@@ -137,10 +112,10 @@ public class Generate {
                     }
             }
         }
-        //buffer.decide(buffer.threshold());//decisionThreshold);
-        decisionThreshold = buffer.threshold();//AA
+        buffer.decide(buffer.threshold());//decisionThreshold);
+        
         design = buffer;
-        design.setBounds();//here for use with AA
+        
     }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);

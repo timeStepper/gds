@@ -20,12 +20,12 @@ public class Source {
     //Design are looked up in this table
     Rules adjacencyList;
     Bounds bounds;  //used for quickening rebounding per location for intersection
-    HashSet<Connection> edges;
+    //HashSet<Connection> edges;
 
     public Source( Child c ) {
         element = c;
         setBounds();
-        edges = Child.flattenConnections(c);
+        //edges = Child.flattenConnections(c);
     }
     public Child element(){
         return element;
@@ -66,9 +66,9 @@ public class Source {
         }
         return rtn;
     }
-    public HashSet<Connection> edges(){
-        return edges;
-    }
+//    public HashSet<Connection> edges(){
+//        return edges;
+//    }
     public Rules lookupTable(){
         return adjacencyList;
     }

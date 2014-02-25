@@ -10,5 +10,5 @@ package gds.resources;
  *
  * @author owenpaulmeyer
  */
-public enum State { Edit, Gen, Open, Close, On, Off, Scale, Move, Add, Remove }
+public enum State { Edit, Gen, Viz, Open, Close, On, Off, Scale, Move, Add, Remove }
     

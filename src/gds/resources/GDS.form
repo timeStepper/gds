@@ -154,7 +154,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" pref="951" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -221,9 +221,11 @@
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="vizMode" min="-2" pref="101" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="editMode" max="32767" attributes="0"/>
-                      <Component id="genMode" pref="101" max="32767" attributes="0"/>
+                      <Component id="editMode" pref="101" max="32767" attributes="0"/>
+                      <Component id="genMode" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -290,6 +292,7 @@
                       <Component id="hereXr" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="genMode" alignment="3" max="32767" attributes="0"/>
+                      <Component id="vizMode" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -407,6 +410,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Y"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="vizMode">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Viz Mode"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizModeActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -1077,19 +1088,24 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="viewButtons" max="32767" attributes="0"/>
-                                      <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jToolBar2" alignment="0" pref="100" max="32767" attributes="0"/>
-                                  </Group>
+                              <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="vizSeedButton" min="-2" max="-2" attributes="0"/>
-                                      <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="viewButtons" max="32767" attributes="0"/>
+                                              <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jToolBar2" alignment="0" pref="100" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="vizSetSourceButton" max="32767" attributes="0"/>
+                                              <Component id="vizSetSeedButton" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="vizGenerateButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="67" max="32767" attributes="0"/>
+                                  <EmptySpace pref="59" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1100,16 +1116,18 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="viewButtons" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="vizSeedButton" min="-2" max="-2" attributes="0"/>
+                                          <Component id="vizSetSeedButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                          <Component id="vizSetSourceButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <EmptySpace pref="333" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="304" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1146,6 +1164,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewSeedButtonActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JToggleButton" name="viewIntersectButton">
                               <Properties>
@@ -1154,6 +1175,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewIntersectButtonActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JToggleButton" name="viewApplicatesButton">
                               <Properties>
@@ -1162,6 +1186,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewApplicatesButtonActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1185,6 +1212,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedUpButtonActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="seedDownButton">
                               <Properties>
@@ -1193,6 +1223,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedDownButtonActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1215,6 +1248,9 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedLeftButtonActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="seedRightButton">
                               <Properties>
@@ -1223,13 +1259,19 @@
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedRightButtonActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JButton" name="vizSeedButton">
+                        <Component class="javax.swing.JButton" name="vizSetSeedButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Set Seed"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizSetSeedButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="vizGenerateButton">
                           <Properties>
@@ -1237,6 +1279,14 @@
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizGenerateButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="vizSetSourceButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Set Source"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizSetSourceButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>

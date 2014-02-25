@@ -182,6 +182,7 @@ public class Child {
         transform(new Transform(s,0,0,s) );
     }
     
+    @Override
     public Child clone(){
         return new Child( child.clone(), location );
     }
