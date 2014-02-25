@@ -27,14 +27,20 @@ public class Intersect {
     private Weight threshold = new Weight(0, 0);
     private double  connectValue = .5;
     
+    public HashMap<Edge,Weight> buffer(){
+        return buffer;
+    }
+    public double threshold(){
+        return threshold.decide();
+    }
+    public void resetThreshold(){
+        threshold = new Weight(1,1);
+    }
     public void intersect(Design bounded, Source located){
         applicates.clear();
         buffer.clear();
-        threshold = new Weight(0,0);
+        //threshold = new Weight(0,0);
         intersectCall(bounded, located.element());
-//        for (Child c : applicates.keySet()){
-//            System.out.println(c+"-> "+applicates.get(c));
-//        }
     }
     private Weight intersectCall(Design bounded, Child located){
         int edgecount = 0;
@@ -75,7 +81,7 @@ public class Intersect {
             }
         }return new Weight(0, 0);//nothing here to intersect with
     }
-    private void bufferIntersection(Source located){
+    public void bufferIntersection(Source located){
         for (Child app : applicates.keySet()){
             //apply the whole child 'app' with weight w
             //this is the top level where no Connections exist

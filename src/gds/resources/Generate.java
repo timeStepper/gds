@@ -24,6 +24,7 @@ public class Generate {
     Source locatedSource;
     Grid grid;
     int offset = 4;
+    Intersect intersect = new Intersect();
     
     
     public Generate(){}
@@ -80,6 +81,31 @@ public class Generate {
         return value;
     }
     public void generation(){
+        Design buffer = new Design();
+        intersect.resetThreshold();
+        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x )
+            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
+                
+                Location here = new Location(x,y);
+                setLocatedSource(here);
+                setBoundedDesign(here);
+                intersect.intersect(boundedDesign, locatedSource);
+                intersect.bufferIntersection(locatedSource);
+                for (Edge e:intersect.buffer().keySet()){
+//                System.out.println(e+"->"+intersect.buffer().get(e)+" / "+design.threshold());
+                    if (intersect.buffer().get(e).decide()>design.threshold()){
+                        //System.out.println(e+ "->" + intersect.buffer().get(e));
+                        buffer.setEdge(e,intersect.buffer().get(e));
+                    }
+                }
+            }
+        
+        //System.out.println("buffer "+buffer.edges().size());
+        buffer.decide(intersect.threshold());
+        //System.out.println("buffer "+buffer.edges().size()+", "+design.threshold());
+        design = buffer;
+    }
+    public void QgenerationQ(){
         design.resetThreshold();
         Design buffer = new Design(design.adjust);
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
@@ -111,45 +137,11 @@ public class Generate {
                     }
             }
         }
-        buffer.decide(buffer.threshold());//decisionThreshold);
+        //buffer.decide(buffer.threshold());//decisionThreshold);
+        decisionThreshold = buffer.threshold();//AA
         design = buffer;
+        design.setBounds();//here for use with AA
     }
-    public void differentiate(){
-        design.resetThreshold();
-        Design buffer = new Design(design.adjust);
-        buffer.adjustDiff(design.diffadj);
-        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
-            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
-                
-                Location here = new Location(x,y);
-                setLocatedSource(here);
-                setBoundedDesign(here);
-                double bounded = boundedDesign.edges().size();
-                    if ( bounded != 0 ){
-                        HashSet<Child> intersection = intersection(new Location(x,y));
-                        Design difference = Design.difference(locatedSource.element(), boundedDesign);
-                        double interVal;
-                        double diffVal;
-                        double differ = difference.edges().size();
-                        interVal = intersection.size() / bounded;
-                        diffVal = differ / bounded;
-                        buffer.balanceDiffNum(diffVal);
-                        //buffer.balanceDiffDen(source.intersectValue);
-                        buffer.applyDifference(difference, interVal);//invDiff);
-                    }
-            }
-        }
-        buffer.adjustDiff(design.diffadj);
-        System.out.println("designDiffAdj: "+design.diffadj);
-        design.applyDifferenceBuffer(buffer);
-        design.decide(buffer.diffThreshold());
-    }
-//    public double intrVal(HashSet<Child> cs){
-//        double rtn = 0;
-//        for ( Child c :cs)
-//            rtn+=c.value();
-//        return rtn;
-//    }
     public void boundTest(Bounds b){
         System.out.println("Seed:\n"+design);
         Design des = Design.bounded(b, design);
@@ -171,9 +163,11 @@ public class Generate {
 //            paintLocation(g,l);
 //        }
         for ( Edge e : design.edges() ){
+            //if (design.edgeMap().get(e).decide() > decisionThreshold)
             paintEdge(g,e);
         }
         for ( Edge e : design.edges() ){
+            if (design.edgeMap().get(e).decide() > decisionThreshold)
             paintEdgeIn(g,e);
         }
     }
@@ -203,3 +197,33 @@ public class Generate {
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
     }
 }
+//public void differentiate(){
+//        design.resetThreshold();
+//        Design buffer = new Design(design.adjust);
+//        buffer.adjustDiff(design.diffadj);
+//        for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x ){
+//            for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
+//                
+//                Location here = new Location(x,y);
+//                setLocatedSource(here);
+//                setBoundedDesign(here);
+//                double bounded = boundedDesign.edges().size();
+//                    if ( bounded != 0 ){
+//                        HashSet<Child> intersection = intersection(new Location(x,y));
+//                        Design difference = Design.difference(locatedSource.element(), boundedDesign);
+//                        double interVal;
+//                        double diffVal;
+//                        double differ = difference.edges().size();
+//                        interVal = intersection.size() / bounded;
+//                        diffVal = differ / bounded;
+//                        buffer.balanceDiffNum(diffVal);
+//                        //buffer.balanceDiffDen(source.intersectValue);
+//                        buffer.applyDifference(difference, interVal);//invDiff);
+//                    }
+//            }
+//        }
+//        buffer.adjustDiff(design.diffadj);
+//        System.out.println("designDiffAdj: "+design.diffadj);
+//        design.applyDifferenceBuffer(buffer);
+//        design.decide(buffer.diffThreshold());
+//    }

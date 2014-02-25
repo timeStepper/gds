@@ -84,6 +84,9 @@ public class Design {
             addEdges( child );  
         }
     }
+    public void setEdge(Edge e, Weight w){
+        edges.put(e,w);
+    }
     public void addEdge( Edge e ){
         edges.put(e,new Weight());
     }

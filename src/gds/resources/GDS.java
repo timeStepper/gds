@@ -109,6 +109,20 @@ public class GDS extends javax.swing.JFrame {
         displayFlattenedChildren = new javax.swing.JButton();
         boundTestButton = new javax.swing.JButton();
         intersectionTestButton = new javax.swing.JButton();
+        viztoolzPanel = new javax.swing.JPanel();
+        viewButtons = new javax.swing.JToolBar();
+        viewBufferButton = new javax.swing.JToggleButton();
+        viewSeedButton = new javax.swing.JToggleButton();
+        viewIntersectButton = new javax.swing.JToggleButton();
+        viewApplicatesButton = new javax.swing.JToggleButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        seedUpButton = new javax.swing.JButton();
+        seedDownButton = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
+        seedLeftButton = new javax.swing.JButton();
+        seedRightButton = new javax.swing.JButton();
+        vizSeedButton = new javax.swing.JButton();
+        vizGenerateButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -315,7 +329,7 @@ public class GDS extends javax.swing.JFrame {
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
+            .addGap(0, 545, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -536,7 +550,7 @@ public class GDS extends javax.swing.JFrame {
                                 .addComponent(diffThresholdButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(diffThreshField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         editControlsLayout.setVerticalGroup(
             editControlsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -693,7 +707,7 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(displayFlattenedEdges)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(displayFlattenedChildren)))
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -722,10 +736,118 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(boundTestButton)
                 .addGap(18, 18, 18)
                 .addComponent(intersectionTestButton)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
-        elementTabs.addTab("tab4", jPanel1);
+        elementTabs.addTab("test", jPanel1);
+
+        viewButtons.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        viewButtons.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        viewButtons.setRollover(true);
+
+        viewBufferButton.setText("Buffer");
+        viewBufferButton.setFocusable(false);
+        viewBufferButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewBufferButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewBufferButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewBufferButtonActionPerformed(evt);
+            }
+        });
+        viewButtons.add(viewBufferButton);
+
+        viewSeedButton.setText("Seed");
+        viewSeedButton.setFocusable(false);
+        viewSeedButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewSeedButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewButtons.add(viewSeedButton);
+
+        viewIntersectButton.setText("Intersect");
+        viewIntersectButton.setFocusable(false);
+        viewIntersectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewIntersectButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewButtons.add(viewIntersectButton);
+
+        viewApplicatesButton.setText("Applicates");
+        viewApplicatesButton.setFocusable(false);
+        viewApplicatesButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewApplicatesButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewButtons.add(viewApplicatesButton);
+
+        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar1.setRollover(true);
+
+        seedUpButton.setText("Up");
+        seedUpButton.setFocusable(false);
+        seedUpButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        seedUpButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(seedUpButton);
+
+        seedDownButton.setText("Down");
+        seedDownButton.setFocusable(false);
+        seedDownButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        seedDownButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(seedDownButton);
+
+        jToolBar2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar2.setRollover(true);
+
+        seedLeftButton.setText("Left");
+        seedLeftButton.setFocusable(false);
+        seedLeftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        seedLeftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(seedLeftButton);
+
+        seedRightButton.setText("Right");
+        seedRightButton.setFocusable(false);
+        seedRightButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        seedRightButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(seedRightButton);
+
+        vizSeedButton.setText("Set Seed");
+
+        vizGenerateButton.setText("Generate");
+        vizGenerateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vizGenerateButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout viztoolzPanelLayout = new javax.swing.GroupLayout(viztoolzPanel);
+        viztoolzPanel.setLayout(viztoolzPanelLayout);
+        viztoolzPanelLayout.setHorizontalGroup(
+            viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viztoolzPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(viewButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(vizSeedButton)
+                    .addComponent(vizGenerateButton))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+        viztoolzPanelLayout.setVerticalGroup(
+            viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viztoolzPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(viztoolzPanelLayout.createSequentialGroup()
+                        .addComponent(vizSeedButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vizGenerateButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(333, Short.MAX_VALUE))
+        );
+
+        elementTabs.addTab("Viz", viztoolzPanel);
 
         centerRightPanels.setRightComponent(elementTabs);
 
@@ -763,7 +885,7 @@ public class GDS extends javax.swing.JFrame {
             .addGroup(leftFlankLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
+                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -785,7 +907,7 @@ public class GDS extends javax.swing.JFrame {
         topBarLayout.setHorizontalGroup(
             topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarLayout.createSequentialGroup()
-                .addContainerGap(442, Short.MAX_VALUE)
+                .addContainerGap(443, Short.MAX_VALUE)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(443, Short.MAX_VALUE))
         );
@@ -905,7 +1027,7 @@ public class GDS extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(verticalSplit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 951, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1198,13 +1320,21 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void differenceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_differenceButtonActionPerformed
-        genit.differentiate();
-        ((MyPanel)displayArea).repaint();
+//        genit.differentiate();
+//        ((MyPanel)displayArea).repaint();
     }//GEN-LAST:event_differenceButtonActionPerformed
 
     private void diffThresholdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diffThresholdButtonActionPerformed
         genit.setDiffThreshold(Double.parseDouble(diffThreshField.getText()));
     }//GEN-LAST:event_diffThresholdButtonActionPerformed
+
+    private void vizGenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizGenerateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vizGenerateButtonActionPerformed
+
+    private void viewBufferButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBufferButtonActionPerformed
+        viz.togglePaintBuffer();
+    }//GEN-LAST:event_viewBufferButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1471,6 +1601,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JLabel labelX;
     private javax.swing.JLabel labelY;
     private javax.swing.JPanel leftFlank;
@@ -1494,6 +1626,10 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton scaleElementButton;
     private javax.swing.JTextField scaleField;
     private javax.swing.JMenuItem scaleImage;
+    private javax.swing.JButton seedDownButton;
+    private javax.swing.JButton seedLeftButton;
+    private javax.swing.JButton seedRightButton;
+    private javax.swing.JButton seedUpButton;
     private javax.swing.JButton setSeedButton;
     private javax.swing.JButton setSourceButton;
     private javax.swing.JButton setThresholdButton;
@@ -1502,8 +1638,16 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JPanel topBar;
     private javax.swing.JMenuItem translateImage;
     private javax.swing.JSplitPane verticalSplit;
+    private javax.swing.JToggleButton viewApplicatesButton;
+    private javax.swing.JToggleButton viewBufferButton;
+    private javax.swing.JToolBar viewButtons;
     private javax.swing.JButton viewGlobalButton;
+    private javax.swing.JToggleButton viewIntersectButton;
     private javax.swing.JButton viewLocalButton;
+    private javax.swing.JToggleButton viewSeedButton;
+    private javax.swing.JButton vizGenerateButton;
+    private javax.swing.JButton vizSeedButton;
+    private javax.swing.JPanel viztoolzPanel;
     private javax.swing.JButton xLeftButton;
     private javax.swing.JButton xRightButton;
     private javax.swing.JButton yDownButton;
@@ -1525,6 +1669,7 @@ public class GDS extends javax.swing.JFrame {
     DynamicTree dt = new DynamicTree( rootNode, treeModel );
     EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
     Generate genit = new Generate(32,32, grid);
+    VisToolz viz = new VisToolz(grid);
 }
 
 

@@ -23,11 +23,13 @@ public class VisToolz {
     private Design design;
     private Design buffer;
     private boolean paintIntersect=false;
-    private boolean paintDifference=false;
-    private boolean paintRules=false;
+    private boolean paintSeed=false;
+    private boolean paintApplicates=false;
     private boolean paintBuffer=false;
     
-    
+    VisToolz(Grid g){
+        grid = g;
+    }
     
     public void setX(int x){
         currentX=x;
@@ -53,8 +55,8 @@ public class VisToolz {
         if(paintBuffer)paintBuffer(g);
         else{
             if(paintIntersect)paintIntersect(g);
-            if(paintDifference)paintDifference(g);
-            if(paintRules)paintRules(g);
+            if(paintSeed)paintDifference(g);
+            if(paintApplicates)paintRules(g);
             }
     }
     public void paintIntersect(Graphics2D g){
@@ -73,17 +75,18 @@ public class VisToolz {
         if(paintIntersect)paintIntersect=false;
         else paintIntersect = true;
     }
-    public void togglePaintDifference(){
-        if(paintDifference)paintDifference=false;
-        else paintDifference=true;
+    public void togglePaintSeed(){
+        if(paintSeed)paintSeed=false;
+        else paintSeed=true;
     }
-    public void togglePaintRules(){
-        if(paintRules)paintRules=false;
-        else paintRules=true;
+    public void togglePaintApplicates(){
+        if(paintApplicates)paintApplicates=false;
+        else paintApplicates=true;
     }
     public void togglePaintBuffer(){
         if(paintBuffer)paintBuffer=false;
         else paintBuffer = true;
+        System.out.println(paintBuffer);
     }
     //color will provide opacity level
     public void paintEdge( Graphics2D g, Edge e, Color color, Float weight ) {

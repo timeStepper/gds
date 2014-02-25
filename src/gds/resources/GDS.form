@@ -154,7 +154,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="bottomBar" alignment="0" max="32767" attributes="0"/>
-          <Component id="verticalSplit" alignment="1" max="32767" attributes="0"/>
+          <Component id="verticalSplit" alignment="1" pref="951" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -481,7 +481,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="541" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="545" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -593,7 +593,7 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="45" max="32767" attributes="0"/>
+                                  <EmptySpace pref="46" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -921,8 +921,8 @@
                     <Container class="javax.swing.JPanel" name="jPanel1">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                          <JTabbedPaneConstraints tabName="tab4">
-                            <Property name="tabTitle" type="java.lang.String" value="tab4"/>
+                          <JTabbedPaneConstraints tabName="test">
+                            <Property name="tabTitle" type="java.lang.String" value="test"/>
                           </JTabbedPaneConstraints>
                         </Constraint>
                       </Constraints>
@@ -949,7 +949,7 @@
                                           <Component id="displayFlattenedChildren" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="29" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -985,7 +985,7 @@
                                   <Component id="boundTestButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="intersectionTestButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="112" max="32767" attributes="0"/>
+                                  <EmptySpace pref="116" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1065,6 +1065,182 @@
                         </Component>
                       </SubComponents>
                     </Container>
+                    <Container class="javax.swing.JPanel" name="viztoolzPanel">
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                          <JTabbedPaneConstraints tabName="Viz">
+                            <Property name="tabTitle" type="java.lang.String" value="Viz"/>
+                          </JTabbedPaneConstraints>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="viewButtons" max="32767" attributes="0"/>
+                                      <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jToolBar2" alignment="0" pref="100" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="vizSeedButton" min="-2" max="-2" attributes="0"/>
+                                      <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="67" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="viewButtons" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="vizSeedButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <EmptySpace pref="333" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Container class="javax.swing.JToolBar" name="viewButtons">
+                          <Properties>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                                <EtchetBorder/>
+                              </Border>
+                            </Property>
+                            <Property name="orientation" type="int" value="1"/>
+                            <Property name="rollover" type="boolean" value="true"/>
+                          </Properties>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JToggleButton" name="viewBufferButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Buffer"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewBufferButtonActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JToggleButton" name="viewSeedButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Seed"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JToggleButton" name="viewIntersectButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Intersect"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JToggleButton" name="viewApplicatesButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Applicates"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JToolBar" name="jToolBar1">
+                          <Properties>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                                <EtchetBorder/>
+                              </Border>
+                            </Property>
+                            <Property name="orientation" type="int" value="1"/>
+                            <Property name="rollover" type="boolean" value="true"/>
+                          </Properties>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JButton" name="seedUpButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Up"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="seedDownButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Down"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JToolBar" name="jToolBar2">
+                          <Properties>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                                <EtchetBorder/>
+                              </Border>
+                            </Property>
+                            <Property name="rollover" type="boolean" value="true"/>
+                          </Properties>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JButton" name="seedLeftButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Left"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="seedRightButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Right"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Component class="javax.swing.JButton" name="vizSeedButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Set Seed"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="vizGenerateButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Generate"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizGenerateButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -1100,7 +1276,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="382" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dynamicTreeLabel" pref="15" max="32767" attributes="0"/>
+                          <Component id="dynamicTreeLabel" pref="18" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="114" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -1199,7 +1375,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="442" max="32767" attributes="0"/>
+                      <EmptySpace pref="443" max="32767" attributes="0"/>
                       <Component id="jTextField1" max="-2" attributes="0"/>
                       <EmptySpace pref="443" max="32767" attributes="0"/>
                   </Group>
