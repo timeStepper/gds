@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,23 +22,19 @@ import java.util.logging.Logger;
  */
 public class Intersect {
     private HashMap<Child, Weight> applicates = new HashMap<>();
-    private HashMap<Edge, Double> buffer = new HashMap<>();
+    private HashMap<Edge, Weight> buffer = new HashMap<>();
     private Weight threshold = new Weight(0, 0);
     
     public void intersect(Design bounded, Source located){
         applicates.clear();
-        intersectCall(bounded, located.element(), located.lookupTable() );
-    }
-//    private void intersectCall(Design bounded, Child located, Rules lookup){
-//        int edgecount=0;
-//        if (!bounded.edges().isEmpty()){
-//            for ( Edge e : bounded.edges() ){
-//                
-//            }
+        buffer.clear();
+        threshold = new Weight(0,0);
+        intersectCall(bounded, located.element());
+//        for (Child c : applicates.keySet()){
+//            System.out.println(c+"-> "+applicates.get(c));
 //        }
-//    }
-    //*WILL* handles the job of distributing mitigated weightes along Connections
-    private Weight intersectCall(Design bounded, Child located, Rules lookup){
+    }
+    private Weight intersectCall(Design bounded, Child located){
         int edgecount = 0;
         if (!bounded.edges().isEmpty()){
             //Child of all empties
@@ -55,7 +50,7 @@ public class Intersect {
                     //accepts the entire Child at the Weight of (intersection/possible intersection)
                     applicates.put(located,w);
                     threshold.applyWeight(w);
-                    //System.out.println(located+" -> "+w);
+                    //System.out.println(located+" :: "+w);
                     return w;
                 }
                 else {
@@ -69,7 +64,7 @@ public class Intersect {
                 Weight w = new Weight(0,0);
                 for ( Child c : located.children() ){
                     //accumulate the weights of the children of 'located'
-                    Weight getW = intersectCall(bounded, c, lookup);
+                    Weight getW = intersectCall(bounded, c);
                     w.applyWeight(getW);
                 }
                 applicates.put(located,w);
@@ -78,29 +73,48 @@ public class Intersect {
             }
         }return new Weight(0, 0);//nothing here to intersect with
     }
-    private void bufferIntersection(){
+    private void connectWeights(Child located, Rules lookup){
+        for (Child c : located.children()){
+            Weight getW = applicates.get(c);
+            for (Child child : lookup.get(c)){
+                double half = getW.intersectValue()/2;
+                if (applicates.containsKey(child))
+                    applicates.get(child).applyWeight(new Weight(half,0));
+                else applicates.put(child, new Weight(half,0));
+            }
+        }
+    }
+    private void bufferIntersection(Source located){
         for (Child app : applicates.keySet()){
-            Weight w = applicates.get(app);
             //apply the whole child 'app' with weight w
             //this is the top level where no Connections exist
-            applicate(app, w.decide());
+            applicate(app, located);
         }
     }
     //recursive application bringing the weight of the parent
     //down the rabbit hole and distributing it throughout
-    //the job of distributing Weights along Connections has already
-    //been handled by intersectCall()
-    private void applicate(Child ch, double val){
+    private void applicate(Child ch, Source located){
         if (ch.containsAllEmpties())
             for (Connection cn : ch.connections()){
                 Edge e = new Edge(cn);
-                Weight w = applicates.get(ch);
-                buffer.put(e, val+w.decide());
+                Weight w = new Weight(applicates.get(ch));
+                //System.out.println("w "+w);
+                if (!buffer.containsKey(e))
+                    buffer.put(e, w);
+                else buffer.get(e).applyWeight(w);
             }
         else {
-            //recursive desent
-            for (Child c : ch.children())
-                applicate(c, val+applicates.get(ch).decide());
+            //recursive desent and Connection Weight distribution
+            for (Child c : ch.children()){
+                applicate(c, located);//desend
+//                Weight w = applicates.get(c);
+//                for (Child child : located.lookupTable().get(c)){
+//                    double half = w.intersectValue()/2;
+//                    if (applicates.containsKey(child))
+//                        applicates.get(child).applyWeight(new Weight(half,0));
+//                    else applicates.put(child, new Weight(half,0));
+//                }
+            }
         }
     }
     public static void main(String args[]) {
@@ -110,12 +124,16 @@ public class Intersect {
         Source test = setTest();
         design.setSeed(test.element());
         design.setBounds();
-        test = test.locate(new Location(2,3));
+        test = test.locate(new Location(0,0));
         
-//        design.displayEdges();
+
         inter.intersect(design, test);
-        for (Child c : inter.applicates.keySet()){
-            System.out.println(c+"-> "+inter.applicates.get(c));
+        inter.bufferIntersection(test);
+//        for (Child c : inter.applicates.keySet()){
+//            System.out.println(c+"-> "+inter.applicates.get(c));
+//        }
+        for (Edge e : inter.buffer.keySet()){
+            System.out.println(e+" -> "+inter.buffer.get(e));
         }
     }
     public static Source setTest(){
@@ -145,11 +163,3 @@ public class Intersect {
 //        applicates.put(c,w);
 //    }
 //}
-//distribute 1/2 w to Connected Childs
-//                    ArrayList<Child> adjs = lookup.get(c);
-//                    for (Child child : adjs){
-//                        double half = getW.intersectValue()/2;
-//                        if (applicates.containsKey(child))
-//                            applicates.get(child).applyWeight(new Weight(half,0));
-//                        else applicates.put(child, new Weight(half,0));
-//                    }

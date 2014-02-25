@@ -30,6 +30,9 @@ public class Source {
     public Child element(){
         return element;
     }
+    public ArrayList<Child> children(){
+        return element.children();
+    }
     public Bounds bounds(){
         return bounds;
     }

@@ -6,7 +6,6 @@
 
 package gds.resources;
 
-import static gds.resources.Source.bounds;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,6 +56,9 @@ public class Design {
     }
     public Set<Edge> edges(){
         return edges.keySet();
+    }
+    public HashMap<Edge,Weight> edgeMap(){
+        return edges;
     }
     
     public void setSeed( Child child ){
@@ -333,195 +335,4 @@ public class Design {
     }
 }
 
-
-class Edge{
-    private Location nodeA;
-    private Location nodeB;
-    
-    Edge( Location a, Location b ){
-        nodeA = a;
-        nodeB = b;
-    }
-    Edge(Connection cn){
-        nodeA = cn.aLoc();
-        nodeB = cn.bLoc();
-    }
-    public Location nodeA(){
-        return nodeA;
-    }
-    public Location nodeB(){
-        return nodeB;
-    }
-    
-    public int aX(){
-        return nodeA.xLoc();
-    }
-    public int aY(){
-        return nodeA.yLoc();
-    }
-    public int bX(){
-        return nodeB.xLoc();
-    }
-    public int bY(){
-        return nodeB.yLoc();
-    }
-    @Override
-    public String toString(){
-        return "["+nodeA+", "+nodeB+"]";
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != getClass()) {
-            return false;
-        }
-        Edge e = ( Edge ) obj;
-        
-        return  (nodeA.equals( e.nodeA( ) ) && nodeB.equals( e.nodeB( ) )) ||
-                (nodeA.equals( e.nodeB( ) ) && nodeB.equals( e.nodeA( ) ));
-    }
-
-    @Override
-    public int hashCode() {
-        int hash;
-        hash = (nodeA.xLoc()*nodeA.yLoc()) + (nodeB.xLoc()*nodeB.yLoc());
-        return hash;
-    }
-}
-class Weight{
-    private double intersect;
-    private double difference;
-    
-    Weight(){
-        intersect = 1;
-        difference = 1;
-    }
-    Weight( double a, double b){
-        intersect = a;
-        difference = b;
-    }
-    public double decide(){
-        if (difference==0)return 0;
-        else return intersect/difference;
-    }
-    public void applyWeight(Weight weight){
-        intersect += weight.intersectValue();
-        difference += weight.differenceValue();
-    }
-    public void addIntersectValue(double v){
-        intersect+=v;
-    }
-    public double intersectValue(){
-        return intersect;
-    }
-    public double differenceValue(){
-        return difference;
-    }
-    public String toString(){
-        return "["+intersect+", "+difference+"]";
-    }
-}
-class Bounds {
-    private final int xmin;
-    private final int xmax;
-    private final int ymin;
-    private final int ymax;
-    
-    Bounds ( int xmn, int xmx, int ymn, int ymx ){
-        xmin = xmn;
-        xmax = xmx;
-        ymin = ymn;
-        ymax = ymx;
-    }
-    public int xmin() {
-        return xmin;
-    }
-    public int xmax() {
-        return xmax;
-    }
-    public int ymin() {
-        return ymin;
-    }
-    public int ymax() {
-        return ymax;
-    }
-    public boolean isBounded( int x, int y ){
-//        System.out.println("xmin -> xmax, x:" + xmin+" -> "+xmax+", "+x);
-//        System.out.println("ymin -> ymax, y:" + ymin+" -> "+ymax+", "+y);
-        boolean rtn = x<=xmax&&x>=xmin&&y<=ymax&&y>=ymin;
-//        System.out.println(rtn);
-        return rtn;
-    }
-    public boolean isBounded( Edge e ){
-        return isBounded(e.aX(),e.aY())&&
-                isBounded(e.bX(),e.bY());
-    }
-    public static Bounds maxminBounds( Bounds b1, Bounds b2 ){
-        int xmn;
-        int xmx;
-        int ymn;
-        int ymx;
-        xmn = Math.min(b1.xmin(), b2.xmin());
-        xmx = Math.max(b1.xmax(), b2.xmax());
-        ymn = Math.min(b1.ymin(), b2.ymin());
-        ymx = Math.max(b1.ymax(), b2.ymax());
-        return new Bounds(xmn,xmx,ymn,ymx);
-    }
-    @Override
-    public String toString(){
-        return "xmin: "+xmin+"\nxmax: "+xmax+"\nymin: "+ymin+"\nymax: "+ymax;
-    }
-}
-class Rules extends HashMap<Child, ArrayList<Child>>{
-    
-    public static Rules intersectToRules( HashSet<Child> intersection, Rules sourceAdjacency ){
-        Rules intersectionRules = new Rules();
-        for ( Child lhs : intersection ){
-            intersectionRules.addRule(lhs, sourceAdjacency.get(lhs));
-        }
-        return intersectionRules;
-    }
-    public void addRule(Child lhs, Child rhs){
-        if (containsKey(lhs)){
-            ArrayList<Child> list = get(lhs);
-            if ( !list.contains(rhs))list.add(rhs);
-        }
-        else {
-            ArrayList<Child> r = new ArrayList<>();
-            r.add(rhs);
-            put(lhs,r);
-        }
-    }
-    public void addRule( Child lhs, ArrayList<Child> rhs){
-        if (containsKey(lhs))
-            get(lhs).addAll(rhs);
-        else put(lhs,rhs);
-    }
-    public void makeAddRules(Child parent, Child c){
-        for ( Connection cn : parent.connections()){
-            if ( cn.a().equals(c) ) addRule(c,cn.b());
-            else if ( cn.b().equals(c) ) addRule(c,cn.a());
-        }
-    }
-    public void union( Rules rs ){
-        for ( Child lhs : rs.keySet() ){
-            ArrayList<Child> cs = rs.get(lhs);
-            for ( Child rhs : cs )
-                addRule(lhs,rhs);
-        }
-    }
-    public boolean containsAll( ArrayList<Child> cs ){
-        for (Child c : cs)
-            if ( !containsKey(c) ) return false;
-        return true;
-    }
-    public void display(){
-        Set<Child> keys = keySet();
-        for ( Child lhs:keys){
-            System.out.println(lhs+" -> "+get(lhs));
-        }
-    }
-}
 
