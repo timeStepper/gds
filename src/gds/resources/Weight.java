@@ -15,8 +15,8 @@ public class Weight{
     private double difference;
     
     Weight(){
-        intersect = 1;
-        difference = 1;
+        intersect = 0;
+        difference = 0;
     }
     Weight( double a, double b){
         intersect = a;

@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ public class Intersect {
     private HashMap<Child, Weight> applicates = new HashMap<>();
     private HashMap<Edge, Weight> buffer = new HashMap<>();
     private Weight threshold = new Weight(0, 0);
+    private double  connectValue = .5;
     
     public void intersect(Design bounded, Source located){
         applicates.clear();
@@ -73,17 +75,6 @@ public class Intersect {
             }
         }return new Weight(0, 0);//nothing here to intersect with
     }
-    private void connectWeights(Child located, Rules lookup){
-        for (Child c : located.children()){
-            Weight getW = applicates.get(c);
-            for (Child child : lookup.get(c)){
-                double half = getW.intersectValue()/2;
-                if (applicates.containsKey(child))
-                    applicates.get(child).applyWeight(new Weight(half,0));
-                else applicates.put(child, new Weight(half,0));
-            }
-        }
-    }
     private void bufferIntersection(Source located){
         for (Child app : applicates.keySet()){
             //apply the whole child 'app' with weight w
@@ -98,24 +89,27 @@ public class Intersect {
             for (Connection cn : ch.connections()){
                 Edge e = new Edge(cn);
                 Weight w = new Weight(applicates.get(ch));
-                //System.out.println("w "+w);
                 if (!buffer.containsKey(e))
                     buffer.put(e, w);
                 else buffer.get(e).applyWeight(w);
             }
-        else {
-            //recursive desent and Connection Weight distribution
+        else {//distribute Weigts along Connections when c is not empty:
+            HashMap<Child,Double> buff = new HashMap<>();//this buffer is needed for parallelism
             for (Child c : ch.children()){
-                applicate(c, located);//desend
-//                Weight w = applicates.get(c);
-//                for (Child child : located.lookupTable().get(c)){
-//                    double half = w.intersectValue()/2;
-//                    if (applicates.containsKey(child))
-//                        applicates.get(child).applyWeight(new Weight(half,0));
-//                    else applicates.put(child, new Weight(half,0));
-//                }
+                //applicate(c,located);//increases the resolution, value remains the same
+                double half = applicates.get(c).intersectValue()*connectValue;
+                for (Child child : located.lookupTable().get(c)){
+                    buff.put(child, half);
+                    //this almost works buts not parallel:
+                    //applicates.get(child).addIntersectValue(half);
+                }
             }
+            for (Child buffC : buff.keySet())
+                applicates.get(buffC).addIntersectValue(buff.get(buffC));
         }
+    }
+    public void connectionDistribution(){
+        
     }
     public static void main(String args[]) {
         System.out.println("o hell o");
@@ -131,10 +125,12 @@ public class Intersect {
         inter.bufferIntersection(test);
 //        for (Child c : inter.applicates.keySet()){
 //            System.out.println(c+"-> "+inter.applicates.get(c));
+//            //c.displayChildren();
 //        }
         for (Edge e : inter.buffer.keySet()){
             System.out.println(e+" -> "+inter.buffer.get(e));
         }
+        System.out.println("thresh: "+inter.threshold);
     }
     public static Source setTest(){
         Gson gson = new Gson();
@@ -151,15 +147,3 @@ public class Intersect {
         return new Source(gson.fromJson(input, Child.class).clone());
     }
 }
-//class Intersection{
-//    HashSet<Edge> difference = new HashSet<>();
-//    HashSet<Edge> intersection = new HashSet<>(); 
-//    HashMap<Child, Weight> applicates = new HashMap<>();
-//    
-//    public void addDiff(Edge e){
-//        difference.add(e);
-//    }
-//    public void putInter(Child c, Weight w){
-//        applicates.put(c,w);
-//    }
-//}
