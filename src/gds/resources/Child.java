@@ -130,8 +130,8 @@ public class Child {
         return edges;
     }
     public static HashSet<Edge> flattenEdges(Child c){
-        Child ch = locate(c,c.location());
-        return flattenEdgesCall(ch);
+        //Child ch = locate(c,c.location());
+        return flattenEdgesCall(c);
     }
     private static HashSet<Edge> flattenEdgesCall(Child c){
         HashSet<Edge> edges = new HashSet<>();

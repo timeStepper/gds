@@ -9,6 +9,7 @@ package gds.resources;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.HashSet;
 
 /**
  *
@@ -28,8 +29,14 @@ public class VisToolz {
     private boolean paintSeed=false;
     private boolean paintApplicates=false;
     private boolean paintBuffer=false;
+    private boolean paintSource=false;
     private int offset = 0;
     Intersect intersect = new Intersect();
+    private Color seedColor = Color.CYAN;
+    private Color applicateColor = Color.GREEN;
+    private Color bufferColor = Color.BLUE;
+    private Color intersectColor = Color.MAGENTA;
+    private Color sourceColor = Color.ORANGE;
     
     VisToolz(Grid g){
         grid = g;
@@ -46,9 +53,10 @@ public class VisToolz {
     }
     public void setSource(Child c){
         source = source = new Source(c.clone());
+        locatedSource = source.locate(new Location(0,0));
     }
     public void setSeed(Child c){
-        System.out.println("c "+c);
+        //System.out.println("c "+c);
         design.setSeed(c.clone());
         design.setBounds();
     }
@@ -62,35 +70,24 @@ public class VisToolz {
     }
     public void up(){
         --currentY;
+        locatedSource = source.locate(new Location(currentX, currentY));
     }
     public void down(){
         ++currentY;
+        locatedSource = source.locate(new Location(currentX, currentY));
     }
     public void left(){
         --currentX;
+        locatedSource = source.locate(new Location(currentX, currentY));
     }
     public void right(){
         ++currentX;
+        locatedSource = source.locate(new Location(currentX, currentY));
     }
-    public void paintViz(Graphics2D g){
-        if(paintBuffer)paintBuffer(g);
-        else{
-            if(paintIntersect)paintIntersect(g);
-            if(paintSeed)paintSeed(g);
-            if(paintApplicates)paintApplicates(g);
-            }
-    }
-    public void paintIntersect(Graphics2D g){
-        
-    }
-    public void paintSeed(Graphics2D g){
-        
-    }
-    public void paintApplicates(Graphics2D g){
-        
-    }
-    public void paintBuffer(Graphics2D g){
-        
+    
+    public void togglePaintSource(){
+        if(paintSource)paintSource=false;
+        else paintSource = true;
     }
     public void togglePaintIntersect(){
         if(paintIntersect)paintIntersect=false;
@@ -107,6 +104,36 @@ public class VisToolz {
     public void togglePaintBuffer(){
         if(paintBuffer)paintBuffer=false;
         else paintBuffer = true;
+    }
+    public void paintViz(Graphics2D g){
+        if(paintBuffer)paintBuffer(g);
+        else{
+            if(paintIntersect)paintIntersect(g);
+            if(paintSeed)paintSeed(g);
+            if(paintApplicates)paintApplicates(g);
+            if(paintSource)paintSource(g);
+            }
+    }
+    public void paintSource(Graphics2D g){
+        //System.out.println(locatedSource);
+        HashSet<Edge> edges = Child.flattenEdges(locatedSource.element());
+        for (Edge e : edges){
+            paintEdge(g,e,sourceColor,2F);
+        }
+    }
+    public void paintIntersect(Graphics2D g){
+        
+    }
+    public void paintSeed(Graphics2D g){
+        for (Edge e : design.edges()){
+            paintEdge(g,e,seedColor,2F);
+        }
+    }
+    public void paintApplicates(Graphics2D g){
+        
+    }
+    public void paintBuffer(Graphics2D g){
+        
     }
     //color will provide opacity level
     public void paintEdge( Graphics2D g, Edge e, Color color, Float weight ) {

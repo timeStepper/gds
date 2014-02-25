@@ -116,6 +116,7 @@ public class GDS extends javax.swing.JFrame {
         viewSeedButton = new javax.swing.JToggleButton();
         viewIntersectButton = new javax.swing.JToggleButton();
         viewApplicatesButton = new javax.swing.JToggleButton();
+        viewSourceButton = new javax.swing.JToggleButton();
         jToolBar1 = new javax.swing.JToolBar();
         seedUpButton = new javax.swing.JButton();
         seedDownButton = new javax.swing.JButton();
@@ -801,6 +802,17 @@ public class GDS extends javax.swing.JFrame {
         });
         viewButtons.add(viewApplicatesButton);
 
+        viewSourceButton.setText("Source");
+        viewSourceButton.setFocusable(false);
+        viewSourceButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        viewSourceButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        viewSourceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSourceButtonActionPerformed(evt);
+            }
+        });
+        viewButtons.add(viewSourceButton);
+
         jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jToolBar1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jToolBar1.setRollover(true);
@@ -897,18 +909,18 @@ public class GDS extends javax.swing.JFrame {
             .addGroup(viztoolzPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(viztoolzPanelLayout.createSequentialGroup()
                         .addComponent(vizSetSeedButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vizSetSourceButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vizSetSourceButton))
+                    .addComponent(viewButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(vizGenerateButton)
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("Viz", viztoolzPanel);
@@ -1441,10 +1453,12 @@ public class GDS extends javax.swing.JFrame {
 
     private void vizSetSeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizSetSeedButtonActionPerformed
         viz.setSeed(edit.selected);
+        globalDisplayArea.repaint();
     }//GEN-LAST:event_vizSetSeedButtonActionPerformed
 
     private void vizSetSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizSetSourceButtonActionPerformed
         viz.setSource(edit.selected);
+        globalDisplayArea.repaint();
     }//GEN-LAST:event_vizSetSourceButtonActionPerformed
 
     private void vizModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vizModeActionPerformed
@@ -1453,6 +1467,11 @@ public class GDS extends javax.swing.JFrame {
         mode.setViz();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_vizModeActionPerformed
+
+    private void viewSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSourceButtonActionPerformed
+        viz.togglePaintSource();
+        ((MyPanel)displayArea).repaint();
+    }//GEN-LAST:event_viewSourceButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1768,6 +1787,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JToggleButton viewIntersectButton;
     private javax.swing.JButton viewLocalButton;
     private javax.swing.JToggleButton viewSeedButton;
+    private javax.swing.JToggleButton viewSourceButton;
     private javax.swing.JButton vizGenerateButton;
     private javax.swing.JToggleButton vizMode;
     private javax.swing.JButton vizSetSeedButton;
