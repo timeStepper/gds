@@ -1107,8 +1107,9 @@
                                           <Component id="decideBufferButton" alignment="0" max="32767" attributes="0"/>
                                           <Component id="vizGenerateButton" alignment="0" max="32767" attributes="0"/>
                                       </Group>
+                                      <Component id="thresholdAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="59" max="32767" attributes="0"/>
+                                  <EmptySpace pref="50" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1132,7 +1133,9 @@
                                   <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="decideBufferButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="234" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="thresholdAdjust" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="205" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1311,6 +1314,14 @@
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decideBufferButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JSlider" name="thresholdAdjust">
+                          <Properties>
+                            <Property name="maximum" type="int" value="400"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="thresholdAdjustStateChanged"/>
                           </Events>
                         </Component>
                       </SubComponents>

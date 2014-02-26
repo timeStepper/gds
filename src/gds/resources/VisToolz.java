@@ -37,6 +37,7 @@ public class VisToolz {
     private Color bufferColor = Color.BLUE;
     private Color intersectColor = Color.GREEN;
     private Color sourceColor = Color.YELLOW;
+    private double thresholdAdjust = 1;
     
     VisToolz(Grid g){
         grid = g;
@@ -59,6 +60,9 @@ public class VisToolz {
         //System.out.println("c "+c);
         design.setSeed(c.clone());
         design.setBounds();
+    }
+    public void setAdjust(double a){
+        thresholdAdjust = a / 100;
     }
     public void step(){
         if ( currentX < bounds.xmax() )currentX++;
@@ -148,7 +152,11 @@ public class VisToolz {
         }
     }
     public void paintBuffer(Graphics2D g){
-        
+        for (Edge e : designBuffer.edges()){
+            Weight w = designBuffer.edgeMap().get(e);
+            if (w.decide() > intersect.threshold()*thresholdAdjust)
+                paintEdge(g,e,bufferColor,2F);
+        }
     }
     //color will provide opacity level
     public void paintEdge( Graphics2D g, Edge e, Color color, Float weight ) {
@@ -183,7 +191,7 @@ public class VisToolz {
 //        design.setBounds();
     }
     public void decide(){
-        designBuffer.decide(intersect.threshold());
+        designBuffer.decide(intersect.threshold()*thresholdAdjust);
         design = new Design(designBuffer);
         design.setBounds();
     }
