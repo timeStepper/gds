@@ -33,6 +33,10 @@ public class Grid {
         public void selectOff() {
             select = false;
         }
+        public int mouseWheel(int m){
+            mS += m;
+            return mS;
+        }
         
       //used for relating grid lines to display for editing elements
         public void setOriginX( int x ) {

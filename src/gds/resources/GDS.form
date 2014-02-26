@@ -1091,23 +1091,30 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="viewButtons" pref="100" max="32767" attributes="0"/>
-                                              <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="vizSetSourceButton" max="32767" attributes="0"/>
-                                              <Component id="vizSetSeedButton" max="32767" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="decideBufferButton" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="vizGenerateButton" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
                                       <Component id="thresholdAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="adjustAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="decideBufferButton" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="vizBufferButton" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="generateButton" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="viewButtons" pref="100" max="32767" attributes="0"/>
+                                                  <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
+                                                  <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="vizSetSourceButton" max="32767" attributes="0"/>
+                                                  <Component id="vizSetSeedButton" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <EmptySpace pref="50" max="32767" attributes="0"/>
                               </Group>
@@ -1130,12 +1137,17 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="vizBufferButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="generateButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="decideBufferButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="thresholdAdjust" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="205" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="adjustAdjust" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="176" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1292,12 +1304,12 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizSetSeedButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="vizGenerateButton">
+                        <Component class="javax.swing.JButton" name="vizBufferButton">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Generate"/>
+                            <Property name="text" type="java.lang.String" value="Buffer"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizGenerateButtonActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizBufferButtonActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="vizSetSourceButton">
@@ -1317,11 +1329,21 @@
                           </Events>
                         </Component>
                         <Component class="javax.swing.JSlider" name="thresholdAdjust">
-                          <Properties>
-                            <Property name="maximum" type="int" value="400"/>
-                          </Properties>
                           <Events>
                             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="thresholdAdjustStateChanged"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JSlider" name="adjustAdjust">
+                          <Events>
+                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="adjustAdjustStateChanged"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="generateButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Generate"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>

@@ -38,6 +38,7 @@ public class VisToolz {
     private Color intersectColor = Color.GREEN;
     private Color sourceColor = Color.YELLOW;
     private double thresholdAdjust = 1;
+    private double adjustAdjust = 88;
     
     VisToolz(Grid g){
         grid = g;
@@ -62,7 +63,10 @@ public class VisToolz {
         design.setBounds();
     }
     public void setAdjust(double a){
-        thresholdAdjust = a / 100;
+        thresholdAdjust = a / adjustAdjust;
+    }
+    public void setAdjustAdjust(double a){
+        adjustAdjust = a;
     }
     public void step(){
         if ( currentX < bounds.xmax() )currentX++;
@@ -152,10 +156,14 @@ public class VisToolz {
         }
     }
     public void paintBuffer(Graphics2D g){
+        double t = 0;
         for (Edge e : designBuffer.edges()){
             Weight w = designBuffer.edgeMap().get(e);
-            if (w.decide() > intersect.threshold()*thresholdAdjust)
+            t = intersect.threshold()*thresholdAdjust;
+            if (w.decide() > t){
                 paintEdge(g,e,bufferColor,2F);
+                //System.out.println(e+" -> "+w.decide()+" < "+t);
+            }
         }
     }
     //color will provide opacity level
@@ -169,8 +177,9 @@ public class VisToolz {
         g.drawLine( x1*grid.mS + grid.originX, y1*grid.mS + grid.originY, x2*grid.mS + grid.originX, y2*grid.mS + grid.originY );
 
     }
-    public void generation(){
+    public void buffer(){
         intersect.resetThreshold();
+        designBuffer.clearEdges();
         Source localSource;
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x )
             for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
@@ -194,6 +203,10 @@ public class VisToolz {
         designBuffer.decide(intersect.threshold()*thresholdAdjust);
         design = new Design(designBuffer);
         design.setBounds();
+    }
+    public void generation(){
+        buffer();
+        decide();
     }
     public void setLocatedSource(Location loc){
         locatedSource = source.locate(loc);

@@ -59,6 +59,9 @@ public class Design {
     public HashSet<Location> grid(){
         return nodes;
     }
+    public void clearEdges(){
+        edges.clear();
+    }
     public Set<Edge> edges(){
         return edges.keySet();
     }
