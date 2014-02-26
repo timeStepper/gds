@@ -32,6 +32,11 @@ public class Design {
     public Design(double ad){
         adjust = ad;
     }
+    public Design(Design d){
+        for(Edge e:d.edges.keySet()){
+            edges.put(e,d.edges.get(e));
+        }
+    }
     
     public boolean isOccupied(int x, int y ){
         return contains(new Location(x,y));
@@ -85,7 +90,9 @@ public class Design {
         }
     }
     public void setEdge(Edge e, Weight w){
-        edges.put(e,w);
+        if(edges.containsKey(e))
+            edges.get(e).applyWeight(w);
+        else edges.put(e,w);
     }
     public void addEdge( Edge e ){
         edges.put(e,new Weight());

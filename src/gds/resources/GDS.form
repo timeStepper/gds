@@ -1093,9 +1093,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="viewButtons" max="32767" attributes="0"/>
+                                              <Component id="viewButtons" pref="100" max="32767" attributes="0"/>
                                               <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jToolBar2" alignment="0" pref="100" max="32767" attributes="0"/>
+                                              <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1103,7 +1103,10 @@
                                               <Component id="vizSetSeedButton" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Component id="vizGenerateButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="decideBufferButton" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="vizGenerateButton" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace pref="59" max="32767" attributes="0"/>
                               </Group>
@@ -1127,7 +1130,9 @@
                                   <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="vizGenerateButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="263" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="decideBufferButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="234" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1159,7 +1164,7 @@
                             </Component>
                             <Component class="javax.swing.JToggleButton" name="viewSeedButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Seed"/>
+                                <Property name="text" type="java.lang.String" value="Seed / Design"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
@@ -1298,6 +1303,14 @@
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizSetSourceButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="decideBufferButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Decide"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="decideBufferButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>

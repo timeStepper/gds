@@ -12,8 +12,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,11 +24,22 @@ import java.util.logging.Logger;
 public class Intersect {
     private HashMap<Child, Weight> applicates = new HashMap<>();
     private HashMap<Edge, Weight> buffer = new HashMap<>();
+    private HashSet<Edge> difference = new HashSet<>();
+    private HashSet<Edge> intersection = new HashSet<>();
     private Weight threshold = new Weight(0, 0);
     private double  connectValue = .5;
     
     public HashMap<Edge,Weight> buffer(){
         return buffer;
+    }
+    public HashSet<Edge> difference(){
+        return difference;
+    }
+    public HashMap<Child, Weight> applicates(){
+        return applicates;
+    }
+    public HashSet<Edge> intersection(){
+        return intersection;
     }
     public double threshold(){
         return threshold.decide();
@@ -36,10 +47,12 @@ public class Intersect {
     public void resetThreshold(){
         threshold = new Weight(1,1);
     }
+    //populates applicates 
     public void intersect(Design bounded, Source located){
         applicates.clear();
         buffer.clear();
-        //threshold = new Weight(0,0);
+        difference.clear();
+        intersection.clear();
         intersectCall(bounded, located.element());
     }
     private Weight intersectCall(Design bounded, Child located){
@@ -50,8 +63,11 @@ public class Intersect {
                 int denominator = located.connections().size();
                 //for each intersecting edge increase the weight value by 1
                 for ( Connection cn : located.connections() ){
-                    if ( bounded.contains(cn))
+                    if ( bounded.contains(cn)){
                         ++edgecount;
+                        intersection.add(new Edge(cn));//for visToolz visuals
+                    }
+                    else difference.add(new Edge(cn));
                 }
                 if (edgecount>0){
                     Weight w = new Weight(edgecount, denominator);
@@ -114,9 +130,6 @@ public class Intersect {
                 applicates.get(buffC).addIntersectValue(buff.get(buffC));
         }
     }
-    public void connectionDistribution(){
-        
-    }
     public static void main(String args[]) {
         System.out.println("o hell o");
         Intersect inter = new Intersect();
@@ -124,7 +137,7 @@ public class Intersect {
         Source test = setTest();
         design.setSeed(test.element());
         design.setBounds();
-        test = test.locate(new Location(0,0));
+        test = test.locate(new Location(1,-3));
         
 
         inter.intersect(design, test);
