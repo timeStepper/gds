@@ -25,6 +25,7 @@ public class Intersect {
     private HashMap<Child, Weight> applicates = new HashMap<>();
     private HashMap<Edge, Weight> buffer = new HashMap<>();
     private HashSet<Edge> difference = new HashSet<>();
+    private int boundDesignSize;
     private HashSet<Edge> intersection = new HashSet<>();
     private Weight threshold = new Weight(0, 0);
     private double  connectValue = .5;
@@ -53,11 +54,13 @@ public class Intersect {
         buffer.clear();
         difference.clear();
         intersection.clear();
+        boundDesignSize=0;
         intersectCall(bounded, located.element());
     }
     private Weight intersectCall(Design bounded, Child located){
         int edgecount = 0;
         if (!bounded.edges().isEmpty()){
+            boundDesignSize = bounded.edges().size();
             //Child of all empties
             if (located.containsAllEmpties()){
                 int denominator = located.connections().size();
@@ -122,8 +125,6 @@ public class Intersect {
                 double half = applicates.get(c).intersectValue()*connectValue;
                 for (Child child : located.lookupTable().get(c)){
                     buff.put(child, half);
-                    //this almost works buts not parallel:
-                    //applicates.get(child).addIntersectValue(half);
                 }
             }
             for (Child buffC : buff.keySet())

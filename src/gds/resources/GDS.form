@@ -1092,28 +1092,32 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="thresholdAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="adjustAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="decideBufferButton" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="vizBufferButton" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="32767" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="vizBufferButton" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace pref="27" max="32767" attributes="0"/>
                                               <Component id="generateButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="viewButtons" pref="100" max="32767" attributes="0"/>
-                                                  <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="vizSetSourceButton" max="32767" attributes="0"/>
-                                                  <Component id="vizSetSeedButton" max="32767" attributes="0"/>
-                                              </Group>
+                                          <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="decideBufferButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="viewBufferButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="viewIntersectBufferButton" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="viewButtons" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="vizSetSeedButton" min="-2" pref="85" max="-2" attributes="0"/>
+                                              <Component id="vizSetSourceButton" min="-2" max="-2" attributes="0"/>
                                           </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="adjustAdjustButton" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="adjustAdjust" min="-2" pref="41" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace pref="50" max="32767" attributes="0"/>
@@ -1123,20 +1127,23 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Component id="vizSetSeedButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="vizSetSourceButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="viewButtons" min="-2" max="-2" attributes="0"/>
+                                      <Component id="viewButtons" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="viewBufferButton" min="-2" max="-2" attributes="0"/>
+                                      <Component id="viewIntersectBufferButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="vizBufferButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="generateButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1145,9 +1152,12 @@
                                   <Component id="decideBufferButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="thresholdAdjust" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="adjustAdjust" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="176" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="adjustAdjustButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="adjustAdjust" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="198" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1166,17 +1176,6 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                           <SubComponents>
-                            <Component class="javax.swing.JToggleButton" name="viewBufferButton">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="Buffer"/>
-                                <Property name="focusable" type="boolean" value="false"/>
-                                <Property name="horizontalTextPosition" type="int" value="0"/>
-                                <Property name="verticalTextPosition" type="int" value="3"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewBufferButtonActionPerformed"/>
-                              </Events>
-                            </Component>
                             <Component class="javax.swing.JToggleButton" name="viewSeedButton">
                               <Properties>
                                 <Property name="text" type="java.lang.String" value="Seed / Design"/>
@@ -1223,43 +1222,6 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JToolBar" name="jToolBar1">
-                          <Properties>
-                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-                                <EtchetBorder/>
-                              </Border>
-                            </Property>
-                            <Property name="orientation" type="int" value="1"/>
-                            <Property name="rollover" type="boolean" value="true"/>
-                          </Properties>
-
-                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
-                          <SubComponents>
-                            <Component class="javax.swing.JButton" name="seedUpButton">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="Up"/>
-                                <Property name="focusable" type="boolean" value="false"/>
-                                <Property name="horizontalTextPosition" type="int" value="0"/>
-                                <Property name="verticalTextPosition" type="int" value="3"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedUpButtonActionPerformed"/>
-                              </Events>
-                            </Component>
-                            <Component class="javax.swing.JButton" name="seedDownButton">
-                              <Properties>
-                                <Property name="text" type="java.lang.String" value="Down"/>
-                                <Property name="focusable" type="boolean" value="false"/>
-                                <Property name="horizontalTextPosition" type="int" value="0"/>
-                                <Property name="verticalTextPosition" type="int" value="3"/>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedDownButtonActionPerformed"/>
-                              </Events>
-                            </Component>
-                          </SubComponents>
-                        </Container>
                         <Container class="javax.swing.JToolBar" name="jToolBar2">
                           <Properties>
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1292,6 +1254,28 @@
                               </Properties>
                               <Events>
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedRightButtonActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="seedUpButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Up"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedUpButtonActionPerformed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="seedDownButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Down"/>
+                                <Property name="focusable" type="boolean" value="false"/>
+                                <Property name="horizontalTextPosition" type="int" value="0"/>
+                                <Property name="verticalTextPosition" type="int" value="3"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedDownButtonActionPerformed"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -1333,17 +1317,47 @@
                             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="thresholdAdjustStateChanged"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JSlider" name="adjustAdjust">
-                          <Events>
-                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="adjustAdjustStateChanged"/>
-                          </Events>
-                        </Component>
                         <Component class="javax.swing.JButton" name="generateButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Generate"/>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JToggleButton" name="viewBufferButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="View Buffer"/>
+                            <Property name="focusable" type="boolean" value="false"/>
+                            <Property name="horizontalTextPosition" type="int" value="0"/>
+                            <Property name="verticalTextPosition" type="int" value="3"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewBufferButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="adjustAdjustButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Adjust"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adjustAdjustButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="adjustAdjust">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value=".01"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JToggleButton" name="viewIntersectBufferButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="IntersectBuffer"/>
+                            <Property name="focusable" type="boolean" value="false"/>
+                            <Property name="horizontalTextPosition" type="int" value="0"/>
+                            <Property name="verticalTextPosition" type="int" value="3"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewIntersectBufferButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>

@@ -112,7 +112,7 @@ public class Generate {
                     }
             }
         }
-        buffer.decide(buffer.threshold());//decisionThreshold);
+        buffer.decide(buffer.threshold());
         
         design = buffer;
         

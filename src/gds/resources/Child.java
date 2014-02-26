@@ -184,7 +184,7 @@ public class Child {
     
     @Override
     public Child clone(){
-        return new Child( child.clone(), location );
+        return new Child( child.clone(), location );//'child' is an Element
     }
     @Override
     public String toString() {
