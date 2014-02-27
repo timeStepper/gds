@@ -147,7 +147,23 @@ public class VisToolz {
         }
     }
     public void paintIntersectBuffer(Graphics2D g){
-        System.out.println("intbuff");
+        for (Location loc : intersectBuffer.keySet()){
+            Intersect inters = intersectBuffer.get(loc);
+            paintIntersect(g,inters);
+        }
+    }
+    private void paintIntersect(Graphics2D g, Intersect inters){
+//        for (Child child:inters.applicates().keySet()){
+//            paintChild(g, 255, 2F, child);
+//        }
+        double t;
+        for (Edge e : inters.buffer().keySet()){
+            Weight w = inters.buffer().get(e);
+            t = inters.threshold()*thresholdAdjust;
+            if (w.decide() > t){
+                paintEdge(g,e,bufferColor,2F);
+            }
+        }
     }
     public void paintIntersect(Graphics2D g){
         for (Edge e:intersect.intersection()){
@@ -163,8 +179,11 @@ public class VisToolz {
         HashSet<Edge> edges = new HashSet<>();
         for(Edge e:intersect.buffer().keySet()){//can use the weights here for visuals
             Weight w = intersect.buffer().get(e);
-            if (w.decide()!=0)
+            if (w.decide()!=0){
+                int op = (int) (255*w.decide());
+                Color col = new Color(255,255,255,0);
                 paintEdge(g,e,applicateColor,2F);
+            }
         }
     }
     public void paintBuffer(Graphics2D g){

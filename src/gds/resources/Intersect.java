@@ -107,15 +107,17 @@ public class Intersect {
     //application of intersection
     public void bufferIntersection(Source located){
         for (Child app : applicates.keySet()){
-            //apply the whole child 'app' with weight w
-            //this is the top level where no Connections exist
-            applicate(app, located);
+            if (!app.containsAllEmpties())
+                distributeConnect(app,located);
+        }
+        for (Child app : applicates.keySet()){
+            if (app.containsAllEmpties())
+                applicate(app, located);
         }
     }
     //recursive application bringing the weight of the parent
     //down the rabbit hole and distributing it throughout
     private void applicate(Child ch, Source located){
-        if (ch.containsAllEmpties())
             for (Connection cn : ch.connections()){
                 Edge e = new Edge(cn);
                 Weight w = new Weight(applicates.get(ch));
@@ -123,18 +125,17 @@ public class Intersect {
                     buffer.put(e, w);
                 else buffer.get(e).applyWeight(w);
             }
-        else {
-            distributeConnect(ch,located);
-        }
     }
     public void distributeConnect(Child child, Source located){
         HashMap<Child,Double> buff = new HashMap<>();
         ArrayList<Child> adjs;
         for (Child ch:child.children()){
             adjs = located.lookupTable().get(ch);
-            double half = applicates.get(child).intersectValue()*connectValue;
-            for (Child c:adjs){
-                buff.put(c,half);
+            if (adjs!=null){
+                double half = applicates.get(child).intersectValue()*connectValue;
+                for (Child c:adjs){
+                    buff.put(c,half);
+                }
             }
         }
         for (Child c:buff.keySet()){
@@ -157,10 +158,10 @@ public class Intersect {
 //            System.out.println(c+"-> "+inter.applicates.get(c));
 //            //c.displayChildren();
 //        }
-//        for (Edge e : inter.buffer.keySet()){
-//            System.out.println(e+" -> "+inter.buffer.get(e));
-//        }
-//        System.out.println("thresh: "+inter.threshold);
+        for (Edge e : inter.buffer.keySet()){
+            System.out.println(e+" -> "+inter.buffer.get(e));
+        }
+        System.out.println("thresh: "+inter.threshold);
     }
     public static Source setTest(){
         Gson gson = new Gson();

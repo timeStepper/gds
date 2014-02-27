@@ -134,6 +134,7 @@ public class GDS extends javax.swing.JFrame {
         adjustAdjustButton = new javax.swing.JButton();
         adjustAdjust = new javax.swing.JTextField();
         viewIntersectBufferButton = new javax.swing.JToggleButton();
+        bufferIntersectButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -931,6 +932,13 @@ public class GDS extends javax.swing.JFrame {
             }
         });
 
+        bufferIntersectButton.setText("BufferIntersect");
+        bufferIntersectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bufferIntersectButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout viztoolzPanelLayout = new javax.swing.GroupLayout(viztoolzPanel);
         viztoolzPanel.setLayout(viztoolzPanelLayout);
         viztoolzPanelLayout.setHorizontalGroup(
@@ -940,12 +948,15 @@ public class GDS extends javax.swing.JFrame {
                 .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(thresholdAdjust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(viztoolzPanelLayout.createSequentialGroup()
-                            .addComponent(vizBufferButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(vizBufferButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(decideBufferButton))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                            .addComponent(generateButton))
-                        .addComponent(jToolBar2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(decideBufferButton)
+                            .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(bufferIntersectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(generateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(viztoolzPanelLayout.createSequentialGroup()
                         .addComponent(viewBufferButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -983,7 +994,9 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(vizBufferButton)
                     .addComponent(generateButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(decideBufferButton)
+                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(decideBufferButton)
+                    .addComponent(bufferIntersectButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(thresholdAdjust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -1576,6 +1589,10 @@ public class GDS extends javax.swing.JFrame {
         globalDisplayArea.repaint();
     }//GEN-LAST:event_viewIntersectBufferButtonActionPerformed
 
+    private void bufferIntersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferIntersectButtonActionPerformed
+        viz.bufferIntersects();
+    }//GEN-LAST:event_bufferIntersectButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1818,6 +1835,7 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton adjustAdjustButton;
     private javax.swing.JPanel bottomBar;
     private javax.swing.JButton boundTestButton;
+    private javax.swing.JButton bufferIntersectButton;
     private javax.swing.JSplitPane centerPanels;
     private javax.swing.JSplitPane centerRightPanels;
     private javax.swing.JList childList;

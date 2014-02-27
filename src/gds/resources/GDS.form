@@ -1093,14 +1093,19 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="thresholdAdjust" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="vizBufferButton" min="-2" pref="65" max="-2" attributes="0"/>
-                                              <EmptySpace pref="27" max="32767" attributes="0"/>
-                                              <Component id="generateButton" min="-2" max="-2" attributes="0"/>
-                                          </Group>
                                           <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="vizBufferButton" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                                                  <Component id="decideBufferButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace pref="27" max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="bufferIntersectButton" max="32767" attributes="0"/>
+                                                  <Component id="generateButton" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
-                                      <Component id="decideBufferButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="viewBufferButton" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -1149,7 +1154,10 @@
                                       <Component id="generateButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="decideBufferButton" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="decideBufferButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="bufferIntersectButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="thresholdAdjust" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -1358,6 +1366,14 @@
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewIntersectBufferButtonActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="bufferIntersectButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="BufferIntersect"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bufferIntersectButtonActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
