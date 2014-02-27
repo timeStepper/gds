@@ -9,7 +9,9 @@ package gds.resources;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -24,9 +26,8 @@ public class VisToolz {
     private Source source;
     private Source locatedSource;
     private Design design = new Design();
-    private Design boundedDesign;
     private Design designBuffer = new Design();
-    private ArrayList<Intersect> intersectBuffer = new ArrayList<>();
+    private HashMap<Location,Intersect> intersectBuffer = new HashMap<>();
     private boolean paintIntersect=false;
     private boolean paintSeed=false;
     private boolean paintApplicates=false;
@@ -207,11 +208,11 @@ public class VisToolz {
                 Location here = new Location(x,y);
                 Intersect intersectB = new Intersect();//for each here
                 localSource = source.locate(here);//located here
-//                setBoundedDesign(here, localSource);//
-                intersectB.intersect(boundedDesign, localSource);
+                bounded = Design.bounded(localSource.bounds(), design);
+                intersectB.intersect(bounded, localSource);
                 intersectB.bufferIntersection(localSource);
                 //deep buffer intersect results for 'here'
-                intersectBuffer.add(intersectB);
+                intersectBuffer.put(here,intersectB);
             }
     }
     public void buffer(){
@@ -221,14 +222,14 @@ public class VisToolz {
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x )
             for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
                 Location here = new Location(x,y);
-                
                 localSource = source.locate(here);
                 bounded = Design.bounded(localSource.bounds(), design);
                 intersect.intersect(bounded, localSource);
                 intersect.bufferIntersection(localSource);
                 //buffer intersect results for 'here'
                 for (Edge e:intersect.buffer().keySet()){
-                        designBuffer.setEdge(e,intersect.buffer().get(e));
+//                    System.out.println(e+" -> "+intersect.buffer().get(e));
+                    designBuffer.setEdge(e,intersect.buffer().get(e));
                 }
             }
     }
@@ -241,7 +242,6 @@ public class VisToolz {
         buffer();
         decide();
     }
-    public Design setBoundedDesign(Source localSource){
-        return Design.bounded(localSource.bounds(), design);
-    }
 }
+
+

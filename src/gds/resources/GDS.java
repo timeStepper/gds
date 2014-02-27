@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.BufferedReader;
@@ -812,6 +814,7 @@ public class GDS extends javax.swing.JFrame {
         jToolBar2.setRollover(true);
 
         seedLeftButton.setText("Left");
+        seedLeftButton.setMnemonic(KeyEvent.VK_LEFT);
         seedLeftButton.setFocusable(false);
         seedLeftButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedLeftButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -823,6 +826,7 @@ public class GDS extends javax.swing.JFrame {
         jToolBar2.add(seedLeftButton);
 
         seedRightButton.setText("Right");
+        seedRightButton.setMnemonic(KeyEvent.VK_RIGHT);
         seedRightButton.setFocusable(false);
         seedRightButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedRightButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -834,6 +838,7 @@ public class GDS extends javax.swing.JFrame {
         jToolBar2.add(seedRightButton);
 
         seedUpButton.setText("Up");
+        seedUpButton.setMnemonic(KeyEvent.VK_UP);
         seedUpButton.setFocusable(false);
         seedUpButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedUpButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -845,6 +850,7 @@ public class GDS extends javax.swing.JFrame {
         jToolBar2.add(seedUpButton);
 
         seedDownButton.setText("Down");
+        seedDownButton.setMnemonic(KeyEvent.VK_DOWN);
         seedDownButton.setFocusable(false);
         seedDownButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         seedDownButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -1605,12 +1611,13 @@ public class GDS extends javax.swing.JFrame {
         });
     }
     
-    public class MyPanel extends JPanel {
+    public class MyPanel extends JPanel{
         public MyPanel ( ) {
             
             addMouseMotionListener ( mode );
             addMouseListener ( mode );
             addMouseWheelListener ( mode );
+            
         }
         
         @Override
@@ -1662,7 +1669,7 @@ public class GDS extends javax.swing.JFrame {
         }
         @Override
         public void mouseWheelMoved(MouseWheelEvent e){
-            int m = e.getWheelRotation();
+            int m = e.getWheelRotation()*(-1);
             int n = grid.mouseWheel(m);
             edit.setModule( n );
             globalDisplayArea.repaint();
@@ -1710,6 +1717,10 @@ public class GDS extends javax.swing.JFrame {
                     backgroundImage.resizeImage(x, y);
                     break;
             }
+            grid.setOriginX(x);
+            grid.setOriginY(y);
+            edit.setX(x);
+            edit.setY(y);
             mp.repaint();
         }
         @Override
@@ -1927,6 +1938,7 @@ public class GDS extends javax.swing.JFrame {
     EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
     Generate genit = new Generate(32,32, grid);
     VisToolz viz = new VisToolz(grid);
+    
 }
 
 

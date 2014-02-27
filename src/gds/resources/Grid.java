@@ -92,14 +92,14 @@ public class Grid {
             if ( paintGrid )paintGridCall(g,w,h);
             g.setStroke(new BasicStroke(3F));
             g.setColor( new Color( 0,200,0,100 ) );
-            g.drawLine( w / 2, 0, w / 2, h );
+            g.drawLine( originX, 0, originX, h );
             g.setColor( new Color( 200,0,0,100 ) );
-            g.drawLine( 0, h / 2, w, h / 2);
+            g.drawLine( 0, originY, w, originY);
             g.setStroke(new BasicStroke(1F));
         }
         private void paintGridCall ( Graphics2D g, int w, int h ) {
-            int offX = ( w - width*mS ) / 2;
-            int offY = ( h - height*mS ) / 2;
+            int offX = originX-(( width*mS ) / 2);
+            int offY = originY-(( height*mS ) / 2);
             
             //semi opaque backdrop covers background image
             g.setColor(col);

@@ -1236,7 +1236,7 @@
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="seedLeftButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Left"/>
+                                <Property name="text" type="java.lang.String" value="Left" postCode="seedLeftButton.setMnemonic(KeyEvent.VK_LEFT);"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
@@ -1247,7 +1247,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="seedRightButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Right"/>
+                                <Property name="text" type="java.lang.String" value="Right" postCode="seedRightButton.setMnemonic(KeyEvent.VK_RIGHT);"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
@@ -1258,7 +1258,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="seedUpButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Up"/>
+                                <Property name="text" type="java.lang.String" value="Up" postCode="seedUpButton.setMnemonic(KeyEvent.VK_UP);"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>
@@ -1269,7 +1269,7 @@
                             </Component>
                             <Component class="javax.swing.JButton" name="seedDownButton">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="Down"/>
+                                <Property name="text" type="java.lang.String" value="Down" postCode="seedDownButton.setMnemonic(KeyEvent.VK_DOWN);"/>
                                 <Property name="focusable" type="boolean" value="false"/>
                                 <Property name="horizontalTextPosition" type="int" value="0"/>
                                 <Property name="verticalTextPosition" type="int" value="3"/>

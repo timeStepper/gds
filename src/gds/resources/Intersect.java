@@ -12,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -41,6 +42,9 @@ public class Intersect {
     }
     public HashSet<Edge> intersection(){
         return intersection;
+    }
+    public int boundSize(){
+        return boundDesignSize;
     }
     public double threshold(){
         return threshold.decide();
@@ -100,6 +104,7 @@ public class Intersect {
             }
         }return new Weight(0, 0);//nothing here to intersect with
     }
+    //application of intersection
     public void bufferIntersection(Source located){
         for (Child app : applicates.keySet()){
             //apply the whole child 'app' with weight w
@@ -118,17 +123,22 @@ public class Intersect {
                     buffer.put(e, w);
                 else buffer.get(e).applyWeight(w);
             }
-        else {//distribute Weigts along Connections when c is not empty:
-            HashMap<Child,Double> buff = new HashMap<>();//this buffer is needed for parallelism
-            for (Child c : ch.children()){
-                //applicate(c,located);//increases the resolution, value remains the same
-                double half = applicates.get(c).intersectValue()*connectValue;
-                for (Child child : located.lookupTable().get(c)){
-                    buff.put(child, half);
-                }
+        else {
+            distributeConnect(ch,located);
+        }
+    }
+    public void distributeConnect(Child child, Source located){
+        HashMap<Child,Double> buff = new HashMap<>();
+        ArrayList<Child> adjs;
+        for (Child ch:child.children()){
+            adjs = located.lookupTable().get(ch);
+            double half = applicates.get(child).intersectValue()*connectValue;
+            for (Child c:adjs){
+                buff.put(c,half);
             }
-            for (Child buffC : buff.keySet())
-                applicates.get(buffC).addIntersectValue(buff.get(buffC));
+        }
+        for (Child c:buff.keySet()){
+            applicates.get(c).addIntersectValue(buff.get(c));
         }
     }
     public static void main(String args[]) {
@@ -147,10 +157,10 @@ public class Intersect {
 //            System.out.println(c+"-> "+inter.applicates.get(c));
 //            //c.displayChildren();
 //        }
-        for (Edge e : inter.buffer.keySet()){
-            System.out.println(e+" -> "+inter.buffer.get(e));
-        }
-        System.out.println("thresh: "+inter.threshold);
+//        for (Edge e : inter.buffer.keySet()){
+//            System.out.println(e+" -> "+inter.buffer.get(e));
+//        }
+//        System.out.println("thresh: "+inter.threshold);
     }
     public static Source setTest(){
         Gson gson = new Gson();
