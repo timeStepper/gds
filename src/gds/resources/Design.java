@@ -145,8 +145,9 @@ public class Design {
         }
         Set<Edge> keys = d.edges.keySet();
         for ( Edge e : keys )
-            if(bounds.isBounded(e))
+            if(bounds.isBounded(e)){
                 rtn.addEdge(e);
+            }
         return rtn;
     }
     public Weight getWeight(Edge e){

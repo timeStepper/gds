@@ -14,17 +14,19 @@ import java.util.HashSet;
  * @author owenpaulmeyer
  */
 public class Source {
-    Child element;
+    private Child element;
     //the adjacencyList serves as a lookup table for Rule application,
     //where the Childs in the intersection of the Source and the
     //Design are looked up in this table
-    Rules adjacencyList;
-    Bounds bounds;  //used for quickening rebounding per location for intersection
+    private Rules adjacencyList;
+    private Bounds bounds;  //used for quickening rebounding per location for intersection
     //HashSet<Connection> edges;
+    private int size;
 
     public Source( Child c ) {
         element = c;
         setBounds();
+        size = Child.flattenConnections(c).size();
         //edges = Child.flattenConnections(c);
     }
     public Child element(){
@@ -35,6 +37,9 @@ public class Source {
     }
     public Bounds bounds(){
         return bounds;
+    }
+    public int size(){
+        return size;
     }
     //computes the field for this object
     private void setBounds(){
