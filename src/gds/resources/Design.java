@@ -18,6 +18,7 @@ import java.util.Set;
 public class Design {
     private HashSet<Location> nodes = new HashSet<>();
     private HashMap<Edge, Weight> edges = new HashMap<>();
+    double maxWeight = 0;
     Bounds bounds;
     double inter;
     double differ;
@@ -93,6 +94,8 @@ public class Design {
         }
     }
     public void setEdge(Edge e, Weight w){
+        double d = w.decide();
+        if (d>maxWeight)maxWeight = d;
         if(edges.containsKey(e))
             edges.get(e).applyWeight(w);
         else edges.put(e,w);

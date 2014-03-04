@@ -11,40 +11,43 @@ package gds.resources;
  * @author owenpaulmeyer
  */
 public class Weight{
-    private double intersect;
-    private double difference;
+    private double top;
+    private double bottom;
     
     Weight(){
-        intersect = 0;
-        difference = 0;
+        top = 0;
+        bottom = 0;
     }
     Weight( double a, double b){
-        intersect = a;
-        difference = b;
+        top = a;
+        bottom = b;
     }
     Weight(Weight w){
-        intersect = w.intersectValue();
-        difference = w.differenceValue();
+        top = w.topValue();
+        bottom = w.bottomValue();
     }
     public double decide(){
-        if (difference==0)return 0;
-        else return intersect/difference;
+        if (bottom==0)return 0;
+        else return top/bottom;
     }
     public void applyWeight(Weight weight){
-        intersect += weight.intersectValue();
-        difference += weight.differenceValue();
+        top += weight.topValue();
+        bottom += weight.bottomValue();
     }
-    public void addIntersectValue(double v){
-        intersect+=v;
+    public void addTopValue(double v){
+        top+=v;
     }
-    public double intersectValue(){
-        return intersect;
+    public void addBottomValue(double v){
+        bottom+=v;
     }
-    public double differenceValue(){
-        return difference;
+    public double topValue(){
+        return top;
+    }
+    public double bottomValue(){
+        return bottom;
     }
     public String toString(){
-        return "["+intersect+", "+difference+"]";
+        return "["+top+", "+bottom+"]";
     }
 }
 

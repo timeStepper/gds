@@ -132,13 +132,11 @@ public class GDS extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        vizBufferButton = new javax.swing.JButton();
-        decideBufferButton = new javax.swing.JButton();
-        generateButton = new javax.swing.JButton();
-        thresholdAdjust = new javax.swing.JSlider();
+        thresholdAdjustUpper = new javax.swing.JSlider();
         jLabel4 = new javax.swing.JLabel();
         adjustAdjustButton = new javax.swing.JButton();
         adjustAdjust = new javax.swing.JTextField();
+        thresholdAdjustLower = new javax.swing.JSlider();
         jPanel2 = new javax.swing.JPanel();
         bufferIntersectButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -154,6 +152,9 @@ public class GDS extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         differenceInvertButton = new javax.swing.JToggleButton();
         jLabel9 = new javax.swing.JLabel();
+        vizBufferButton = new javax.swing.JButton();
+        decideBufferButton = new javax.swing.JButton();
+        generateButton = new javax.swing.JButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         addableElementList = new AddableList(addableListModel, edit);
@@ -374,7 +375,7 @@ public class GDS extends javax.swing.JFrame {
         );
         displayAreaLayout.setVerticalGroup(
             displayAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 588, Short.MAX_VALUE)
+            .addGap(0, 589, Short.MAX_VALUE)
         );
 
         centerRightPanels.setLeftComponent(displayArea);
@@ -781,7 +782,7 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(boundTestButton)
                 .addGap(18, 18, 18)
                 .addComponent(intersectionTestButton)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
         elementTabs.addTab("test", jPanel1);
@@ -959,30 +960,9 @@ public class GDS extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        vizBufferButton.setText("Buffer");
-        vizBufferButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vizBufferButtonActionPerformed(evt);
-            }
-        });
-
-        decideBufferButton.setText("Decide");
-        decideBufferButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                decideBufferButtonActionPerformed(evt);
-            }
-        });
-
-        generateButton.setText("Generate");
-        generateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateButtonActionPerformed(evt);
-            }
-        });
-
-        thresholdAdjust.addChangeListener(new javax.swing.event.ChangeListener() {
+        thresholdAdjustUpper.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                thresholdAdjustStateChanged(evt);
+                thresholdAdjustUpperStateChanged(evt);
             }
         });
 
@@ -997,40 +977,38 @@ public class GDS extends javax.swing.JFrame {
 
         adjustAdjust.setText(".01");
 
+        thresholdAdjustLower.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                thresholdAdjustLowerStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(vizBufferButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(decideBufferButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(generateButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(thresholdAdjust, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(thresholdAdjustUpper, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(31, 31, 31)
                         .addComponent(adjustAdjustButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(adjustAdjust, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(thresholdAdjustLower, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(vizBufferButton)
-                    .addComponent(decideBufferButton)
-                    .addComponent(generateButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(thresholdAdjust, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(thresholdAdjustUpper, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(thresholdAdjustLower, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(adjustAdjustButton)
@@ -1164,6 +1142,27 @@ public class GDS extends javax.swing.JFrame {
                     .addComponent(jLabel9)))
         );
 
+        vizBufferButton.setText("Buffer");
+        vizBufferButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vizBufferButtonActionPerformed(evt);
+            }
+        });
+
+        decideBufferButton.setText("Decide");
+        decideBufferButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                decideBufferButtonActionPerformed(evt);
+            }
+        });
+
+        generateButton.setText("Generate");
+        generateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout viztoolzPanelLayout = new javax.swing.GroupLayout(viztoolzPanel);
         viztoolzPanel.setLayout(viztoolzPanelLayout);
         viztoolzPanelLayout.setHorizontalGroup(
@@ -1179,7 +1178,13 @@ public class GDS extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(viztoolzPanelLayout.createSequentialGroup()
+                        .addComponent(vizBufferButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(decideBufferButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(generateButton)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         viztoolzPanelLayout.setVerticalGroup(
@@ -1192,7 +1197,12 @@ public class GDS extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(viztoolzPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vizBufferButton)
+                    .addComponent(decideBufferButton)
+                    .addComponent(generateButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1236,7 +1246,7 @@ public class GDS extends javax.swing.JFrame {
             .addGroup(leftFlankLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(dynamicTreeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1384,7 +1394,7 @@ public class GDS extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addComponent(verticalSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1757,10 +1767,10 @@ public class GDS extends javax.swing.JFrame {
         globalDisplayArea.repaint();
     }//GEN-LAST:event_decideBufferButtonActionPerformed
 
-    private void thresholdAdjustStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_thresholdAdjustStateChanged
-        viz.setAdjust(thresholdAdjust.getValue());
+    private void thresholdAdjustUpperStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_thresholdAdjustUpperStateChanged
+        viz.setAdjustUpper(((double)thresholdAdjustUpper.getValue())/100);
         globalDisplayArea.repaint();
-    }//GEN-LAST:event_thresholdAdjustStateChanged
+    }//GEN-LAST:event_thresholdAdjustUpperStateChanged
 
     private void generateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateButtonActionPerformed
         viz.generation();
@@ -1782,7 +1792,7 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_viewIntersectBufferButtonActionPerformed
 
     private void bufferIntersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferIntersectButtonActionPerformed
-        viz.bufferIntersects();
+        viz.bufferPlacements();
     }//GEN-LAST:event_bufferIntersectButtonActionPerformed
 
     private void intersectionInvertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intersectionInvertButtonActionPerformed
@@ -1798,7 +1808,7 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_differenceInvertButtonActionPerformed
 
     private void intersectionSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intersectionSliderStateChanged
-        viz.setIntersectVal(intersectionSlider.getValue());
+        viz.value.setI_S(((double)(intersectionSlider.getValue())/100));
         globalDisplayArea.repaint();
     }//GEN-LAST:event_intersectionSliderStateChanged
 
@@ -1813,9 +1823,14 @@ public class GDS extends javax.swing.JFrame {
     }//GEN-LAST:event_differenceSliderStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        viz.decideIntersects();
+        viz.decidePlacements();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void thresholdAdjustLowerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_thresholdAdjustLowerStateChanged
+        viz.setAdjustLower(((double)thresholdAdjustLower.getValue())/100);
+        globalDisplayArea.repaint();
+    }//GEN-LAST:event_thresholdAdjustLowerStateChanged
 
     /**
      * @param args the command line arguments
@@ -2159,7 +2174,8 @@ public class GDS extends javax.swing.JFrame {
     private javax.swing.JButton setSeedButton;
     private javax.swing.JButton setSourceButton;
     private javax.swing.JButton setThresholdButton;
-    private javax.swing.JSlider thresholdAdjust;
+    private javax.swing.JSlider thresholdAdjustLower;
+    private javax.swing.JSlider thresholdAdjustUpper;
     private javax.swing.JTextField thresholdField;
     private javax.swing.JButton toJsonButton;
     private javax.swing.JPanel topBar;

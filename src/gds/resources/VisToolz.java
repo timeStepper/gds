@@ -27,7 +27,7 @@ public class VisToolz {
     private Source locatedSource;
     private Design design = new Design();
     private Design designBuffer = new Design();
-    private HashMap<Location,Intersect> intersectBuffer = new HashMap<>();
+    private HashMap<Location,Placement> placementBuffer = new HashMap<>();
     private boolean paintIntersect=false;
     private boolean paintSeed=false;
     private boolean paintApplicates=false;
@@ -35,18 +35,22 @@ public class VisToolz {
     private boolean paintSource=false;
     private boolean paintIntersectBuffer=false;
     private int offset = 2;
-    Intersect intersect = new Intersect();
+    Placement placement = new Placement();
     private Color seedColor = Color.BLACK;
     private Color applicateColor = Color.WHITE;
     private Color bufferColor = Color.BLUE;
     private Color intersectColor = Color.GREEN;
     private Color sourceColor = Color.YELLOW;
-    private double thresholdAdjust = 1;
-    private double adjustAdjust = 1;
+    private double thresholdAdjustUpper = 1;
+    private double thresholdAdjustLower = 0;
+    private double adjustAdjust = 10;
     private double intersectVal;
     private double differenceVal;
     private double boundSizeVal;
     private double intersectThreshold;
+    //Value is here, as it remains consistent for a whole generation
+    public Value value=new Value();
+    
     
     VisToolz(Grid g){
         grid = g;
@@ -69,8 +73,11 @@ public class VisToolz {
         design.setSeed(c.clone());
         design.setBounds();
     }
-    public void setAdjust(double a){
-        thresholdAdjust = a/100;
+    public void setAdjustUpper(double a){
+        thresholdAdjustUpper = a;
+    }
+    public void setAdjustLower(double a){
+        thresholdAdjustLower = a;
     }
     public void setAdjustAdjust(double a){
         adjustAdjust = a;
@@ -110,26 +117,30 @@ public class VisToolz {
     public void up(){
         --currentY;
         locatedSource = source.locate(new Location(currentX, currentY));
-        intersect.intersect(design, locatedSource);
-        intersect.bufferIntersection(locatedSource);
+        placement = new Placement(locatedSource);
+        placement.placement(design);
+        placement.bufferPlacement();
     }
     public void down(){
         ++currentY;
         locatedSource = source.locate(new Location(currentX, currentY));
-        intersect.intersect(design, locatedSource);
-        intersect.bufferIntersection(locatedSource);
+        placement = new Placement(locatedSource);
+        placement.placement(design);
+        placement.bufferPlacement();
     }
     public void left(){
         --currentX;
         locatedSource = source.locate(new Location(currentX, currentY));
-        intersect.intersect(design, locatedSource);
-        intersect.bufferIntersection(locatedSource);
+        placement = new Placement(locatedSource);
+        placement.placement(design);
+        placement.bufferPlacement();
     }
     public void right(){
         ++currentX;
         locatedSource = source.locate(new Location(currentX, currentY));
-        intersect.intersect(design, locatedSource);
-        intersect.bufferIntersection(locatedSource);
+        placement = new Placement(locatedSource);
+        placement.placement(design);
+        placement.bufferPlacement();
     }
     
     public void togglePaintSource(){
@@ -158,7 +169,7 @@ public class VisToolz {
     }
     public void paintViz(Graphics2D g){
         if(paintBuffer)paintBuffer(g);
-        else if (paintIntersectBuffer)paintIntersectBuffer(g);
+        else if (paintIntersectBuffer)paintPlacementBuffer(g);
         else{
             if(paintIntersect)paintIntersect(g);
             if(paintSeed)paintSeed(g);
@@ -173,30 +184,28 @@ public class VisToolz {
             paintEdge(g,e,sourceColor,1F);
         }
     }
-    public void paintIntersectBuffer(Graphics2D g){
-        for (Location loc : intersectBuffer.keySet()){
-            Intersect inters = intersectBuffer.get(loc);
-            paintIntersectCall(g,inters);
+    public void paintPlacementBuffer(Graphics2D g){
+        for (Location loc : placementBuffer.keySet()){
+            Placement inters = placementBuffer.get(loc);
+            paintPlacement(g,inters);
         }
     }
-    private void paintIntersectCall(Graphics2D g, Intersect inters){
+    private void paintPlacement(Graphics2D g, Placement placement){
         
-        double t;
-        for (Edge e : inters.buffer().keySet()){
-            Weight w = inters.buffer().get(e);
-            double in = inters.intersection().size();
-            double diff = inters.difference().size();
-            if ( diff == 0 )t=100;
-            else
-                t = (in/diff)*differenceVal*adjustAdjust;
-            //System.out.println("t "+t);
-            if (w.decide() > t){
+        double lower;
+        double weight;
+        placement.bufferPlacement(value);
+        for (Edge e : placement.buffer().keySet()){
+            Weight w = placement.buffer().get(e);
+            lower = placement.threshold()*thresholdAdjustLower*adjustAdjust;
+            weight = w.decide();
+            if (weight > lower && weight < thresholdAdjustUpper){
                 paintEdge(g,e,bufferColor,2F);
             }
         }
     }
     public void paintIntersect(Graphics2D g){
-        for (Edge e:intersect.intersection()){
+        for (Edge e:placement.intersection()){
             paintEdge(g,e,intersectColor,4F);
         }
     }
@@ -207,8 +216,8 @@ public class VisToolz {
     }
     public void paintApplicates(Graphics2D g){
         HashSet<Edge> edges = new HashSet<>();
-        for(Edge e:intersect.buffer().keySet()){//can use the weights here for visuals
-            Weight w = intersect.buffer().get(e);
+        for(Edge e:placement.buffer().keySet()){//can use the weights here for visuals
+            Weight w = placement.buffer().get(e);
             if (w.decide()!=0){
 //                System.out.println(w.decide());
                 int op = (int) (255*w.decide())+50;
@@ -219,13 +228,14 @@ public class VisToolz {
         }
     }
     public void paintBuffer(Graphics2D g){
+        adjustAdjust = designBuffer.maxWeight;
         double t = 0;
         for (Edge e : designBuffer.edges()){
             Weight w = designBuffer.edgeMap().get(e);
-            intersectThreshold = (intersect.threshold()*adjustAdjust)*thresholdAdjust;
+            intersectThreshold = adjustAdjust*thresholdAdjustUpper;
             if (w.decide() > intersectThreshold){
                 paintEdge(g,e,bufferColor,2F);
-                //System.out.println(e+" -> "+w.decide()+" < "+t);
+//                System.out.println(e+" -> "+w.decide()+" < "+t);
             }
         }
     }
@@ -251,28 +261,27 @@ public class VisToolz {
 
     }
     
-    public void bufferIntersects(){
+    public void bufferPlacements(){
         Design bounded;
-        intersectBuffer.clear();//used for {here}
+        placementBuffer.clear();//used for {here}
         Source localSource;//relocated for each here
         for ( int x = design.bounds.xmin()-offset; x <= design.bounds.xmax()+offset; ++x )
             for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
                 Location here = new Location(x,y);
-                Intersect intersectB = new Intersect();//for each here
                 localSource = source.locate(here);//located here
+                Placement placement = new Placement(localSource);//for each here
                 bounded = Design.bounded(localSource.bounds(), design);
-                intersectB.intersect(bounded, localSource);
-                intersectB.bufferIntersection(localSource);
+                placement.placement(bounded);
                 //deep buffer intersect results for 'here'
-                intersectBuffer.put(here,intersectB);
+                placementBuffer.put(here,placement);
             }
     }
-    public void decideIntersects(){
+    public void decidePlacements(){
         designBuffer.clearEdges();
-        for (Location l : intersectBuffer.keySet()){
-            Intersect i = intersectBuffer.get(l);
-            for (Edge e:intersect.buffer().keySet()){
-                designBuffer.setEdge(e,intersect.buffer().get(e));
+        for (Location l : placementBuffer.keySet()){
+            Placement p = placementBuffer.get(l);
+            for (Edge e:p.buffer().keySet()){
+                designBuffer.setEdge(e,p.buffer().get(e));
             }
         }
         designBuffer.decide(intersectThreshold);
@@ -280,6 +289,7 @@ public class VisToolz {
         design.setBounds();
     }
     public void buffer(){
+        Placement placement;
         designBuffer.clearEdges();
         Design bounded;
         Source localSource;
@@ -287,18 +297,19 @@ public class VisToolz {
             for ( int y = design.bounds.ymin()-offset; y <= design.bounds.ymax()+offset; ++y){
                 Location here = new Location(x,y);
                 localSource = source.locate(here);
+                placement = new Placement(localSource);
                 bounded = Design.bounded(localSource.bounds(), design);
-                intersect.intersect(bounded, localSource);
-                intersect.bufferIntersection(localSource);
+                placement.placement(bounded);
+                placement.bufferPlacement();
                 //buffer intersect results for 'here'
-                for (Edge e:intersect.buffer().keySet()){
+                for (Edge e:placement.buffer().keySet()){
 //                    System.out.println(e+" -> "+intersect.buffer().get(e));
-                    designBuffer.setEdge(e,intersect.buffer().get(e));
+                    designBuffer.setEdge(e,placement.buffer().get(e));
                 }
             }
     }
     public void decide(){
-        designBuffer.decide(intersect.threshold()*thresholdAdjust);
+        designBuffer.decide(thresholdAdjustUpper*adjustAdjust);
         design = new Design(designBuffer);
         design.setBounds();
     }

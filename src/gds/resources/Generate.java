@@ -24,7 +24,7 @@ public class Generate {
     Source locatedSource;
     Grid grid;
     int offset = 4;
-    Intersect intersect = new Intersect();
+    Placement intersect = new Placement();
     
     
     public Generate(){}

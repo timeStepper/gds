@@ -73,6 +73,14 @@ public class Child {
             }
         return true;
     }
+    public int size(){
+        int cnt = 0;
+        for (Child c : children()){
+            if (c.isEmpty())cnt++;
+            else cnt += c.size();
+        }
+        return cnt;
+    }
 //    public double value(){
 //        return value;
 //    }
