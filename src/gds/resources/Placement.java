@@ -75,14 +75,18 @@ public class Placement {
         //threshold = new Weight(0, 0);
         boundDesignSize=0;
         sourceSize = locatedSource.size();
-        placementCall(bounded, locatedSource.element());
+        for (Child c:locatedSource.element().children()){
+            System.out.println(c+"\n");
+            placementCall(bounded, c);
+        }
     }
     private int placementCall(Design bounded, Child located){
+        if (!located.isEmpty())
+            System.out.println(located);
         int edgecount = 0;
         if (!bounded.edges().isEmpty()){
             boundDesignSize = bounded.edges().size();
-            
-            
+            //empties
             if (located.isEmpty()){
                 Location a = located.location();
                 if (bounded.contains(a)){
@@ -104,70 +108,33 @@ public class Placement {
                     return 0;
                 }
             }
-            
-            
-            //Child of all empties
-//            if (located.containsAllEmpties()){
-//                int denominator = located.connections().size();
-//                //for each intersecting edge increase the weight value by 1
-//                for ( Connection cn : located.connections() ){
-//                    if ( bounded.contains(cn)){
-//                        ++edgecount;
-//                        intersection.add(new Edge(cn));//for visToolz visuals
-//                    }
-//                    else difference.add(new Edge(cn));
-//                }
-//                if (edgecount>0){
-//                    Weight w = new Weight(edgecount, denominator);
-//                    //accepts the entire Child at the Weight of (intersection/possible intersection)
-//                    applicants.put(located,w);
-//                    threshold.applyWeight(w);
-//                    //System.out.println(located+" :: "+w);
-//                    return (int)(w.topValue());
-//                }
-//                else {
-//                    Weight empty = new Weight(0, denominator);
-//                    applicants.put(located,empty);
-//                    return 0;
-//                }
-//            }
-            //Child of non empties
+            //non empties
             else {
                 Weight w = new Weight(0,0);
                 for ( Child c : located.children() ){
                     //accumulate the weights of the children of 'located'
                     int top = placementCall(bounded, c);
-                    //if (!c.isEmpty()){
-                        w.addTopValue(top);
-                        if (c.isEmpty())System.out.println(c+" => "+top);
-//                        w.addBottomValue(bottom);
-                    //}
+                    w.addTopValue(top);
                 }
-                System.out.println();
                 w.addBottomValue(located.size());
                 applicants.put(located,w);
-//                System.out.println(located+"->"+w);
-                //threshold.applyWeight(w);
+                //threshold.applyWeight(new Weight(w.decide(),1));
                 return (int)(w.topValue());
             }
         }return 0;//nothing here to intersect with
     }
-    public void bufferPlacement(Value value){
-        buffer.clear(); 
-//        for (Child app : applicants.keySet()){
-//            if (!app.containsAllEmpties())
-//                distributeWeightsAlongConnections(app,located);
-//        }
-        for (Child app : applicants.keySet()){
-            if (app.containsAllEmpties())
-                applicate(app, locatedSource, value);
-        }
-    }
     public void bufferPlacement(){
         bufferPlacement(new Value());
     }
+    public void bufferPlacement(Value value){
+        buffer.clear(); 
+        for (Child app : applicants.keySet()){
+            applicate(app, value);
+        }
+    }
     //application is the point where an edge gets it's value
-    private void applicate(Child ch, Source located, Value value){
+    private void applicate(Child ch, Value value){
+        if (ch.containsAllEmpties()){
             for (Connection cn : ch.connections()){
                 Edge e = new Edge(cn);
                 Weight w = new Weight(applicants.get(ch));
@@ -178,6 +145,12 @@ public class Placement {
                     buffer.put(e, w);
                 else buffer.get(e).applyWeight(w);
             }
+        }
+        else {
+            for (Child c:ch.children()){
+                applicate(c, value);
+            }
+        }
     }
     //is called when !child.containsAllEmpties()
     public void distributeWeightsAlongConnections(Child child, Source located){
