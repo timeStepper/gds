@@ -76,13 +76,10 @@ public class Placement {
         boundDesignSize=0;
         sourceSize = locatedSource.size();
         for (Child c:locatedSource.element().children()){
-            System.out.println(c+"\n");
             placementCall(bounded, c);
         }
     }
     private int placementCall(Design bounded, Child located){
-        if (!located.isEmpty())
-            System.out.println(located);
         int edgecount = 0;
         if (!bounded.edges().isEmpty()){
             boundDesignSize = bounded.edges().size();
@@ -93,7 +90,9 @@ public class Placement {
                     ArrayList<Child> adjs = locatedSource.lookupTable().get(located);
                     for (Child c:adjs){
                         Location b = c.location();
-                        if (bounded.contains(c.location())){
+                        Edge e = new Edge(a,b);
+//                        System.out.println("child "+located);
+                        if (bounded.contains(e)){
                             edgecount++;
                             intersection.add(new Edge(a,b));
                         }
@@ -118,7 +117,8 @@ public class Placement {
                 }
                 w.addBottomValue(located.size());
                 applicants.put(located,w);
-                //threshold.applyWeight(new Weight(w.decide(),1));
+                if (w.decide()!=0)
+                    threshold.applyWeight(w);//new Weight(w.decide(),1));
                 return (int)(w.topValue());
             }
         }return 0;//nothing here to intersect with

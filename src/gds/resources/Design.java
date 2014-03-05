@@ -37,6 +37,9 @@ public class Design {
         for(Edge e:d.edges.keySet()){
             edges.put(e,d.edges.get(e));
         }
+        for(Location n:d.nodes()){
+            nodes.add(n);
+        }
     }
     
     public boolean isOccupied(int x, int y ){
@@ -52,6 +55,9 @@ public class Design {
         Edge e = new Edge(conn.aLoc(),conn.bLoc());
         return edges.containsKey(e);
     }
+    public boolean contains(Edge e){
+        return edges.containsKey(e);
+    }
     public boolean contains(Location a, Location b){
         Edge e1 = new Edge(a, b);
         Edge e2 = new Edge(b, a);
@@ -65,6 +71,9 @@ public class Design {
     }
     public Set<Edge> edges(){
         return edges.keySet();
+    }
+    public Set<Location> nodes(){
+        return nodes;
     }
     public HashMap<Edge,Weight> edgeMap(){
         return edges;
@@ -116,12 +125,6 @@ public class Design {
         int xmax = Integer.MIN_VALUE;
         int ymin = Integer.MAX_VALUE;
         int ymax = Integer.MIN_VALUE;
-//        for( Location l : nodes ){
-//            if ( l.xLoc() < xmin ) xmin = l.xLoc();
-//            if ( l.xLoc() > xmax ) xmax = l.xLoc();
-//            if ( l.yLoc() < ymin ) ymin = l.yLoc();
-//            if ( l.yLoc() > ymax ) ymax = l.yLoc();
-//        }
         for ( Edge e : edges.keySet() ){
             if ( e.aX() < xmin ) xmin = e.aX();
             if ( e.bX() < xmin ) xmin = e.bX();
@@ -167,8 +170,6 @@ public class Design {
         inter+=i;
     }
     public double threshold(){
-//        System.out.println("inter "+inter);
-//        System.out.println("differ "+differ);
         if (differ==0||adjust==0)return 0;
         return inter/differ/adjust;
     }
