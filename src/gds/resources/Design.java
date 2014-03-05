@@ -66,8 +66,9 @@ public class Design {
     public HashSet<Location> grid(){
         return nodes;
     }
-    public void clearEdges(){
+    public void clear(){
         edges.clear();
+        nodes.clear();
     }
     public Set<Edge> edges(){
         return edges.keySet();
@@ -107,7 +108,11 @@ public class Design {
         if (d>maxWeight)maxWeight = d;
         if(edges.containsKey(e))
             edges.get(e).applyWeight(w);
-        else edges.put(e,w);
+        else {
+            edges.put(e,w);
+        }
+        if (!nodes.contains(e.nodeA()))nodes.add(e.nodeA());
+        if (!nodes.contains(e.nodeB()))nodes.add(e.nodeB());
     }
     public void addEdge( Edge e ){
         edges.put(e,new Weight());

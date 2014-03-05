@@ -12,48 +12,45 @@ package gds.resources;
  */
 public class Value{
     //percentages:
-    double intersect_source=0;
-    double intersect_bounded=0;
-    double intersect_one=0;
+    double intersectValue=0;
+    double boundedValue=0;
+    double sourceValue=0;
     //switches:
-    boolean i_s=true;
-    boolean i_b=false;
-    boolean i_o=false;
+    boolean intersect=true;
+    boolean bounded=true;
+    boolean source=true;
     
-    public void setI_S(double percent){
-        intersect_source = percent;
+    public void slideIntersect(double percent){
+        intersectValue = percent;
     }
-    public void setI_B(double percent){
-        intersect_bounded = percent;
+    public void slideBounded(double percent){
+        boundedValue = percent;
     }
-    public void setI_O(double percent){
-        intersect_one = percent;
+    public void slideSource(double percent){
+        sourceValue = percent;
     }
-    public void toggleI_S(){
-        if (i_s)i_s = false;
-        else i_s = true;
+    public void toggleIntersect(){
+        if (intersect)intersect = false;
+        else intersect = true;
     }
-    public void toggleI_B(){
-        if (i_b)i_b = false;
-        else i_b = true;
+    public void toggleBounded(){
+        if (bounded)bounded = false;
+        else bounded = true;
     }
-    public void toggleI_O(){
-        if (i_o)i_o = false;
-        else i_o = true;
+    public void toggleSource(){
+        if (source)source = false;
+        else source = true;
     }
     public Weight evaluate(int source, int bounded, int intersect){
         Weight rtn = new Weight(0,0);        
-        if (i_s){
-            rtn.addTopValue(intersect*intersect_source);
-            rtn.addBottomValue(source*intersect_source);
+        if (this.intersect){
+            rtn.addTopValue(intersect*intersectValue);
         }
-        if (i_b){
-            rtn.addTopValue(intersect);
-            rtn.addBottomValue(bounded);
+        if (this.bounded){
+            rtn.addBottomValue(bounded*boundedValue);
         }
-        if (i_o){
-            rtn.addTopValue(intersect);
-            rtn.addBottomValue(1);
+        if (this.source){
+            rtn.addBottomValue(source*sourceValue);
         }
 //        System.out.println("val "+rtn);
         return rtn;

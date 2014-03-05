@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class Placement {
     private HashMap<Child, Weight> applicants = new HashMap<>();
-    private HashMap<Edge, Weight> buffer = new HashMap<>();
+    private HashMap<Edge, Weight> applicated = new HashMap<>();
     private Source locatedSource;
     private HashSet<Edge> difference = new HashSet<>();
     private HashSet<Edge> intersection = new HashSet<>();
@@ -43,8 +43,8 @@ public class Placement {
     public void setConnectValue(double d){
         connectValue = d;
     }
-    public HashMap<Edge,Weight> buffer(){
-        return buffer;
+    public HashMap<Edge,Weight> applicated(){
+        return applicated;
     }
     public HashSet<Edge> difference(){
         return difference;
@@ -69,7 +69,7 @@ public class Placement {
     }
     public void placement(Design bounded){
         applicants.clear();
-        buffer.clear();
+        applicated.clear();
         difference.clear();
         intersection.clear();
         //threshold = new Weight(0, 0);
@@ -123,11 +123,11 @@ public class Placement {
             }
         }return 0;//nothing here to intersect with
     }
-    public void bufferPlacement(){
-        bufferPlacement(new Value());
+    public void applyPlacement(){
+        applyPlacement(new Value());
     }
-    public void bufferPlacement(Value value){
-        buffer.clear(); 
+    public void applyPlacement(Value value){
+        applicated.clear(); 
         for (Child app : applicants.keySet()){
             applicate(app, value);
         }
@@ -141,9 +141,9 @@ public class Placement {
                 Weight val = value.evaluate(
                         sourceSize, boundDesignSize, intersection.size());
                 w.applyWeight(val);
-                if (!buffer.containsKey(e))
-                    buffer.put(e, w);
-                else buffer.get(e).applyWeight(w);
+                if (!applicated.containsKey(e))
+                    applicated.put(e, w);
+                else applicated.get(e).applyWeight(w);
             }
         }
         else {
@@ -152,23 +152,7 @@ public class Placement {
             }
         }
     }
-    //is called when !child.containsAllEmpties()
-    public void distributeWeightsAlongConnections(Child child, Source located){
-        HashMap<Child,Double> buff = new HashMap<>();
-        ArrayList<Child> adjs;
-        for (Child ch:child.children()){
-            adjs = located.lookupTable().get(ch);
-            if (adjs!=null){
-                double half = applicants.get(child).topValue()*connectValue;
-                for (Child c:adjs){
-                    buff.put(c,half);
-                }
-            }
-        }
-        for (Child c:buff.keySet()){
-            applicants.get(c).addTopValue(buff.get(c));
-        }
-    }
+//    
  
     public static void main(String args[]) {
         System.out.println("o hell o");
@@ -289,3 +273,20 @@ public class Placement {
     //recursive application bringing the weight of the parent
     //down the rabbit hole and distributing it throughout
     
+//is called when !child.containsAllEmpties()
+//    public void distributeWeightsAlongConnections(Child child, Source located){
+//        HashMap<Child,Double> buff = new HashMap<>();
+//        ArrayList<Child> adjs;
+//        for (Child ch:child.children()){
+//            adjs = located.lookupTable().get(ch);
+//            if (adjs!=null){
+//                double half = applicants.get(child).topValue()*connectValue;
+//                for (Child c:adjs){
+//                    buff.put(c,half);
+//                }
+//            }
+//        }
+//        for (Child c:buff.keySet()){
+//            applicants.get(c).addTopValue(buff.get(c));
+//        }
+//    }
