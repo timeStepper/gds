@@ -79,50 +79,105 @@ public class Placement {
             placementCall(bounded, c);
         }
     }
-    private int placementCall(Design bounded, Child located){
+    private Weight placementCall(Design bounded, Child located){
         int edgecount = 0;
         if (!bounded.edges().isEmpty()){
             boundDesignSize = bounded.edges().size();
-            //empties
-            if (located.isEmpty()){
-                Location a = located.location();
-                if (bounded.contains(a)){
-                    ArrayList<Child> adjs = locatedSource.lookupTable().get(located);
-                    for (Child c:adjs){
-                        Location b = c.location();
-                        Edge e = new Edge(a,b);
-//                        System.out.println("child "+located);
-                        if (bounded.contains(e)){
-                            edgecount++;
-                            intersection.add(new Edge(a,b));
-                        }
+            //Child of all empties
+            if (located.containsAllEmpties()){
+                int denominator = located.connections().size();
+                //for each intersecting edge increase the weight value by 1
+                for ( Connection cn : located.connections() ){
+                    if ( bounded.contains(cn)){
+                        ++edgecount;
+                        intersection.add(new Edge(cn));//for visToolz visuals
                     }
+                    else difference.add(new Edge(cn));
                 }
-                if (edgecount > 0){
-                    Weight w = new Weight(1, 1);
+                if (edgecount>0){
+                    Weight w = new Weight(edgecount, denominator);
+                    
+                    
+                    //accepts the entire Child at the Weight of (intersection/possible intersection)
                     applicants.put(located,w);
-                    return 1;
+                    
+                    
+//                    ArrayList<Child> adjs = lookup.get(located);
+//                    if (adjs!=null){
+//                        for(Child c:adjs){
+//                            applicants.put(located,w);
+//                        }
+//                    }
+                    
+                    
+                    threshold.applyWeight(w);
+                    //System.out.println(located+" :: "+w);
+                    return w;
                 }
                 else {
-                    return 0;
+                    Weight empty = new Weight(0, denominator);
+                    applicants.put(located,empty);
+                    return empty;
                 }
             }
-            //non empties
+            //Child of non empties
             else {
                 Weight w = new Weight(0,0);
                 for ( Child c : located.children() ){
                     //accumulate the weights of the children of 'located'
-                    int top = placementCall(bounded, c);
-                    w.addTopValue(top);
+                    Weight getW = placementCall(bounded, c);
+                    w.applyWeight(getW);
                 }
-                w.addBottomValue(located.size());
                 applicants.put(located,w);
-                if (w.decide()!=0)
-                    threshold.applyWeight(w);//new Weight(w.decide(),1));
-                return (int)(w.topValue());
+                threshold.applyWeight(w);
+                return w;
             }
-        }return 0;//nothing here to intersect with
+        }return new Weight(0, 0);//nothing here to intersect with
     }
+//    private int placementCall(Design bounded, Child located){
+//        int edgecount = 0;
+//        if (!bounded.edges().isEmpty()){
+//            boundDesignSize = bounded.edges().size();
+//            //empties
+//            if (located.isEmpty()){
+//                Location a = located.location();
+//                if (bounded.contains(a)){
+//                    ArrayList<Child> adjs = locatedSource.lookupTable().get(located);
+//                    for (Child c:adjs){
+//                        Location b = c.location();
+//                        Edge e = new Edge(a,b);
+////                        System.out.println("child "+located);
+//                        if (bounded.contains(e)){
+//                            edgecount++;
+//                            intersection.add(new Edge(a,b));
+//                        }
+//                    }
+//                }
+//                if (edgecount > 0){
+//                    Weight w = new Weight(1, 1);
+//                    applicants.put(located,w);
+//                    return 1;
+//                }
+//                else {
+//                    return 0;
+//                }
+//            }
+//            //non empties
+//            else {
+//                Weight w = new Weight(0,0);
+//                for ( Child c : located.children() ){
+//                    //accumulate the weights of the children of 'located'
+//                    int top = placementCall(bounded, c);
+//                    w.addTopValue(top);
+//                }
+//                w.addBottomValue(located.size());
+//                applicants.put(located,w);
+//                if (w.decide()!=0)
+//                    threshold.applyWeight(w);//new Weight(w.decide(),1));
+//                return (int)(w.topValue());
+//            }
+//        }return 0;//nothing here to intersect with
+//    }
     public void applyPlacement(){
         applyPlacement(new Value());
     }
@@ -135,24 +190,19 @@ public class Placement {
     //application is the point where an edge gets it's value
     private void applicate(Child ch, Value value){
         if (ch.containsAllEmpties()){
-                Weight wq = new Weight(applicants.get(ch));
-                Weight valq = value.evaluate(
-                        sourceSize, boundDesignSize, intersection.size());
-                wq.applyWeight(valq);
-            for (Connection cn : ch.connections()){
                 Weight w = new Weight(applicants.get(ch));
                 Weight val = value.evaluate(
-                        sourceSize, boundDesignSize, intersection.size());
+                        sourceSize,
+                        boundDesignSize,
+                        intersection.size(),
+                        difference.size());
                 w.applyWeight(val);
-                Weight app = new Weight(wq);
-                if ( !w.equals(wq) )
-                    System.out.println(w +","+wq);
+            for (Connection cn : ch.connections()){
+                Weight app = new Weight(w);//copy here to avoid multiple reference!
                 Edge e = new Edge(cn);
                 if (!applicated.containsKey(e))
                     applicated.put(e, app);
                 else applicated.get(e).applyWeight(app);
-                if ( !w.equals(wq) )
-                    System.out.println(w +","+wq);
             }
         }
         else {
@@ -170,7 +220,10 @@ public class Placement {
                 if (n==null)n = new Weight(1,1);
                 Weight w = new Weight(n);//applicants.get(ch));
                 Weight val = value.evaluate(
-                        sourceSize, boundDesignSize, intersection.size());
+                        sourceSize,
+                        boundDesignSize,
+                        intersection.size(),
+                        difference.size());
                 w.applyWeight(val);
                 if (!applicated.containsKey(e))
                     applicated.put(e, w);
