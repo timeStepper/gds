@@ -161,7 +161,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="verticalSplit" pref="644" max="32767" attributes="0"/>
+              <Component id="verticalSplit" pref="645" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="bottomBar" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -215,19 +215,27 @@
                                   <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="vizMode" min="-2" pref="101" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="gridcontrolLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="374" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="editMode" min="-2" pref="101" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="genMode" min="-2" pref="101" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="editModeButton" min="-2" pref="101" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="genModeButton" min="-2" pref="101" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="vizModeButton" min="-2" pref="101" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="seedModeButton" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="hereXr" alignment="0" min="-2" pref="61" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
@@ -252,39 +260,20 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="gridY" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gridX" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gridSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gridToggleButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="moduleSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                          <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="vizMode" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="editMode" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="genMode" alignment="3" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="gridY" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridX" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridToggleButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="gridXlabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gridYlabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="moduleSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="gridcontrolLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -300,6 +289,30 @@
                       <Component id="hereYr" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Component id="imageOpacity" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="vizModeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="seedModeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="editModeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="genModeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -375,23 +388,23 @@
             <Property name="text" type="java.lang.String" value="Image Opacity"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="editMode">
+        <Component class="javax.swing.JToggleButton" name="editModeButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit Mode"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editModeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editModeButtonActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="editMode.setSelected(true);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="editModeButton.setSelected(true);"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="genMode">
+        <Component class="javax.swing.JToggleButton" name="genModeButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gen Mode"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genModeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genModeButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="gridToggleButton">
@@ -416,12 +429,20 @@
             <Property name="text" type="java.lang.String" value="Y"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="vizMode">
+        <Component class="javax.swing.JToggleButton" name="vizModeButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Viz Mode"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizModeActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vizModeButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="seedModeButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Seed Mode"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seedModeButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -497,7 +518,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="623" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="624" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -1001,7 +1022,7 @@
                                   <Component id="boundTestButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="intersectionTestButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="194" max="32767" attributes="0"/>
+                                  <EmptySpace pref="195" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1106,10 +1127,14 @@
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="vizSetSourceButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jPanel3" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
-                                      <Component id="jToolBar2" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jPanel4" pref="0" max="32767" attributes="0"/>
+                                      <Component id="jPanel3" alignment="0" min="-2" pref="221" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jToolBar2" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="algoToggleButton" min="-2" pref="103" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -1134,7 +1159,10 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jToolBar2" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <Component id="algoToggleButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="bufferIntersectButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1472,13 +1500,20 @@
                                   <Component id="sourceSizeSlider" alignment="0" max="32767" attributes="0"/>
                                   <Component id="boundSizeSlider" alignment="0" max="32767" attributes="0"/>
                                   <Component id="differenceSizeSlider" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                                      <Component id="generateButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="intersectionSlider" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="173" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                                      <Component id="generateButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace pref="80" max="32767" attributes="0"/>
                                       <Component id="differenceSizeSlider" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="boundSizeSlider" min="-2" max="-2" attributes="0"/>
@@ -1507,6 +1542,14 @@
                             <Component class="javax.swing.JSlider" name="differenceSizeSlider">
                               <Events>
                                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="differenceSizeSliderStateChanged"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JButton" name="generateButton">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="generate"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateButtonActionPerformed"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -1557,6 +1600,14 @@
                             <Property name="text" type="java.lang.String" value="Difference"/>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JToggleButton" name="algoToggleButton">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Algo Toggle"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="algoToggleButtonActionPerformed"/>
+                          </Events>
+                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -1594,7 +1645,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jScrollPane1" min="-2" pref="382" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dynamicTreeLabel" pref="96" max="32767" attributes="0"/>
+                          <Component id="dynamicTreeLabel" pref="97" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="114" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>

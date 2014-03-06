@@ -46,6 +46,7 @@ public class VisToolz {
     private double thresholdAdjustUpper = .5;
     private double thresholdAdjustLower = .5;
     private double adjustAdjust = 10;
+    private boolean algo = true;
     
     
     VisToolz(Grid g){
@@ -75,32 +76,38 @@ public class VisToolz {
     public void setAdjustAdjust(double a){
         adjustAdjust = a;
     }
+    public void toggleAlgo(){
+        if (algo)
+            algo = false;
+        else
+            algo = true;
+    }
     public void up(){
         --currentY;
         locatedSource = source.locate(new Location(currentX, currentY));
         placement = new Placement(locatedSource);
-        placement.placement(design);
+        placement.placement(design, algo);
         placement.applyPlacement();
     }
     public void down(){
         ++currentY;
         locatedSource = source.locate(new Location(currentX, currentY));
         placement = new Placement(locatedSource);
-        placement.placement(design);
+        placement.placement(design, algo);
         placement.applyPlacement();
     }
     public void left(){
         --currentX;
         locatedSource = source.locate(new Location(currentX, currentY));
         placement = new Placement(locatedSource);
-        placement.placement(design);
+        placement.placement(design, algo);
         placement.applyPlacement();
     }
     public void right(){
         ++currentX;
         locatedSource = source.locate(new Location(currentX, currentY));
         placement = new Placement(locatedSource);
-        placement.placement(design);
+        placement.placement(design, algo);
         placement.applyPlacement();
     }
     
@@ -203,7 +210,7 @@ public class VisToolz {
                 localSource = source.locate(here);//located here
                 Placement placement = new Placement(localSource);//for each here
                 bounded = Design.bounded(localSource.bounds(), design);
-                placement.placement(bounded);
+                placement.placement(bounded, algo);
                 //deep buffer placement results for 'here'
                 placementBuffer.put(here,placement);
             }
