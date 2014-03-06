@@ -49,5 +49,17 @@ public class Weight{
     public String toString(){
         return "["+top+", "+bottom+"]";
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        Weight w = ( Weight ) obj;
+        
+        return  top==w.topValue() && bottom==w.bottomValue();
+    }
 }
 

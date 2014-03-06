@@ -135,9 +135,40 @@ public class Placement {
     //application is the point where an edge gets it's value
     private void applicate(Child ch, Value value){
         if (ch.containsAllEmpties()){
+                Weight wq = new Weight(applicants.get(ch));
+                Weight valq = value.evaluate(
+                        sourceSize, boundDesignSize, intersection.size());
+                wq.applyWeight(valq);
             for (Connection cn : ch.connections()){
-                Edge e = new Edge(cn);
                 Weight w = new Weight(applicants.get(ch));
+                Weight val = value.evaluate(
+                        sourceSize, boundDesignSize, intersection.size());
+                w.applyWeight(val);
+                Weight app = new Weight(wq);
+                if ( !w.equals(wq) )
+                    System.out.println(w +","+wq);
+                Edge e = new Edge(cn);
+                if (!applicated.containsKey(e))
+                    applicated.put(e, app);
+                else applicated.get(e).applyWeight(app);
+                if ( !w.equals(wq) )
+                    System.out.println(w +","+wq);
+            }
+        }
+        else {
+            for (Child c:ch.children()){
+                applicate(c, value);
+            }
+        }
+    }
+    private void applicateQ(Child ch, Value value){
+        if (ch.isEmpty()){
+            ArrayList<Child> adjs = locatedSource.lookupTable().get(ch);
+            for (Child c:adjs){
+                Edge e = new Edge(c.location(),ch.location());
+                Weight n = applicants.get(ch);
+                if (n==null)n = new Weight(1,1);
+                Weight w = new Weight(n);//applicants.get(ch));
                 Weight val = value.evaluate(
                         sourceSize, boundDesignSize, intersection.size());
                 w.applyWeight(val);

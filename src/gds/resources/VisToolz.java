@@ -21,13 +21,16 @@ import java.util.HashSet;
 public class VisToolz {
     private int currentX=0;
     private int currentY=0;
-    private Bounds bounds;//for stepping
+    //private Bounds bounds;//for stepping
     private Grid grid;
+    
     private Source source;
     private Source locatedSource;
     private Design design = new Design();
-    private Design designBuffer = new Design();
     private HashMap<Location,Placement> placementBuffer = new HashMap<>();
+    public Value value=new Value();
+    
+    private Placement placement = new Placement();//for visualz
     private boolean paintIntersect=false;
     private boolean paintSeed=false;
     private boolean paintApplicates=false;
@@ -35,21 +38,14 @@ public class VisToolz {
     private boolean paintSource=false;
     private boolean paintIntersectBuffer=false;
     private int offset = 2;
-    Placement placement = new Placement();
     private Color seedColor = Color.BLACK;
     private Color applicateColor = Color.WHITE;
     private Color bufferColor = Color.BLUE;
     private Color intersectColor = Color.GREEN;
     private Color sourceColor = Color.YELLOW;
-    private double thresholdAdjustUpper = 1;
-    private double thresholdAdjustLower = 0;
+    private double thresholdAdjustUpper = .5;
+    private double thresholdAdjustLower = .5;
     private double adjustAdjust = 10;
-    private double intersectVal;
-    private double differenceVal;
-    private double boundSizeVal;
-    private double intersectThreshold;
-    //Value is here, as it remains consistent for a whole generation
-    public Value value=new Value();
     
     
     VisToolz(Grid g){
@@ -61,9 +57,6 @@ public class VisToolz {
     }
     public void setY(int y){
         currentY=y;
-    }
-    public void setBound(Bounds bs){
-        bounds = bs;
     }
     public void setSource(Child c){
         source = source = new Source(c.clone());
@@ -81,32 +74,6 @@ public class VisToolz {
     }
     public void setAdjustAdjust(double a){
         adjustAdjust = a;
-    }
-    public void setIntersectVal(double d){
-        intersectVal = d/100;
-    }
-//    public void setBoundSizeVal(double d){
-//        boundSizeVal = d/100;
-//    }
-//    public void setDifferenceVal(double d){
-//        differenceVal = d/100;
-//    }
-//    public void invertIntersectVal(){
-//        intersectVal = 1/intersectVal;
-//    }
-//    public void invertBoundSizeVal(){
-//        boundSizeVal = 1/boundSizeVal;
-//    }
-//    public void invertDifferenceVal(){
-//        differenceVal = 1/differenceVal ;
-//    }
-    public void step(){
-        if ( currentX < bounds.xmax() )currentX++;
-        else {
-            currentX = bounds.xmin();
-            if ( currentY < bounds.ymax() )currentY++;
-            else currentY = bounds.ymin();
-        }
     }
     public void up(){
         --currentY;
@@ -219,28 +186,12 @@ public class VisToolz {
         plcmnt.applyPlacement(value);
         for (Edge e : plcmnt.applicated().keySet()){
             Weight w = plcmnt.applicated().get(e);
-            lower = thresholdAdjustLower*adjustAdjust*plcmnt.threshold();
+            lower = thresholdAdjustLower*adjustAdjust;
             weight = w.decide();
             if (weight > lower && weight < thresholdAdjustUpper){
                 paintEdge(g,e,bufferColor,2F);
             }
         }
-    }
-    public void decidePlacements(){
-        design.clear();
-        for (Location l : placementBuffer.keySet()){
-            Placement plcmnt = placementBuffer.get(l);
-            plcmnt.applyPlacement(value);
-            for (Edge e:plcmnt.applicated().keySet()){
-                Weight w = plcmnt.applicated().get(e);
-                double lower = thresholdAdjustLower*adjustAdjust*placement.threshold();
-                double weight = w.decide();
-                if (weight > lower && weight < thresholdAdjustUpper){
-                    design.setEdge(e,w);
-                }
-            }
-        }
-        //design.decide(0);
     }
     public void bufferPlacements(){
         Design bounded;
@@ -257,6 +208,23 @@ public class VisToolz {
                 placementBuffer.put(here,placement);
             }
     }
+    public void decidePlacements(){
+        design.clear();
+        for (Location l : placementBuffer.keySet()){
+            Placement plcmnt = placementBuffer.get(l);
+            plcmnt.applyPlacement(value);
+            for (Edge e:plcmnt.applicated().keySet()){
+                Weight w = plcmnt.applicated().get(e);
+                double lower = thresholdAdjustLower*adjustAdjust;
+                double weight = w.decide();
+                if (weight > lower && weight < thresholdAdjustUpper){
+                    design.setEdge(e,w);
+                }
+            }
+        }
+        design.setBounds();
+    }
+}
 //    public void buffer(){
 //        Placement placement;
 //        designBuffer.clearEdges();
@@ -286,6 +254,6 @@ public class VisToolz {
 //        buffer();
 //        decide();
 //    }
-}
+
 
 

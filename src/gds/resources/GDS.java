@@ -1684,6 +1684,7 @@ public class GDS extends javax.swing.JFrame {
 
     private void bufferIntersectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bufferIntersectButtonActionPerformed
         viz.bufferPlacements();
+        globalDisplayArea.repaint();
     }//GEN-LAST:event_bufferIntersectButtonActionPerformed
 
     private void intersectionSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_intersectionSliderStateChanged

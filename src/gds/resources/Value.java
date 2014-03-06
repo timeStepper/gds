@@ -12,9 +12,9 @@ package gds.resources;
  */
 public class Value{
     //percentages:
-    double intersectValue=0;
-    double boundedValue=0;
-    double sourceValue=0;
+    double intersectValue=.5;
+    double boundedValue=.5;
+    double sourceValue=.5;
     //switches:
     boolean intersect=true;
     boolean bounded=true;
