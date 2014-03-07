@@ -154,7 +154,7 @@ public class GDS extends javax.swing.JFrame {
         algoToggleButton = new javax.swing.JToggleButton();
         leftFlank = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        addableElementList = new AddableList(addableListModel, edit);
+        addableElementList = new AddableList(addableListModel,edit);
         addableElementListLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         //treeModel.addTreeModelListener(new MyTreeModelListener());
@@ -1190,7 +1190,9 @@ public class GDS extends javax.swing.JFrame {
         leftFlank.setBackground(new java.awt.Color(180, 180, 180));
         leftFlank.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        //((AddableList)addableElementList).setEditElem(edit);
         edit.setAddableList( (AddableList) addableElementList );
+        seed.setAddableList( (AddableList) addableElementList );
         addableElementList.setBackground(new java.awt.Color(180, 180, 180));
         addableElementList.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane2.setViewportView(addableElementList);
@@ -1411,7 +1413,11 @@ public class GDS extends javax.swing.JFrame {
         if ( genModeButton.isSelected( ) ) genModeButton.setSelected( false );
         else if ( vizModeButton.isSelected() ) vizModeButton.setSelected( false);
         else if ( seedModeButton.isSelected() ) seedModeButton.setSelected( false );
+        seed.saveMode();
+        edit.loadMode();
         mode.setEdit();
+        ((AddableList)addableElementList).setEditElem(edit);
+        dynamicTree = edit.getTree();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_editModeButtonActionPerformed
 
@@ -1419,6 +1425,8 @@ public class GDS extends javax.swing.JFrame {
         if ( editModeButton.isSelected( ) ) editModeButton.setSelected( false );
         else if ( vizModeButton.isSelected() ) vizModeButton.setSelected( false);
         else if ( seedModeButton.isSelected() ) seedModeButton.setSelected( false );
+        seed.saveMode();
+        edit.saveMode();
         mode.setGen();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_genModeButtonActionPerformed
@@ -1721,6 +1729,8 @@ public class GDS extends javax.swing.JFrame {
         else if ( editModeButton.isSelected() ) editModeButton.setSelected( false);
         else if ( seedModeButton.isSelected() ) seedModeButton.setSelected( false );
         mode.setViz();
+        seed.saveMode();
+        edit.saveMode();
         globalDisplayArea.repaint();
     }//GEN-LAST:event_vizModeButtonActionPerformed
 
@@ -1789,7 +1799,11 @@ public class GDS extends javax.swing.JFrame {
         if ( genModeButton.isSelected( ) ) genModeButton.setSelected( false );
         else if ( editModeButton.isSelected() ) editModeButton.setSelected( false);
         else if ( vizModeButton.isSelected() ) vizModeButton.setSelected( false );
-        mode.setViz();
+        edit.saveMode();
+        seed.loadMode();
+        mode.setSeed();
+        ((AddableList)addableElementList).setEditElem(seed);
+        seed.setAddable(new Element());
         globalDisplayArea.repaint();
     }//GEN-LAST:event_seedModeButtonActionPerformed
 
@@ -1884,6 +1898,9 @@ public class GDS extends javax.swing.JFrame {
         public void setViz(){
             mode = State.Viz;
         }
+        public void setSeed(){
+            mode = State.Seed;
+        }
         @Override
         public void mouseWheelMoved(MouseWheelEvent e){
             int m = e.getWheelRotation()*(-1);
@@ -1901,6 +1918,25 @@ public class GDS extends javax.swing.JFrame {
             MyPanel mp = ( MyPanel )displayArea;
             switch ( mode ) {
                 case Edit :
+                    switch ( editElem ) {
+                        case Add:
+                            grid.setX( xLoc );
+                            grid.setY(yLoc);
+                            if ( grid.isReticle( xLoc, yLoc ) ) {
+                                grid.selectOn();
+                                mp.repaint();
+                            }
+                            else {
+                                grid.selectOff();
+                                mp.repaint();
+                            }
+                            break;
+                        case Remove:
+                            
+                            break;
+                    }
+                break;
+                    case Seed :
                     switch ( editElem ) {
                         case Add:
                             grid.setX( xLoc );
@@ -1965,7 +2001,28 @@ public class GDS extends javax.swing.JFrame {
                         else if ( button == MouseEvent.BUTTON3 ) {
                             edit.highlight(l);
                             ((MyPanel)displayArea).repaint();
-                        }                    
+                        }
+                break;
+                case Seed :
+                        int buttonS = e.getButton();
+                        Location loc = new Location( grid.currentX(), grid.currentY() );
+                        Child ch;
+                        if ( buttonS == MouseEvent.BUTTON1 ){
+                            if ( elementClone == State.On )
+                                ch = new Child( seed.addable().clone(), loc );
+                            else ch = new Child( seed.addable(), loc );
+                            seed.addChild( ch );
+                            mp.repaint();
+                        }
+                        else if ( buttonS == MouseEvent.BUTTON2 ) {
+                            seed.removeChild( loc );
+                            ((MyPanel)displayArea).repaint();
+                        }
+                        else if ( buttonS == MouseEvent.BUTTON3 ) {
+                            seed.highlight(loc);
+                            ((MyPanel)displayArea).repaint();
+                        }
+                break;
             }
         }
         //update displayArea relations with grid and edit
@@ -1977,7 +2034,9 @@ public class GDS extends javax.swing.JFrame {
             grid.setOriginX(ox);
             grid.setOriginY(yx);
             edit.setX(ox);
-            edit.setY(yx);            
+            edit.setY(yx);   
+            seed.setX(ox);
+            seed.setY(yx);
             mp.repaint();
         }
         @Override
@@ -2003,6 +2062,12 @@ public class GDS extends javax.swing.JFrame {
             }
             else if (mode==State.Viz){
                 viz.paintViz(g);
+            }
+            else if (mode==State.Seed){
+                grid.paintGrid( g, globalDisplayArea.getWidth( ), globalDisplayArea.getHeight( ) );
+                seed.paintAddable(g);
+                seed.paintEdit( g );
+                seed.paintHighlighted(g);
             }
         }
     }
@@ -2166,14 +2231,18 @@ public class GDS extends javax.swing.JFrame {
     DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode( new Child( ) );
     //the elementTree is modified by methods on treeModel
     DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
+    DefaultMutableTreeNode seedRootNode = new DefaultMutableTreeNode( new Child( ) );
+    //the elementTree is modified by methods on treeModel
+    DefaultTreeModel seedTreeModel = new DefaultTreeModel(rootNode);
     DefaultListModel addableListModel = new DefaultListModel();
     DefaultListModel childrenListModel = new DefaultListModel();
     ChildrenList childrenList = new ChildrenList( childrenListModel );//for childList(global)
     DefaultListModel connectionsModel = new DefaultListModel();
     ConnectionsList cnList = new ConnectionsList ( connectionsModel );
     DynamicTree dt = new DynamicTree( rootNode, treeModel );
+    DynamicTree seedTree = new DynamicTree( seedRootNode, seedTreeModel );
     EditElement edit = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
-    EditElement seed = new EditElement( dt, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
+    EditElement seed = new EditElement( seedTree, (ChildrenList)childrenList, (ConnectionsList)cnList, grid );
     Generate genit = new Generate(32,32, grid);
     VisToolz viz = new VisToolz(grid);
     

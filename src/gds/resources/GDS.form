@@ -1677,8 +1677,8 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new AddableList(addableListModel, edit)"/>
-                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="edit.setAddableList( (AddableList) addableElementList );"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new AddableList(addableListModel,edit)"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="//((AddableList)addableElementList).setEditElem(edit);&#xa;edit.setAddableList( (AddableList) addableElementList );&#xa;seed.setAddableList( (AddableList) addableElementList );"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

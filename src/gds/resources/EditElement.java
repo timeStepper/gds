@@ -31,7 +31,6 @@ public class EditElement {
         ConnectionsList selected_ConnectionsList;
         Element addable = null;//the element that can be added to the current selection by mouse clicks
         DynamicTree dynamicTree;
-        DynamicTree localTree;
         AddableList addableList;
         Grid grid;
         boolean paintEmpties = true;
@@ -72,6 +71,9 @@ public class EditElement {
         }
         public void setY( int y ) {
             originY = y;
+        }
+        public DynamicTree getTree(){
+            return dynamicTree;
         }
         public void highlight( Location l )throws NoSuchElementException{
             try {
@@ -259,10 +261,9 @@ public class EditElement {
             Child son = gson.fromJson(input, Child.class).clone();
             dynamicTree.setRoot(son);
         }
-        public void modeOff(){
-            localTree = dynamicTree;
+        public void saveMode(){
         }
-        public void modeOn(){
-            dynamicTree = localTree;
+        public void loadMode(){
+            dynamicTree.setRoot(selected);
         }
     }

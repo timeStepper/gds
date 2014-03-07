@@ -48,7 +48,9 @@ public class AddableList extends JList implements ListSelectionListener {
         addListSelectionListener(this);
         setSelectedIndex(0);
     }
-    
+    public void setEditElem( EditElement ee ){
+        editElem = ee;
+    }
     public void removeSelection() {
         int index = getSelectedIndex();
         listModel.remove( index );
